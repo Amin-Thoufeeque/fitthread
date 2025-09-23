@@ -1,6 +1,8 @@
 import 'package:fitthread/Presentation/Home%20Screen/widgets/workout_stats_tile.dart';
 import 'package:fitthread/Presentation/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,9 +19,70 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: screenSize.height / 2.3,
+                height: screenSize.height / 2.2,
                 width: screenSize.width,
-                color: AppColors.cardBackground,
+                decoration: BoxDecoration(
+                  color: AppColors.cardBackground,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TableCalendar(
+                  selectedDayPredicate: (day) => true,
+                  headerStyle: HeaderStyle(
+                    formatButtonVisible: false,
+                    titleTextStyle: TextStyle(
+                      color: AppColors.primaryText,
+                      fontSize: 20,
+                    ),
+                    titleCentered: true,
+                    leftChevronIcon: Icon(
+                      Icons.arrow_back_ios_outlined,
+                      color: AppColors.primaryText,
+                    ),
+                    rightChevronIcon: Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      color: AppColors.primaryText,
+                    ),
+                    headerMargin: EdgeInsets.all(10),
+                  ),
+                  daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 14,
+                    ),
+                    weekendStyle: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 14,
+                    ),
+                    dowTextFormatter: (date, locale) => DateFormat.E(
+                      locale,
+                    ).format(date).substring(0, 1).toUpperCase(),
+                  ),
+                  calendarStyle: CalendarStyle(
+                    selectedDecoration: BoxDecoration(
+                      color: AppColors.accentGreen,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    selectedTextStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.cardBackground,
+                    ),
+                    outsideDaysVisible: false,
+                    defaultTextStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryText,
+                    ),
+                    weekendTextStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                  focusedDay: DateTime.now(),
+                  firstDay: DateTime.utc(2010, 10, 16),
+                  lastDay: DateTime.now(),
+                ),
               ),
               SizedBox(height: 10),
               Row(
