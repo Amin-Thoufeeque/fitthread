@@ -1,5 +1,7 @@
 import 'package:fitthread/Presentation/Home%20Screen/widgets/workout_stats_tile.dart';
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -11,7 +13,11 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(backgroundColor: AppColors.mainBackground),
+      appBar: AppBar(
+        backgroundColor: AppColors.mainBackground,
+        title: Text('Logo here'),
+        actions: [CircleAvatar(backgroundColor: AppColors.primaryText)],
+      ),
       backgroundColor: AppColors.mainBackground,
       body: SingleChildScrollView(
         child: Padding(
@@ -19,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: screenSize.height / 2.2,
+                //height: screenSize.height / 2.2,
                 width: screenSize.width,
                 decoration: BoxDecoration(
                   color: AppColors.cardBackground,
@@ -44,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     headerMargin: EdgeInsets.all(10),
                   ),
+
                   daysOfWeekStyle: DaysOfWeekStyle(
                     weekdayStyle: TextStyle(
                       color: Colors.grey[400],
@@ -58,6 +65,7 @@ class HomeScreen extends StatelessWidget {
                     ).format(date).substring(0, 1).toUpperCase(),
                   ),
                   calendarStyle: CalendarStyle(
+                    cellMargin: EdgeInsets.all(10),
                     selectedDecoration: BoxDecoration(
                       color: AppColors.accentGreen,
                       borderRadius: BorderRadius.circular(20),
@@ -101,6 +109,24 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: screenSize.height / 8,
+          child: FloatingNavbar(
+            backgroundColor: AppColors.cardBackground,
+            selectedBackgroundColor: AppColors.accentGreen,
+
+            items: [
+              FloatingNavbarItem(icon: Icons.home, title: "Home"),
+              FloatingNavbarItem(icon: Icons.tab, title: 'Workout'),
+              FloatingNavbarItem(icon: Icons.person, title: "Profile"),
+            ],
+            currentIndex: 2,
+            onTap: (val) {},
           ),
         ),
       ),

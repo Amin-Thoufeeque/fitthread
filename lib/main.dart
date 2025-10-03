@@ -1,4 +1,5 @@
 import 'package:fitthread/Presentation/Home%20Screen/home_screen.dart';
+import 'package:fitthread/Presentation/Workout%20Screen/workout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         textTheme: GoogleFonts.lexendTextTheme(),
       ),
-      home: const HomeScreen(),
+      home: const WorkoutScreen(),
     );
   }
 }
