@@ -1,6 +1,6 @@
-import 'package:fitthread/Presentation/Home%20Screen/home_screen.dart';
 import 'package:fitthread/Presentation/Workout%20Screen/workout_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -13,14 +13,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fitthread',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        textTheme: GoogleFonts.lexendTextTheme(),
-      ),
-      home: const WorkoutScreen(),
+    return ScreenUtilInit(
+      designSize: Size(360, 690),
+
+      builder: (_, child) {
+        return MaterialApp(
+          title: 'Fitthread',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            textTheme: GoogleFonts.lexendTextTheme(),
+          ),
+          home: const WorkoutScreen(),
+        );
+      },
     );
   }
 }

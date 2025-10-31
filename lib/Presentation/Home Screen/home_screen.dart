@@ -1,7 +1,6 @@
 import 'package:fitthread/Presentation/Home%20Screen/widgets/workout_stats_tile.dart';
 import 'package:fitthread/Presentation/colors.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
