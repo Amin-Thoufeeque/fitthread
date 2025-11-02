@@ -1,4 +1,5 @@
-import 'package:fitthread/Presentation/Workout%20Screen/workout_screen.dart';
+import 'package:fitthread/Presentation/Authentication/signup_screen.dart';
+import 'package:fitthread/Presentation/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,17 +15,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(360, 690),
+      designSize: Size(390, 884),
 
       builder: (_, child) {
         return MaterialApp(
           title: 'Fitthread',
           debugShowCheckedModeBanner: false,
+
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            textTheme: GoogleFonts.lexendTextTheme(),
+            brightness: Brightness.dark,
+            primaryColor: AppColors.accentGreen,
+            scaffoldBackgroundColor: AppColors.mainBackground,
+
+            // primaryTextTheme: TextTheme(
+            //   labelMedium: TextStyle(color: AppColors.primaryText),
+            //   labelLarge: TextStyle(color: AppColors.primaryText),
+            //   labelSmall: TextStyle(color: AppColors.primaryText),
+            // ),
+            textTheme: GoogleFonts.lexendTextTheme().apply(
+              bodyColor: AppColors.primaryText,
+            ),
           ),
-          home: const WorkoutScreen(),
+          home: const SignupScreen(),
         );
       },
     );
