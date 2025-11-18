@@ -1,5 +1,5 @@
-import 'package:fitthread/Presentation/Authentication/signup_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               bodyColor: AppColors.primaryText,
             ),
           ),
-          home: const SignupScreen(),
+          home: const MainScreen(),
         );
       },
     );

@@ -1,7 +1,7 @@
 import 'package:fitthread/Presentation/Home%20Screen/widgets/workout_stats_tile.dart';
 import 'package:fitthread/Presentation/colors.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      extendBody: false,
       appBar: AppBar(
         backgroundColor: AppColors.mainBackground,
         title: Text('Logo here'),
@@ -108,24 +109,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ],
-          ),
-        ),
-      ),
-
-      bottomNavigationBar: SafeArea(
-        child: SizedBox(
-          height: screenSize.height / 8,
-          child: FloatingNavbar(
-            backgroundColor: AppColors.cardBackground,
-            selectedBackgroundColor: AppColors.accentGreen,
-
-            items: [
-              FloatingNavbarItem(icon: Icons.home, title: "Home"),
-              FloatingNavbarItem(icon: Icons.tab, title: 'Workout'),
-              FloatingNavbarItem(icon: Icons.person, title: "Profile"),
-            ],
-            currentIndex: 2,
-            onTap: (val) {},
           ),
         ),
       ),
