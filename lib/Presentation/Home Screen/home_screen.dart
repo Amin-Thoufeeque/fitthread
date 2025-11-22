@@ -1,6 +1,7 @@
 import 'package:fitthread/Presentation/Home%20Screen/widgets/workout_stats_tile.dart';
 import 'package:fitthread/Presentation/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -10,7 +11,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       extendBody: false,
       appBar: AppBar(
@@ -26,10 +26,10 @@ class HomeScreen extends StatelessWidget {
             children: [
               Container(
                 //height: screenSize.height / 2.2,
-                width: screenSize.width,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: AppColors.cardBackground,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.w),
                 ),
                 child: TableCalendar(
                   selectedDayPredicate: (day) => true,
@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                     formatButtonVisible: false,
                     titleTextStyle: TextStyle(
                       color: AppColors.primaryText,
-                      fontSize: 20,
+                      fontSize: 20.sp,
                     ),
                     titleCentered: true,
                     leftChevronIcon: Icon(
@@ -48,17 +48,17 @@ class HomeScreen extends StatelessWidget {
                       Icons.arrow_forward_ios_outlined,
                       color: AppColors.primaryText,
                     ),
-                    headerMargin: EdgeInsets.all(10),
+                    headerMargin: EdgeInsets.all(10.w),
                   ),
 
                   daysOfWeekStyle: DaysOfWeekStyle(
                     weekdayStyle: TextStyle(
                       color: Colors.grey[400],
-                      fontSize: 14,
+                      fontSize: 14.sp,
                     ),
                     weekendStyle: TextStyle(
                       color: Colors.grey[400],
-                      fontSize: 14,
+                      fontSize: 14.sp,
                     ),
                     dowTextFormatter: (date, locale) => DateFormat.E(
                       locale,
@@ -68,21 +68,21 @@ class HomeScreen extends StatelessWidget {
                     cellMargin: EdgeInsets.all(10),
                     selectedDecoration: BoxDecoration(
                       color: AppColors.accentGreen,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(20.w),
                     ),
                     selectedTextStyle: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.cardBackground,
                     ),
                     outsideDaysVisible: false,
                     defaultTextStyle: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.primaryText,
                     ),
                     weekendTextStyle: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.primaryText,
                     ),
@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                   lastDay: DateTime.now(),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -100,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                   WorkoutStatsTile(title: 'Total workouts', stats: '157'),
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
