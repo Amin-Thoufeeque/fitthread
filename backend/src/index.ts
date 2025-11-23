@@ -1,7 +1,8 @@
-import express,{Request,Response} from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from "dotenv";
 import cors from "cors";
 import userRouter from './routes/user';
+import connnectDb from './config/db';
 
 
 dotenv.config();
@@ -12,12 +13,14 @@ const port = 3000;
 app.use(express.json())
 app.use(cors())
 
-app.use('/user',userRouter)
+connnectDb();
 
-app.get('/',(req,res)=>{
+app.use('/user', userRouter)
+
+app.get('/', (req, res) => {
     res.json('backend is ready!!')
 })
 
-app.listen(port,'0.0.0.0',()=>{
-    console.log('Server running at port'+port)
+app.listen(port, '0.0.0.0', () => {
+    console.log('Server running at port' + port)
 })
