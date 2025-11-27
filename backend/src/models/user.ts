@@ -26,14 +26,18 @@ const userSchema = new Schema({
         validate: {
             validator: (value) => {
                 if (value.length < 8) {
-                    return true;
-                } else {
                     return false;
+                } else {
+                    return true;
                 }
             },
             message: "Password must be 8 characters long."
         }
 
+    },
+    role: {
+        type: String,
+        default: 'user'
     }
 });
 
