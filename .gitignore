@@ -46,3 +46,6 @@ app.*.map.json
 
 #backend
 backend/.env
+
+#frontend
+lib/Implementation/const.dart

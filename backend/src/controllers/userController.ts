@@ -18,7 +18,8 @@ export const createUser = async (req: Request, res: Response) => {
             email
         });
         user = await user.save();
-        res.json(user);
+        const token = jwt.sign({ id: user._id }, process.env.JWT_Secret_Key || '')
+        res.json({ user, token });
         console.log('Creating user');
     } catch (e) {
         res.status(500).json({ error: "Error: " + e })
@@ -28,16 +29,34 @@ export const createUser = async (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const existingUser = await User.findOne({ email })
-        if (!existingUser) {
+        const user = await User.findOne({ email })
+        if (!user) {
             return res.status(400).json({ msg: "User with this email doesn't exist." })
         }
-        const isPasswordMatch = await bcrypt.compare(password, existingUser.password);
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
             return res.status(400).json({ msg: "Incorrect password." })
         }
-        const token = jwt.sign({ id: existingUser._id }, process.env.JWT_Secret_Key || '')
-        res.json({ token, email: existingUser.email, id: existingUser._id, name: existingUser.name, })
+        const token = jwt.sign({ id: user._id }, process.env.JWT_Secret_Key || '')
+        res.json({ token, user })
+    } catch (e) {
+        res.status(500).json({ error: "Error: " + e })
+    }
+}
+
+export const isTokenValid = async (req: Request, res: Response) => {
+    try {
+        const token = req.header('auth-token');
+        if (!token) {
+            return res.json({ msg: 'No auth token,access denied' })
+        }
+        const verified = jwt.verify(token, process.env.JWT_Secret_Key || '');
+        if (!verified) {
+            return res.json({ status: false })
+        }
+        const payload = verified as jwt.JwtPayload;
+        const user = await User.findById(payload.id)
+        return res.json({ status: true, user })
     } catch (e) {
         res.status(500).json({ error: "Error: " + e })
     }

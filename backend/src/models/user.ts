@@ -38,7 +38,32 @@ const userSchema = new Schema({
     role: {
         type: String,
         default: 'user'
-    }
+    },
+    weightKg: {
+        type: Number,
+        trim: true,
+        default: 0
+    },
+    heightCm: {
+        type: Number,
+        trim: true,
+        default: 0
+    },
+    fatPercentage: {
+        type: Number,
+        trim: true,
+        default: 0
+    },
+    totalWorkouts: {
+        type: Number,
+        trim: true,
+        default: 0
+    },
+    totalWorkoutDuration: {
+        type: Number,
+        trim: true,
+        default: 0
+    },
 });
 
 export type UserType = InferSchemaType<typeof userSchema>;
