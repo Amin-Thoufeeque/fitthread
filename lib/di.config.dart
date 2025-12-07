@@ -12,6 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import 'Application/bloc/user_bloc.dart' as _i586;
 import 'Domain/Auth/auth_service.dart' as _i142;
 import 'Implementation/Auth/auth_impl.dart' as _i461;
 
@@ -23,6 +24,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.lazySingleton<_i142.AuthService>(() => _i461.AuthImplementation());
+    gh.factory<_i586.UserBloc>(() => _i586.UserBloc(gh<_i142.AuthService>()));
     return this;
   }
 }

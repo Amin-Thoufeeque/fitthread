@@ -5,12 +5,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomAuthInputField extends StatefulWidget {
   final String hintText;
   final bool isPassword;
+
   final TextInputType inputType;
+  final FormFieldValidator validator;
+  final TextEditingController controller;
   const CustomAuthInputField({
     super.key,
     required this.hintText,
     this.isPassword = false,
     this.inputType = TextInputType.name,
+    required this.controller,
+
+    required this.validator,
   });
 
   @override
@@ -22,7 +28,9 @@ bool isObscure = true;
 class _CustomAuthInputFieldState extends State<CustomAuthInputField> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: widget.controller,
+      validator: widget.validator,
       cursorColor: AppColors.accentGreen,
       obscureText: widget.isPassword && isObscure,
       keyboardType: widget.inputType,
@@ -59,12 +67,17 @@ class _CustomAuthInputFieldState extends State<CustomAuthInputField> {
 
 class CustomAuthButton extends StatelessWidget {
   final String label;
-  const CustomAuthButton({super.key, required this.label});
+  final VoidCallback onPressed;
+  const CustomAuthButton({
+    super.key,
+    required this.label,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: onPressed,
       minWidth: double.infinity,
       height: 56.h,
       color: AppColors.accentGreen,

@@ -1,9 +1,13 @@
+import 'package:fitthread/Application/bloc/user_bloc.dart';
+import 'package:fitthread/Presentation/Authentication/login_screen.dart';
+import 'package:fitthread/Presentation/Authentication/signup_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
 import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:fitthread/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,25 +25,29 @@ class MyApp extends StatelessWidget {
       designSize: Size(390, 884),
 
       builder: (_, child) {
-        return MaterialApp(
-          title: 'Fitthread',
-          debugShowCheckedModeBanner: false,
+        return MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => getIt<UserBloc>())],
 
-          theme: ThemeData(
-            brightness: Brightness.dark,
-            primaryColor: AppColors.accentGreen,
-            scaffoldBackgroundColor: AppColors.mainBackground,
+          child: MaterialApp(
+            title: 'Fitthread',
+            debugShowCheckedModeBanner: false,
 
-            // primaryTextTheme: TextTheme(
-            //   labelMedium: TextStyle(color: AppColors.primaryText),
-            //   labelLarge: TextStyle(color: AppColors.primaryText),
-            //   labelSmall: TextStyle(color: AppColors.primaryText),
-            // ),
-            textTheme: GoogleFonts.lexendTextTheme().apply(
-              bodyColor: AppColors.primaryText,
+            theme: ThemeData(
+              brightness: Brightness.dark,
+              primaryColor: AppColors.accentGreen,
+              scaffoldBackgroundColor: AppColors.mainBackground,
+
+              // primaryTextTheme: TextTheme(
+              //   labelMedium: TextStyle(color: AppColors.primaryText),
+              //   labelLarge: TextStyle(color: AppColors.primaryText),
+              //   labelSmall: TextStyle(color: AppColors.primaryText),
+              // ),
+              textTheme: GoogleFonts.lexendTextTheme().apply(
+                bodyColor: AppColors.primaryText,
+              ),
             ),
+            home: const LoginScreen(),
           ),
-          home: const MainScreen(),
         );
       },
     );

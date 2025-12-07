@@ -7,11 +7,6 @@ abstract class AuthService {
     required String username,
     required String email,
     required String password,
-    required int totalWorkouts,
-    required int totalWorkoutDuration,
-    required double fatPercentage,
-    required double weightKg,
-    required double heightCm,
   });
   Future<Either<Failure, User>> logIn({
     required String password,

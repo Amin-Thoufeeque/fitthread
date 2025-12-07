@@ -65,14 +65,14 @@ class User {
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['_id'] as String,
-      username: map['username'] as String,
+      username: map['name'] as String,
       email: map['email'] as String,
       role: map['role'] as String,
       totalWorkouts: map['totalWorkouts'] as int,
       totalWorkoutDuration: map['totalWorkoutDuration'] as int,
-      fatPercentage: map['fatPercentage'] as double,
-      weightKg: map['weightKg'] as double,
-      heightCm: map['heightCm'] as double,
+      fatPercentage: (map['fatPercentage'] as num).toDouble(),
+      weightKg: (map['weightKg'] as num).toDouble(),
+      heightCm: (map['heightCm'] as num).toDouble(),
     );
   }
 

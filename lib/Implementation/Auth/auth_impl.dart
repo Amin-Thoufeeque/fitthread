@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -9,6 +7,7 @@ import 'package:fitthread/Domain/Auth/auth_service.dart';
 import 'package:fitthread/Domain/Failure/failure.dart';
 import 'package:fitthread/Domain/models/user_model.dart';
 import 'package:fitthread/Implementation/const.dart';
+import 'dart:developer';
 
 @LazySingleton(as: AuthService)
 class AuthImplementation extends AuthService {
@@ -19,24 +18,42 @@ class AuthImplementation extends AuthService {
     required String email,
   }) async {
     try {
-      final Response response = await dio.post(
-        '$api/login',
-        data: {'email': email, 'password': password},
-      );
-
+      log(email);
+      log('i calling login');
+      final Response response =
+          await Dio(
+            BaseOptions(
+              connectTimeout: Duration(seconds: 10),
+              receiveTimeout: Duration(seconds: 10),
+            ),
+          ).post(
+            '$api/user/login',
+            data: {'email': email, 'password': password},
+            options: Options(contentType: 'application/json; charset=UTF-8'),
+          );
+      log('got response');
       if (response.statusCode == 200) {
-        final User user = User.fromJson(jsonDecode(response.data)['user']);
-        final String token = jsonDecode(response.data)['token'];
+        log('login success');
+        final User user = User.fromMap(response.data['user']);
+        log(user.toString());
+        final String token = response.data['token'];
+        log(token);
         SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
         await sharedPrefs.setString(sharedPrefsSecretKey, token);
         return Right(user);
       }
       if (response.statusCode == 400) {
-        return Left(Failure.general(jsonDecode(response.data)['msg']));
+        log('Login failed');
+        return Left(Failure.general(response.data['msg']));
       }
 
-      return Left(Failure.general(jsonDecode(response.data)['error']));
+      return Left(Failure.general(response.data['error']));
+    } on DioException catch (e) {
+      log(e.toString());
+
+      return Left(Failure.network('Request timeout!'));
     } catch (e) {
+      log(e.toString());
       return Left(Failure.network(e.toString()));
     }
   }
@@ -46,36 +63,23 @@ class AuthImplementation extends AuthService {
     required String username,
     required String email,
     required String password,
-    required int totalWorkouts,
-    required int totalWorkoutDuration,
-    required double fatPercentage,
-    required double weightKg,
-    required double heightCm,
   }) async {
     try {
       final response = await dio.post(
-        '$api/signup',
-        data: {
-          'name': username,
-          'email': email,
-          'password': password,
-          'totalWorkouts': totalWorkouts,
-          'totalWorkoutDuration': totalWorkoutDuration,
-          'fatPercentage': fatPercentage,
-          'weightKg': weightKg,
-          'heightCm': heightCm,
-        },
+        '$api/user/signup',
+        data: {'name': username, 'email': email, 'password': password},
       );
 
       if (response.statusCode == 200) {
-        final user = User.fromJson(jsonDecode(response.data)['user']);
+        final user = User.fromMap(response.data['user']);
+        log(user.toString());
         return Right(user);
       }
       if (response.statusCode == 400) {
-        return Left(Failure.general(jsonDecode(response.data)['msg']));
+        return Left(Failure.general(response.data['msg']));
       }
 
-      return Left(Failure.general(jsonDecode(response.data)['error']));
+      return Left(Failure.general(response.data['error']));
     } catch (e) {
       return Left(Failure.network(e.toString()));
     }
@@ -83,7 +87,9 @@ class AuthImplementation extends AuthService {
 
   @override
   Future<Either<Failure, User>> validateToken({required String token}) async {
-    try {} catch (e) {
+    try {
+      return Left(Failure.general('error'));
+    } catch (e) {
       return Left(Failure.network(e.toString()));
     }
   }
