@@ -5,6 +5,7 @@ abstract class UserState with _$UserState {
   const factory UserState({
     required bool isLoading,
     required bool isError,
+    required bool isTokenValid,
     required String errorMessage,
     required Option<Either<Failure, User>> loginUserFunc,
     required Option<Future<Either<Failure, User>>> signUpUserFunc,
@@ -13,6 +14,7 @@ abstract class UserState with _$UserState {
   factory UserState.initial() => UserState(
     isLoading: false,
     isError: false,
+    isTokenValid: false,
     errorMessage: '',
     loginUserFunc: None(),
     signUpUserFunc: None(),

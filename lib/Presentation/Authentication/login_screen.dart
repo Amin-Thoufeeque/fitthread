@@ -1,6 +1,7 @@
 import 'package:fitthread/Application/bloc/user_bloc.dart';
 import 'package:fitthread/Presentation/Authentication/signup_screen.dart';
 import 'package:fitthread/Presentation/Authentication/widgets.dart';
+import 'package:fitthread/Presentation/Home%20Screen/home_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -133,6 +134,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             email: emailCntrl.text,
                             password: passwordCntrl.text,
                           ),
+                        );
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
                         );
                       }
                     },

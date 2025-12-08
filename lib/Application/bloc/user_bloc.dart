@@ -63,5 +63,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         },
       );
     });
+    on<ValidateUser>((event, emit) async {
+      final validateUser = await authService.validateToken();
+      if (validateUser == null) {
+        emit(state.copyWith(isTokenValid: false));
+      } else {
+        emit(state.copyWith(isTokenValid: true, user: validateUser));
+      }
+    });
   }
 }

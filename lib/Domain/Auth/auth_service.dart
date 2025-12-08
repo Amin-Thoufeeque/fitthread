@@ -12,5 +12,5 @@ abstract class AuthService {
     required String password,
     required String email,
   });
-  Future<Either<Failure, User>> validateToken({required String token});
+  Future<User?> validateToken();
 }

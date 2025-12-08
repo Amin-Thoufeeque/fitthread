@@ -14,68 +14,36 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserEvent implements DiagnosticableTreeMixin {
 
- String get email; String get password;
-/// Create a copy of UserEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$UserEventCopyWith<UserEvent> get copyWith => _$UserEventCopyWithImpl<UserEvent>(this as UserEvent, _$identity);
+
 
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'UserEvent'))
-    ..add(DiagnosticsProperty('email', email))..add(DiagnosticsProperty('password', password));
+    ;
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEvent&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEvent);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email,password);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserEvent(email: $email, password: $password)';
+  return 'UserEvent()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $UserEventCopyWith<$Res>  {
-  factory $UserEventCopyWith(UserEvent value, $Res Function(UserEvent) _then) = _$UserEventCopyWithImpl;
-@useResult
-$Res call({
- String email, String password
-});
-
-
-
-
-}
-/// @nodoc
-class _$UserEventCopyWithImpl<$Res>
-    implements $UserEventCopyWith<$Res> {
-  _$UserEventCopyWithImpl(this._self, this._then);
-
-  final UserEvent _self;
-  final $Res Function(UserEvent) _then;
-
-/// Create a copy of UserEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,}) {
-  return _then(_self.copyWith(
-email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
+class $UserEventCopyWith<$Res>  {
+$UserEventCopyWith(UserEvent _, $Res Function(UserEvent) __);
 }
 
 
@@ -93,12 +61,13 @@ extension UserEventPatterns on UserEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LogIn value)?  login,TResult Function( SignUp value)?  signUp,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LogIn value)?  login,TResult Function( SignUp value)?  signUp,TResult Function( ValidateUser value)?  validateUser,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LogIn() when login != null:
 return login(_that);case SignUp() when signUp != null:
-return signUp(_that);case _:
+return signUp(_that);case ValidateUser() when validateUser != null:
+return validateUser(_that);case _:
   return orElse();
 
 }
@@ -116,12 +85,13 @@ return signUp(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LogIn value)  login,required TResult Function( SignUp value)  signUp,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LogIn value)  login,required TResult Function( SignUp value)  signUp,required TResult Function( ValidateUser value)  validateUser,}){
 final _that = this;
 switch (_that) {
 case LogIn():
 return login(_that);case SignUp():
-return signUp(_that);case _:
+return signUp(_that);case ValidateUser():
+return validateUser(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -138,12 +108,13 @@ return signUp(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LogIn value)?  login,TResult? Function( SignUp value)?  signUp,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LogIn value)?  login,TResult? Function( SignUp value)?  signUp,TResult? Function( ValidateUser value)?  validateUser,}){
 final _that = this;
 switch (_that) {
 case LogIn() when login != null:
 return login(_that);case SignUp() when signUp != null:
-return signUp(_that);case _:
+return signUp(_that);case ValidateUser() when validateUser != null:
+return validateUser(_that);case _:
   return null;
 
 }
@@ -160,11 +131,12 @@ return signUp(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  login,TResult Function( String username,  String email,  String password)?  signUp,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  login,TResult Function( String username,  String email,  String password)?  signUp,TResult Function()?  validateUser,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LogIn() when login != null:
 return login(_that.email,_that.password);case SignUp() when signUp != null:
-return signUp(_that.username,_that.email,_that.password);case _:
+return signUp(_that.username,_that.email,_that.password);case ValidateUser() when validateUser != null:
+return validateUser();case _:
   return orElse();
 
 }
@@ -182,11 +154,12 @@ return signUp(_that.username,_that.email,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  login,required TResult Function( String username,  String email,  String password)  signUp,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  login,required TResult Function( String username,  String email,  String password)  signUp,required TResult Function()  validateUser,}) {final _that = this;
 switch (_that) {
 case LogIn():
 return login(_that.email,_that.password);case SignUp():
-return signUp(_that.username,_that.email,_that.password);case _:
+return signUp(_that.username,_that.email,_that.password);case ValidateUser():
+return validateUser();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,11 +176,12 @@ return signUp(_that.username,_that.email,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  login,TResult? Function( String username,  String email,  String password)?  signUp,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  login,TResult? Function( String username,  String email,  String password)?  signUp,TResult? Function()?  validateUser,}) {final _that = this;
 switch (_that) {
 case LogIn() when login != null:
 return login(_that.email,_that.password);case SignUp() when signUp != null:
-return signUp(_that.username,_that.email,_that.password);case _:
+return signUp(_that.username,_that.email,_that.password);case ValidateUser() when validateUser != null:
+return validateUser();case _:
   return null;
 
 }
@@ -222,12 +196,12 @@ class LogIn with DiagnosticableTreeMixin implements UserEvent {
   const LogIn({required this.email, required this.password});
   
 
-@override final  String email;
-@override final  String password;
+ final  String email;
+ final  String password;
 
 /// Create a copy of UserEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $LogInCopyWith<LogIn> get copyWith => _$LogInCopyWithImpl<LogIn>(this, _$identity);
 
@@ -259,7 +233,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 abstract mixin class $LogInCopyWith<$Res> implements $UserEventCopyWith<$Res> {
   factory $LogInCopyWith(LogIn value, $Res Function(LogIn) _then) = _$LogInCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
  String email, String password
 });
@@ -278,7 +252,7 @@ class _$LogInCopyWithImpl<$Res>
 
 /// Create a copy of UserEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
   return _then(LogIn(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
@@ -297,12 +271,12 @@ class SignUp with DiagnosticableTreeMixin implements UserEvent {
   
 
  final  String username;
-@override final  String email;
-@override final  String password;
+ final  String email;
+ final  String password;
 
 /// Create a copy of UserEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $SignUpCopyWith<SignUp> get copyWith => _$SignUpCopyWithImpl<SignUp>(this, _$identity);
 
@@ -334,7 +308,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 abstract mixin class $SignUpCopyWith<$Res> implements $UserEventCopyWith<$Res> {
   factory $SignUpCopyWith(SignUp value, $Res Function(SignUp) _then) = _$SignUpCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
  String username, String email, String password
 });
@@ -353,7 +327,7 @@ class _$SignUpCopyWithImpl<$Res>
 
 /// Create a copy of UserEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? username = null,Object? email = null,Object? password = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? username = null,Object? email = null,Object? password = null,}) {
   return _then(SignUp(
 username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -366,9 +340,47 @@ as String,
 }
 
 /// @nodoc
+
+
+class ValidateUser with DiagnosticableTreeMixin implements UserEvent {
+  const ValidateUser();
+  
+
+
+
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.validateUser'))
+    ;
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ValidateUser);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.validateUser()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
 mixin _$UserState implements DiagnosticableTreeMixin {
 
- bool get isLoading; bool get isError; String get errorMessage; Option<Either<Failure, User>> get loginUserFunc; Option<Future<Either<Failure, User>>> get signUpUserFunc; User get user;
+ bool get isLoading; bool get isError; bool get isTokenValid; String get errorMessage; Option<Either<Failure, User>> get loginUserFunc; Option<Future<Either<Failure, User>>> get signUpUserFunc; User get user;
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -380,21 +392,21 @@ $UserStateCopyWith<UserState> get copyWith => _$UserStateCopyWithImpl<UserState>
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'UserState'))
-    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('errorMessage', errorMessage))..add(DiagnosticsProperty('loginUserFunc', loginUserFunc))..add(DiagnosticsProperty('signUpUserFunc', signUpUserFunc))..add(DiagnosticsProperty('user', user));
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('isTokenValid', isTokenValid))..add(DiagnosticsProperty('errorMessage', errorMessage))..add(DiagnosticsProperty('loginUserFunc', loginUserFunc))..add(DiagnosticsProperty('signUpUserFunc', signUpUserFunc))..add(DiagnosticsProperty('user', user));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.loginUserFunc, loginUserFunc) || other.loginUserFunc == loginUserFunc)&&(identical(other.signUpUserFunc, signUpUserFunc) || other.signUpUserFunc == signUpUserFunc)&&(identical(other.user, user) || other.user == user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isTokenValid, isTokenValid) || other.isTokenValid == isTokenValid)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.loginUserFunc, loginUserFunc) || other.loginUserFunc == loginUserFunc)&&(identical(other.signUpUserFunc, signUpUserFunc) || other.signUpUserFunc == signUpUserFunc)&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,errorMessage,loginUserFunc,signUpUserFunc,user);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,isTokenValid,errorMessage,loginUserFunc,signUpUserFunc,user);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserState(isLoading: $isLoading, isError: $isError, errorMessage: $errorMessage, loginUserFunc: $loginUserFunc, signUpUserFunc: $signUpUserFunc, user: $user)';
+  return 'UserState(isLoading: $isLoading, isError: $isError, isTokenValid: $isTokenValid, errorMessage: $errorMessage, loginUserFunc: $loginUserFunc, signUpUserFunc: $signUpUserFunc, user: $user)';
 }
 
 
@@ -405,7 +417,7 @@ abstract mixin class $UserStateCopyWith<$Res>  {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) _then) = _$UserStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool isError, String errorMessage, Option<Either<Failure, User>> loginUserFunc, Option<Future<Either<Failure, User>>> signUpUserFunc, User user
+ bool isLoading, bool isError, bool isTokenValid, String errorMessage, Option<Either<Failure, User>> loginUserFunc, Option<Future<Either<Failure, User>>> signUpUserFunc, User user
 });
 
 
@@ -422,10 +434,11 @@ class _$UserStateCopyWithImpl<$Res>
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? errorMessage = null,Object? loginUserFunc = null,Object? signUpUserFunc = null,Object? user = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? isTokenValid = null,Object? errorMessage = null,Object? loginUserFunc = null,Object? signUpUserFunc = null,Object? user = null,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
+as bool,isTokenValid: null == isTokenValid ? _self.isTokenValid : isTokenValid // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,loginUserFunc: null == loginUserFunc ? _self.loginUserFunc : loginUserFunc // ignore: cast_nullable_to_non_nullable
 as Option<Either<Failure, User>>,signUpUserFunc: null == signUpUserFunc ? _self.signUpUserFunc : signUpUserFunc // ignore: cast_nullable_to_non_nullable
@@ -515,10 +528,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isTokenValid,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
+return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
   return orElse();
 
 }
@@ -536,10 +549,10 @@ return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.loginUser
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isTokenValid,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)  $default,) {final _that = this;
 switch (_that) {
 case _UserState():
-return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
+return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -556,10 +569,10 @@ return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.loginUser
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  bool isTokenValid,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)?  $default,) {final _that = this;
 switch (_that) {
 case _UserState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
+return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
   return null;
 
 }
@@ -571,11 +584,12 @@ return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.loginUser
 
 
 class _UserState with DiagnosticableTreeMixin implements UserState {
-  const _UserState({required this.isLoading, required this.isError, required this.errorMessage, required this.loginUserFunc, required this.signUpUserFunc, required this.user});
+  const _UserState({required this.isLoading, required this.isError, required this.isTokenValid, required this.errorMessage, required this.loginUserFunc, required this.signUpUserFunc, required this.user});
   
 
 @override final  bool isLoading;
 @override final  bool isError;
+@override final  bool isTokenValid;
 @override final  String errorMessage;
 @override final  Option<Either<Failure, User>> loginUserFunc;
 @override final  Option<Future<Either<Failure, User>>> signUpUserFunc;
@@ -592,21 +606,21 @@ _$UserStateCopyWith<_UserState> get copyWith => __$UserStateCopyWithImpl<_UserSt
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'UserState'))
-    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('errorMessage', errorMessage))..add(DiagnosticsProperty('loginUserFunc', loginUserFunc))..add(DiagnosticsProperty('signUpUserFunc', signUpUserFunc))..add(DiagnosticsProperty('user', user));
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('isTokenValid', isTokenValid))..add(DiagnosticsProperty('errorMessage', errorMessage))..add(DiagnosticsProperty('loginUserFunc', loginUserFunc))..add(DiagnosticsProperty('signUpUserFunc', signUpUserFunc))..add(DiagnosticsProperty('user', user));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.loginUserFunc, loginUserFunc) || other.loginUserFunc == loginUserFunc)&&(identical(other.signUpUserFunc, signUpUserFunc) || other.signUpUserFunc == signUpUserFunc)&&(identical(other.user, user) || other.user == user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isTokenValid, isTokenValid) || other.isTokenValid == isTokenValid)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.loginUserFunc, loginUserFunc) || other.loginUserFunc == loginUserFunc)&&(identical(other.signUpUserFunc, signUpUserFunc) || other.signUpUserFunc == signUpUserFunc)&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,errorMessage,loginUserFunc,signUpUserFunc,user);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,isTokenValid,errorMessage,loginUserFunc,signUpUserFunc,user);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserState(isLoading: $isLoading, isError: $isError, errorMessage: $errorMessage, loginUserFunc: $loginUserFunc, signUpUserFunc: $signUpUserFunc, user: $user)';
+  return 'UserState(isLoading: $isLoading, isError: $isError, isTokenValid: $isTokenValid, errorMessage: $errorMessage, loginUserFunc: $loginUserFunc, signUpUserFunc: $signUpUserFunc, user: $user)';
 }
 
 
@@ -617,7 +631,7 @@ abstract mixin class _$UserStateCopyWith<$Res> implements $UserStateCopyWith<$Re
   factory _$UserStateCopyWith(_UserState value, $Res Function(_UserState) _then) = __$UserStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool isError, String errorMessage, Option<Either<Failure, User>> loginUserFunc, Option<Future<Either<Failure, User>>> signUpUserFunc, User user
+ bool isLoading, bool isError, bool isTokenValid, String errorMessage, Option<Either<Failure, User>> loginUserFunc, Option<Future<Either<Failure, User>>> signUpUserFunc, User user
 });
 
 
@@ -634,10 +648,11 @@ class __$UserStateCopyWithImpl<$Res>
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? errorMessage = null,Object? loginUserFunc = null,Object? signUpUserFunc = null,Object? user = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? isTokenValid = null,Object? errorMessage = null,Object? loginUserFunc = null,Object? signUpUserFunc = null,Object? user = null,}) {
   return _then(_UserState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
+as bool,isTokenValid: null == isTokenValid ? _self.isTokenValid : isTokenValid // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,loginUserFunc: null == loginUserFunc ? _self.loginUserFunc : loginUserFunc // ignore: cast_nullable_to_non_nullable
 as Option<Either<Failure, User>>,signUpUserFunc: null == signUpUserFunc ? _self.signUpUserFunc : signUpUserFunc // ignore: cast_nullable_to_non_nullable

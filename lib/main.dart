@@ -1,8 +1,6 @@
 import 'package:fitthread/Application/bloc/user_bloc.dart';
-import 'package:fitthread/Presentation/Authentication/login_screen.dart';
-import 'package:fitthread/Presentation/Authentication/signup_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
-import 'package:fitthread/Presentation/main_screen.dart';
+import 'package:fitthread/Presentation/splashscreen.dart';
 import 'package:fitthread/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,7 +44,7 @@ class MyApp extends StatelessWidget {
                 bodyColor: AppColors.primaryText,
               ),
             ),
-            home: const LoginScreen(),
+            home: const Splashscreen(),
           ),
         );
       },

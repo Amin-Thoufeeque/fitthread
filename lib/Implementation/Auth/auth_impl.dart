@@ -11,7 +11,6 @@ import 'dart:developer';
 
 @LazySingleton(as: AuthService)
 class AuthImplementation extends AuthService {
-  final dio = Dio();
   @override
   Future<Either<Failure, User>> logIn({
     required String password,
@@ -20,17 +19,11 @@ class AuthImplementation extends AuthService {
     try {
       log(email);
       log('i calling login');
-      final Response response =
-          await Dio(
-            BaseOptions(
-              connectTimeout: Duration(seconds: 10),
-              receiveTimeout: Duration(seconds: 10),
-            ),
-          ).post(
-            '$api/user/login',
-            data: {'email': email, 'password': password},
-            options: Options(contentType: 'application/json; charset=UTF-8'),
-          );
+      final Response response = await Dio().post(
+        '$api/user/login',
+        data: {'email': email, 'password': password},
+        options: Options(contentType: 'application/json; charset=UTF-8'),
+      );
       log('got response');
       if (response.statusCode == 200) {
         log('login success');
@@ -65,7 +58,7 @@ class AuthImplementation extends AuthService {
     required String password,
   }) async {
     try {
-      final response = await dio.post(
+      final response = await Dio().post(
         '$api/user/signup',
         data: {'name': username, 'email': email, 'password': password},
       );
@@ -86,11 +79,32 @@ class AuthImplementation extends AuthService {
   }
 
   @override
-  Future<Either<Failure, User>> validateToken({required String token}) async {
+  Future<User?> validateToken() async {
     try {
-      return Left(Failure.general('error'));
+      SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+      String? authToken = sharedPrefs.getString(sharedPrefsSecretKey);
+      if (authToken == null) {
+        return null;
+      }
+      log(authToken.toString());
+      Response response = await Dio().post(
+        '$api/user/isTokenValid',
+        options: Options(headers: {'auth-token': authToken}),
+      );
+      if (response.statusCode == 200) {
+        log('token status 200');
+        bool status = response.data['status'];
+        log(status.toString());
+        User user = User.fromMap(response.data['user']);
+        log(user.toString());
+        if (!status) {
+          return null;
+        }
+        return user;
+      }
+      return null;
     } catch (e) {
-      return Left(Failure.network(e.toString()));
+      return null;
     }
   }
 }

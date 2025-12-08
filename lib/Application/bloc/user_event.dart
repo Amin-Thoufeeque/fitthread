@@ -11,4 +11,5 @@ abstract class UserEvent with _$UserEvent {
     required String email,
     required String password,
   }) = SignUp;
+  const factory UserEvent.validateUser() = ValidateUser;
 }
