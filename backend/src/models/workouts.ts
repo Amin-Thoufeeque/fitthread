@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { getDefaultAutoSelectFamilyAttemptTimeout } from "net";
+import { title } from "process";
 
 const SetSchema = new mongoose.Schema({
     setNumber: {
@@ -45,7 +46,7 @@ const WorkoutSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    name: {
+    title: {
         type: String,
         required: true,
     }

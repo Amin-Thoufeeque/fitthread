@@ -1,31 +1,32 @@
 import 'package:fitthread/Presentation/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomAuthInputField extends StatefulWidget {
+class CustomInputField extends StatefulWidget {
   final String hintText;
   final bool isPassword;
-
   final TextInputType inputType;
   final FormFieldValidator validator;
   final TextEditingController controller;
-  const CustomAuthInputField({
+  final int? maxLength;
+  final int maxLines;
+  const CustomInputField({
     super.key,
     required this.hintText,
     this.isPassword = false,
     this.inputType = TextInputType.name,
     required this.controller,
-
     required this.validator,
+    this.maxLength,
+    this.maxLines = 1,
   });
 
   @override
-  State<CustomAuthInputField> createState() => _CustomAuthInputFieldState();
+  State<CustomInputField> createState() => _CustomInputFieldState();
 }
 
 bool isObscure = true;
 
-class _CustomAuthInputFieldState extends State<CustomAuthInputField> {
+class _CustomInputFieldState extends State<CustomInputField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -33,7 +34,9 @@ class _CustomAuthInputFieldState extends State<CustomAuthInputField> {
       validator: widget.validator,
       cursorColor: AppColors.accentGreen,
       obscureText: widget.isPassword && isObscure,
+      maxLength: widget.maxLength,
       keyboardType: widget.inputType,
+      maxLines: widget.maxLines,
       decoration: InputDecoration(
         filled: true,
         suffixIcon: widget.isPassword
@@ -59,37 +62,6 @@ class _CustomAuthInputFieldState extends State<CustomAuthInputField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(style: BorderStyle.none, width: 0),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomAuthButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onPressed;
-  const CustomAuthButton({
-    super.key,
-    required this.label,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialButton(
-      onPressed: onPressed,
-      minWidth: double.infinity,
-      height: 56.h,
-      color: AppColors.accentGreen,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(15),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: AppColors.darkOlive,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );

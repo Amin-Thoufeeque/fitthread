@@ -4,6 +4,7 @@ import cors from "cors";
 import userRouter from './routes/user';
 import connnectDb from './config/db';
 import adminRouter from './routes/admin';
+import workoutRouter from './routes/workout';
 
 
 dotenv.config();
@@ -16,8 +17,9 @@ app.use(cors())
 
 connnectDb();
 
-app.use('/user', userRouter)
-app.use('/admin', adminRouter)
+app.use('/user', userRouter);
+app.use('/admin', adminRouter);
+app.use('/workout',workoutRouter);
 
 app.get('/', (req, res) => {
     res.json('backend is ready!!')

@@ -1,6 +1,8 @@
-import 'package:fitthread/Application/bloc/user_bloc.dart';
-import 'package:fitthread/Presentation/Authentication/widgets.dart';
+import 'package:fitthread/Application/User/user_bloc.dart';
+
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/widgets/custom_input_field.dart';
+import 'package:fitthread/Presentation/widgets/custom_submit_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             child: Text('Username'),
                           ),
 
-                          CustomAuthInputField(
+                          CustomInputField(
                             controller: nameCntrl,
                             validator: (value) {
                               if (value != null && value.length > 2) {
@@ -117,7 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ).h,
                             child: Text('Email'),
                           ),
-                          CustomAuthInputField(
+                          CustomInputField(
                             controller: emailCntrl,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -141,7 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             child: Text('Password'),
                           ),
 
-                          CustomAuthInputField(
+                          CustomInputField(
                             hintText: 'Enter your password',
 
                             validator: (value) {
@@ -161,7 +163,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     SizedBox(height: 30.h),
 
-                    CustomAuthButton(
+                    CustomSubmitButton(
                       label: 'Sign Up',
                       onPressed: () {
                         if (globalKey.currentState!.validate()) {

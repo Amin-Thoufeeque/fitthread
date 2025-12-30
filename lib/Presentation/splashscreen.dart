@@ -1,7 +1,9 @@
-import 'package:fitthread/Application/bloc/user_bloc.dart';
+import 'package:fitthread/Application/User/user_bloc.dart';
+import 'package:fitthread/Presentation/Admin/Home%20Screen/admin_home_screen.dart';
 import 'package:fitthread/Presentation/Authentication/login_screen.dart';
-import 'package:fitthread/Presentation/Home%20Screen/home_screen.dart';
+
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +28,7 @@ class _SplashscreenState extends State<Splashscreen> {
       listener: (context, state) {
         if (state.isTokenValid) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => MainScreen()),
           );
         } else {
           Navigator.of(context).pushReplacement(

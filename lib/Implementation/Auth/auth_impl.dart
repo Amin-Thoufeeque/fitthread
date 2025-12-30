@@ -11,6 +11,15 @@ import 'dart:developer';
 
 @LazySingleton(as: AuthService)
 class AuthImplementation extends AuthService {
+  final Dio dio = Dio(
+    BaseOptions(
+      baseUrl: api,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+      sendTimeout: const Duration(seconds: 10),
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+    ),
+  );
   @override
   Future<Either<Failure, User>> logIn({
     required String password,
@@ -19,7 +28,7 @@ class AuthImplementation extends AuthService {
     try {
       log(email);
       log('i calling login');
-      final Response response = await Dio().post(
+      final Response response = await dio.post(
         '$api/user/login',
         data: {'email': email, 'password': password},
         options: Options(contentType: 'application/json; charset=UTF-8'),
@@ -58,7 +67,7 @@ class AuthImplementation extends AuthService {
     required String password,
   }) async {
     try {
-      final response = await Dio().post(
+      final response = await dio.post(
         '$api/user/signup',
         data: {'name': username, 'email': email, 'password': password},
       );
@@ -87,7 +96,7 @@ class AuthImplementation extends AuthService {
         return null;
       }
       log(authToken.toString());
-      Response response = await Dio().post(
+      Response response = await dio.post(
         '$api/user/isTokenValid',
         options: Options(headers: {'auth-token': authToken}),
       );
@@ -104,6 +113,7 @@ class AuthImplementation extends AuthService {
       }
       return null;
     } catch (e) {
+      log(e.toString());
       return null;
     }
   }

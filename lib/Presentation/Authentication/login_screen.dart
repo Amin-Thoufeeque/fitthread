@@ -1,8 +1,10 @@
-import 'package:fitthread/Application/bloc/user_bloc.dart';
+import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Presentation/Authentication/signup_screen.dart';
-import 'package:fitthread/Presentation/Authentication/widgets.dart';
+
 import 'package:fitthread/Presentation/Home%20Screen/home_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/widgets/custom_input_field.dart';
+import 'package:fitthread/Presentation/widgets/custom_submit_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text('Email'),
                           ),
 
-                          CustomAuthInputField(
+                          CustomInputField(
                             controller: emailCntrl,
                             hintText: 'Enter your email',
                             inputType: TextInputType.emailAddress,
@@ -105,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ).h,
                             child: Text('Password'),
                           ),
-                          CustomAuthInputField(
+                          CustomInputField(
                             controller: passwordCntrl,
                             hintText: 'Enter your password',
                             isPassword: true,
@@ -124,21 +126,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 30.h),
 
-                  CustomAuthButton(
-                    label: "Login",
-                    onPressed: () {
-                      globalKey.currentState!.validate();
-                      if (globalKey.currentState!.validate()) {
-                        BlocProvider.of<UserBloc>(context).add(
-                          LogIn(
-                            email: emailCntrl.text,
-                            password: passwordCntrl.text,
-                          ),
-                        );
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                        );
-                      }
+                  BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      return CustomSubmitButton(
+                        label: "Login",
+                        onPressed: () {
+                          globalKey.currentState!.validate();
+                          if (globalKey.currentState!.validate()) {
+                            BlocProvider.of<UserBloc>(context).add(
+                              LogIn(
+                                email: emailCntrl.text,
+                                password: passwordCntrl.text,
+                              ),
+                            );
+                            if (!state.isError && !state.isLoading) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreen(),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                      );
                     },
                   ),
 
