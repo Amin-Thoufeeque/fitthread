@@ -3,30 +3,31 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import 'package:fitthread/Domain/models/exercise_model.dart';
 import 'package:fitthread/Domain/models/workout_set_model.dart';
 
 class WorkoutExersiseModel {
   final String id;
-  final String exerciseId;
+  final Exercise exercise;
   final String quantifying;
   final List<WorkoutSet> sets;
 
   WorkoutExersiseModel({
     required this.id,
-    required this.exerciseId,
+    required this.exercise,
     required this.quantifying,
     required this.sets,
   });
 
   WorkoutExersiseModel copyWith({
     String? id,
-    String? exerciseId,
+    Exercise? exercise,
     String? quantifying,
     List<WorkoutSet>? sets,
   }) {
     return WorkoutExersiseModel(
       id: id ?? this.id,
-      exerciseId: exerciseId ?? this.exerciseId,
+      exercise: exercise ?? this.exercise,
       quantifying: quantifying ?? this.quantifying,
       sets: sets ?? this.sets,
     );
@@ -35,7 +36,7 @@ class WorkoutExersiseModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'exerciseId': exerciseId,
+      'exercise': exercise.toMap(),
       'quantifying': quantifying,
       'sets': sets.map((x) => x.toMap()).toList(),
     };
@@ -43,8 +44,8 @@ class WorkoutExersiseModel {
 
   factory WorkoutExersiseModel.fromMap(Map<String, dynamic> map) {
     return WorkoutExersiseModel(
-      id: map['_id'] as String,
-      exerciseId: map['exerciseId'] as String,
+      id: map['id'] as String,
+      exercise: Exercise.fromMap(map['exercise'] as Map<String, dynamic>),
       quantifying: map['quantifying'] as String,
       sets: List<WorkoutSet>.from(
         (map['sets'] as List<int>).map<WorkoutSet>(
@@ -61,7 +62,7 @@ class WorkoutExersiseModel {
 
   @override
   String toString() {
-    return 'WorkoutExersiseModel(id: $id, exerciseId: $exerciseId, quantifying: $quantifying, sets: $sets)';
+    return 'WorkoutExersiseModel(id: $id, exercise: $exercise, quantifying: $quantifying, sets: $sets)';
   }
 
   @override
@@ -69,7 +70,7 @@ class WorkoutExersiseModel {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        other.exerciseId == exerciseId &&
+        other.exercise == exercise &&
         other.quantifying == quantifying &&
         listEquals(other.sets, sets);
   }
@@ -77,7 +78,7 @@ class WorkoutExersiseModel {
   @override
   int get hashCode {
     return id.hashCode ^
-        exerciseId.hashCode ^
+        exercise.hashCode ^
         quantifying.hashCode ^
         sets.hashCode;
   }

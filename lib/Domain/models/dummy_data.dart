@@ -18,18 +18,18 @@ final exerciseModel2 = Exercise(
   description: 'great workout',
 );
 List<Exercise> dummyexerlist = [exerciseModel1, exerciseModel2];
-final workout = WorkoutSet(id: '1', set: 2, reps: 13);
-final workout1 = WorkoutSet(id: '2', set: 3, reps: 15);
+final workout = WorkoutSet(id: '1', set: 2, reps: 13, isCompleted: false);
+final workout1 = WorkoutSet(id: '2', set: 3, reps: 15, isCompleted: false);
 
 final workoutExercise = WorkoutExersiseModel(
   id: '1',
-  exerciseId: exerciseModel1.id,
+  exercise: exerciseModel1,
   quantifying: 'kg',
   sets: [workout, workout1],
 );
 final workoutExercise1 = WorkoutExersiseModel(
   id: '2',
-  exerciseId: exerciseModel2.id,
+  exercise: exerciseModel2,
   quantifying: 'kg',
   sets: [workout, workout1],
 );

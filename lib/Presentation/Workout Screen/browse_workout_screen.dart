@@ -1,6 +1,5 @@
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
-import 'package:fitthread/Presentation/Workout%20Screen/workout_detail_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -127,9 +126,10 @@ class _BrowseWorkoutsScreenState extends State<BrowseWorkoutsScreen> {
               ),
             );
           } else {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => WorkoutDetailScreen()),
+            context.read<WorkoutBloc>().add(
+              GetWorkoutExercise(selectedExercises: selectedExerciseList),
             );
+            Navigator.of(context).pop();
           }
         },
         backgroundColor: selectedExerciseList.isNotEmpty

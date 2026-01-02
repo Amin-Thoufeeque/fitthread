@@ -1,4 +1,4 @@
-import 'package:fitthread/Presentation/Workout%20Screen/browse_workout_screen.dart';
+import 'package:fitthread/Presentation/Workout%20Screen/workout_detail_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -157,7 +157,7 @@ class WorkoutScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => BrowseWorkoutsScreen(),
+                                builder: (context) => WorkoutDetailScreen(),
                               ),
                             );
                           },

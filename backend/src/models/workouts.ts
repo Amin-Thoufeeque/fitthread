@@ -49,6 +49,10 @@ const WorkoutSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
+    },
+    totalWeightLifted: {
+        type: Number,
+        required: true
     }
     ,
     exercises: [WorkoutExerciseSchema]

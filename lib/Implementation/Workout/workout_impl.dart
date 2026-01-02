@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:fitthread/Domain/Failure/failure.dart';
 import 'package:fitthread/Domain/Workout/workout_service.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
+import 'package:fitthread/Domain/models/workout_exercise_model.dart';
 import 'package:fitthread/Implementation/const.dart';
 // ignore: depend_on_referenced_packages
 import 'package:injectable/injectable.dart';
@@ -117,5 +118,16 @@ class WorkoutImplementation extends WorkoutService {
       log(e.toString());
       return Left(Failure.network('Something went wrong'));
     }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> addWorkout({
+    required List<WorkoutExersiseModel> workoutExerciseList,
+    required String title,
+    required DateTime workoutDuration,
+    required int totalWeightLifted,
+  }) {
+    // TODO: implement addWorkout
+    throw UnimplementedError();
   }
 }

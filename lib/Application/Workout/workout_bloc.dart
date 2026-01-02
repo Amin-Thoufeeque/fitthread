@@ -1,5 +1,7 @@
 import 'package:fitthread/Domain/Workout/workout_service.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
+import 'package:fitthread/Domain/models/workout_exercise_model.dart';
+import 'package:fitthread/Domain/models/workout_set_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 // ignore: depend_on_referenced_packages
@@ -85,6 +87,200 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
         ),
         (exerciseList) => emit(
           state.copyWith(isLoading: false, isError: false, isSuccess: true),
+        ),
+      );
+    });
+    on<GetSelectedExercise>((event, emit) async {
+      final exerciseList = List<Exercise>.from(state.selectedExerciseList);
+      exerciseList.addAll(event.selectedExercises);
+      // print(exerciseList);
+      emit(state.copyWith(selectedExerciseList: exerciseList));
+    });
+    on<GetWorkoutExercise>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+      final exerciseList = List<Exercise>.from(state.selectedExerciseList);
+      exerciseList.addAll(event.selectedExercises);
+      final workoutList = List<WorkoutExersiseModel>.from(state.workoutsList);
+      final newWorkouts = event.selectedExercises.asMap().entries.map((entry) {
+        return WorkoutExersiseModel(
+          id: entry.key.toString(), // index
+          exercise: entry.value,
+          quantifying: entry.value.quantifying,
+          sets: [],
+        );
+      }).toList();
+      workoutList.addAll(newWorkouts);
+      emit(
+        state.copyWith(
+          workoutsList: workoutList,
+          isLoading: false,
+          selectedExerciseList: exerciseList,
+        ),
+      );
+    });
+    on<AddWorkoutSet>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+
+      final workouts = List<WorkoutExersiseModel>.from(state.workoutsList);
+
+      final oldWorkout = workouts[event.workoutIndex];
+
+      final newSetId = oldWorkout.sets.length + 1;
+      final newSetNumber = oldWorkout.sets.length + 2;
+
+      final newSet = WorkoutSet(
+        id: newSetId.toString(),
+        set: newSetNumber,
+        reps: oldWorkout.quantifying == 'reps' ? 0 : null,
+        timeInSeconds: oldWorkout.quantifying == 'time' ? 0 : null,
+        weightInKg: oldWorkout.quantifying == 'kg' ? 0 : null,
+        isCompleted: false,
+      );
+
+      final updatedWorkout = oldWorkout.copyWith(
+        sets: [...oldWorkout.sets, newSet],
+      );
+
+      workouts[event.workoutIndex] = updatedWorkout;
+
+      emit(state.copyWith(isLoading: false, workoutsList: workouts));
+    });
+    on<DeleteWorkoutSet>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+
+      final workouts = List<WorkoutExersiseModel>.from(state.workoutsList);
+      final set = workouts[event.workoutIndex].sets;
+
+      double totalVolume = state.totalVolume;
+      int totalSets = state.totalSet;
+      final rep = double.tryParse(set[event.setIndex].reps.toString());
+      final weight = set[event.setIndex].weightInKg;
+
+      if (rep == null && weight == null) {
+        emit(state.copyWith(totalVolume: 0));
+      } else {
+        totalVolume = totalVolume - rep! * weight!;
+        totalSets = totalSets - 1;
+      }
+
+      set.removeAt(event.setIndex);
+
+      emit(
+        state.copyWith(
+          isLoading: false,
+          workoutsList: workouts,
+          totalVolume: totalVolume,
+          totalSet: totalSets,
+        ),
+      );
+    });
+    on<CompleteWorkoutSet>((event, emit) async {
+      final workouts = List<WorkoutExersiseModel>.from(state.workoutsList);
+
+      final workout = workouts[event.workoutIndex];
+
+      final sets = List<WorkoutSet>.from(workout.sets);
+
+      final currentSet = sets[event.setIndex];
+
+      final updatedSet = currentSet.isCompleted
+          ? currentSet.copyWith(isCompleted: false)
+          : currentSet.copyWith(
+              reps: int.tryParse(event.reps),
+              weightInKg: double.tryParse(event.weight),
+              timeInSeconds: double.tryParse(event.time),
+              isCompleted: true,
+            );
+
+      sets[event.setIndex] = updatedSet;
+      workouts[event.workoutIndex] = workout.copyWith(sets: sets);
+      double totalVolume = state.totalVolume;
+      int totalSets = state.totalSet;
+      final rep = double.tryParse(event.reps);
+      final weight = updatedSet.weightInKg;
+      if (updatedSet.isCompleted) {
+        if (rep == null && weight == null) {
+          emit(state.copyWith(totalVolume: 0));
+        } else {
+          totalVolume = totalVolume + rep! * weight!;
+          totalSets = totalSets + 1;
+        }
+      } else {
+        if (rep == null && weight == null) {
+          emit(state.copyWith(totalVolume: 0));
+        } else {
+          totalVolume = totalVolume - rep! * weight!;
+          totalSets = totalSets - 1;
+        }
+      }
+
+      emit(
+        state.copyWith(
+          isLoading: false,
+          workoutsList: workouts,
+          totalVolume: totalVolume,
+          totalSet: totalSets,
+        ),
+      );
+    });
+    on<RemoveSelectedExercise>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+      final exercises = List<Exercise>.from(state.selectedExerciseList);
+      final workouts = List<WorkoutExersiseModel>.from(state.workoutsList);
+      double totalVolume = state.totalVolume;
+      int totalSets = state.totalSet;
+
+      for (final set in workouts[event.selectedWorkoutIndex].sets) {
+        final reps = set.reps;
+        final weight = set.weightInKg;
+
+        if (reps == null || weight == null) continue;
+
+        totalVolume -= reps * weight;
+        totalSets -= 1;
+      }
+
+      workouts.removeAt(event.selectedWorkoutIndex);
+      exercises.removeAt(event.selectedWorkoutIndex);
+
+      emit(
+        state.copyWith(
+          isLoading: false,
+          workoutsList: workouts,
+          selectedExerciseList: exercises,
+          totalSet: totalSets,
+          totalVolume: totalVolume,
+        ),
+      );
+    });
+    on<AddNewSelectedExercise>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+
+      final workouts = List<WorkoutExersiseModel>.from(state.workoutsList);
+      final exercises = List<Exercise>.from(state.selectedExerciseList);
+      exercises.addAll(event.newExerciseList);
+      final newWorkoutList = event.newExerciseList.asMap().entries.map((entry) {
+        return WorkoutExersiseModel(
+          id: entry.key.toString(), // index
+          exercise: entry.value,
+          quantifying: entry.value.quantifying,
+          sets: [],
+        );
+      }).toList();
+      workouts.addAll(newWorkoutList);
+
+      emit(
+        state.copyWith(
+          isLoading: false,
+          workoutsList: newWorkoutList,
+          selectedExerciseList: exercises,
+        ),
+      );
+    });
+    on<StartWorkoutTimer>((event, emit) {
+      emit(
+        state.copyWith(
+          workoutStartTime: state.workoutStartTime ?? DateTime.now(),
         ),
       );
     });
