@@ -3,7 +3,6 @@ import 'dart:convert';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class WorkoutSet {
-  final String id;
   final bool isCompleted;
   final int set;
   final int? reps;
@@ -11,7 +10,6 @@ class WorkoutSet {
   final double? weightInKg;
 
   WorkoutSet({
-    required this.id,
     required this.isCompleted,
     required this.set,
     this.reps,
@@ -20,7 +18,6 @@ class WorkoutSet {
   });
 
   WorkoutSet copyWith({
-    String? id,
     bool? isCompleted,
     int? set,
     int? reps,
@@ -28,7 +25,6 @@ class WorkoutSet {
     double? weightInKg,
   }) {
     return WorkoutSet(
-      id: id ?? this.id,
       isCompleted: isCompleted ?? this.isCompleted,
       set: set ?? this.set,
       reps: reps ?? this.reps,
@@ -39,7 +35,6 @@ class WorkoutSet {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'isCompleted': isCompleted,
       'set': set,
       'reps': reps,
@@ -50,7 +45,6 @@ class WorkoutSet {
 
   factory WorkoutSet.fromMap(Map<String, dynamic> map) {
     return WorkoutSet(
-      id: map['id'] as String,
       isCompleted: map['isCompleted'] as bool,
       set: map['set'] as int,
       reps: map['reps'] != null ? map['reps'] as int : null,
@@ -70,15 +64,14 @@ class WorkoutSet {
 
   @override
   String toString() {
-    return 'WorkoutSet(id: $id, isCompleted: $isCompleted, set: $set, reps: $reps, timeInSeconds: $timeInSeconds, weightInKg: $weightInKg)';
+    return 'WorkoutSet(isCompleted: $isCompleted, set: $set, reps: $reps, timeInSeconds: $timeInSeconds, weightInKg: $weightInKg)';
   }
 
   @override
   bool operator ==(covariant WorkoutSet other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
-        other.isCompleted == isCompleted &&
+    return other.isCompleted == isCompleted &&
         other.set == set &&
         other.reps == reps &&
         other.timeInSeconds == timeInSeconds &&
@@ -87,8 +80,7 @@ class WorkoutSet {
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        isCompleted.hashCode ^
+    return isCompleted.hashCode ^
         set.hashCode ^
         reps.hashCode ^
         timeInSeconds.hashCode ^

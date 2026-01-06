@@ -40,10 +40,11 @@ class WorkoutEvent with _$WorkoutEvent {
     required List<Exercise> newExerciseList,
   }) = AddNewSelectedExercise;
   const factory WorkoutEvent.startWorkoutTimer() = StartWorkoutTimer;
+  const factory WorkoutEvent.discardWorkout() = DiscardWorkout;
+  const factory WorkoutEvent.checkSetCompletion() = CheckSetCompletion;
   const factory WorkoutEvent.addWorkout({
-    required List<WorkoutExersiseModel> workoutExerciseList,
     required String title,
-    required DateTime workoutDuration,
-    required int totalWeightLifted,
+    required Duration workoutDuration,
+    required String userId,
   }) = AddWorkout;
 }

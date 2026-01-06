@@ -17,7 +17,10 @@ abstract class WorkoutService {
   Future<Either<Failure, Unit>> addWorkout({
     required List<WorkoutExersiseModel> workoutExerciseList,
     required String title,
-    required DateTime workoutDuration,
-    required int totalWeightLifted,
+    required DateTime workoutStartTime,
+    required double totalWeightLifted,
+    required int totalWorkoutDuration,
+    required String userId,
+    required int totalWorkoutSet,
   });
 }

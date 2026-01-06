@@ -10,6 +10,7 @@ ValueNotifier<int> screenNotifier = ValueNotifier(0);
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
+
   final screens = const [HomeScreen(), WorkoutScreen(), ProfileScreen()];
 
   @override

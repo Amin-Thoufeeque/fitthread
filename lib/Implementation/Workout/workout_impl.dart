@@ -124,10 +124,37 @@ class WorkoutImplementation extends WorkoutService {
   Future<Either<Failure, Unit>> addWorkout({
     required List<WorkoutExersiseModel> workoutExerciseList,
     required String title,
-    required DateTime workoutDuration,
-    required int totalWeightLifted,
-  }) {
-    // TODO: implement addWorkout
-    throw UnimplementedError();
+    required DateTime workoutStartTime,
+    required double totalWeightLifted,
+    required int totalWorkoutDuration,
+    required String userId,
+    required int totalWorkoutSet,
+  }) async {
+    try {
+      final payload = {
+        "title": title,
+        "userId": userId,
+        "totalWorkoutSet": totalWorkoutSet,
+        "startTime": workoutStartTime.toIso8601String(),
+        "totalWeightLifted": totalWeightLifted,
+        "duration": totalWorkoutDuration,
+        "exercises": workoutExerciseList.map((e) => e.toMap()).toList(),
+      };
+      Response response = await dio.post('$api/workout/add', data: payload);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return const Right(unit);
+      } else {
+        return Left(
+          Failure.general(response.data['message'] ?? 'Workout save failed'),
+        );
+      }
+    } on DioException catch (e) {
+      return Left(
+        Failure.network(e.response?.data['message'] ?? 'Network error'),
+      );
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure.network('Something went wrong'));
+    }
   }
 }

@@ -55,7 +55,7 @@ extension WorkoutEventPatterns on WorkoutEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( GetExercise value)?  getExercise,TResult Function( AddExercise value)?  addExercise,TResult Function( DeleteExercise value)?  deleteExercise,TResult Function( EditExercise value)?  editExercise,TResult Function( GetSelectedExercise value)?  getSelectedExercise,TResult Function( GetWorkoutExercise value)?  getWorkoutExercise,TResult Function( AddWorkoutSet value)?  addWorkoutSet,TResult Function( DeleteWorkoutSet value)?  deleteWorkoutSet,TResult Function( CompleteWorkoutSet value)?  completeWorkoutSet,TResult Function( RemoveSelectedExercise value)?  removeSelectedExercise,TResult Function( AddNewSelectedExercise value)?  addNewSelectedExercise,TResult Function( StartWorkoutTimer value)?  startWorkoutTimer,TResult Function( AddWorkout value)?  addWorkout,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( GetExercise value)?  getExercise,TResult Function( AddExercise value)?  addExercise,TResult Function( DeleteExercise value)?  deleteExercise,TResult Function( EditExercise value)?  editExercise,TResult Function( GetSelectedExercise value)?  getSelectedExercise,TResult Function( GetWorkoutExercise value)?  getWorkoutExercise,TResult Function( AddWorkoutSet value)?  addWorkoutSet,TResult Function( DeleteWorkoutSet value)?  deleteWorkoutSet,TResult Function( CompleteWorkoutSet value)?  completeWorkoutSet,TResult Function( RemoveSelectedExercise value)?  removeSelectedExercise,TResult Function( AddNewSelectedExercise value)?  addNewSelectedExercise,TResult Function( StartWorkoutTimer value)?  startWorkoutTimer,TResult Function( DiscardWorkout value)?  discardWorkout,TResult Function( CheckSetCompletion value)?  checkSetCompletion,TResult Function( AddWorkout value)?  addWorkout,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case GetExercise() when getExercise != null:
@@ -70,7 +70,9 @@ return deleteWorkoutSet(_that);case CompleteWorkoutSet() when completeWorkoutSet
 return completeWorkoutSet(_that);case RemoveSelectedExercise() when removeSelectedExercise != null:
 return removeSelectedExercise(_that);case AddNewSelectedExercise() when addNewSelectedExercise != null:
 return addNewSelectedExercise(_that);case StartWorkoutTimer() when startWorkoutTimer != null:
-return startWorkoutTimer(_that);case AddWorkout() when addWorkout != null:
+return startWorkoutTimer(_that);case DiscardWorkout() when discardWorkout != null:
+return discardWorkout(_that);case CheckSetCompletion() when checkSetCompletion != null:
+return checkSetCompletion(_that);case AddWorkout() when addWorkout != null:
 return addWorkout(_that);case _:
   return orElse();
 
@@ -89,7 +91,7 @@ return addWorkout(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( GetExercise value)  getExercise,required TResult Function( AddExercise value)  addExercise,required TResult Function( DeleteExercise value)  deleteExercise,required TResult Function( EditExercise value)  editExercise,required TResult Function( GetSelectedExercise value)  getSelectedExercise,required TResult Function( GetWorkoutExercise value)  getWorkoutExercise,required TResult Function( AddWorkoutSet value)  addWorkoutSet,required TResult Function( DeleteWorkoutSet value)  deleteWorkoutSet,required TResult Function( CompleteWorkoutSet value)  completeWorkoutSet,required TResult Function( RemoveSelectedExercise value)  removeSelectedExercise,required TResult Function( AddNewSelectedExercise value)  addNewSelectedExercise,required TResult Function( StartWorkoutTimer value)  startWorkoutTimer,required TResult Function( AddWorkout value)  addWorkout,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( GetExercise value)  getExercise,required TResult Function( AddExercise value)  addExercise,required TResult Function( DeleteExercise value)  deleteExercise,required TResult Function( EditExercise value)  editExercise,required TResult Function( GetSelectedExercise value)  getSelectedExercise,required TResult Function( GetWorkoutExercise value)  getWorkoutExercise,required TResult Function( AddWorkoutSet value)  addWorkoutSet,required TResult Function( DeleteWorkoutSet value)  deleteWorkoutSet,required TResult Function( CompleteWorkoutSet value)  completeWorkoutSet,required TResult Function( RemoveSelectedExercise value)  removeSelectedExercise,required TResult Function( AddNewSelectedExercise value)  addNewSelectedExercise,required TResult Function( StartWorkoutTimer value)  startWorkoutTimer,required TResult Function( DiscardWorkout value)  discardWorkout,required TResult Function( CheckSetCompletion value)  checkSetCompletion,required TResult Function( AddWorkout value)  addWorkout,}){
 final _that = this;
 switch (_that) {
 case GetExercise():
@@ -104,7 +106,9 @@ return deleteWorkoutSet(_that);case CompleteWorkoutSet():
 return completeWorkoutSet(_that);case RemoveSelectedExercise():
 return removeSelectedExercise(_that);case AddNewSelectedExercise():
 return addNewSelectedExercise(_that);case StartWorkoutTimer():
-return startWorkoutTimer(_that);case AddWorkout():
+return startWorkoutTimer(_that);case DiscardWorkout():
+return discardWorkout(_that);case CheckSetCompletion():
+return checkSetCompletion(_that);case AddWorkout():
 return addWorkout(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -122,7 +126,7 @@ return addWorkout(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( GetExercise value)?  getExercise,TResult? Function( AddExercise value)?  addExercise,TResult? Function( DeleteExercise value)?  deleteExercise,TResult? Function( EditExercise value)?  editExercise,TResult? Function( GetSelectedExercise value)?  getSelectedExercise,TResult? Function( GetWorkoutExercise value)?  getWorkoutExercise,TResult? Function( AddWorkoutSet value)?  addWorkoutSet,TResult? Function( DeleteWorkoutSet value)?  deleteWorkoutSet,TResult? Function( CompleteWorkoutSet value)?  completeWorkoutSet,TResult? Function( RemoveSelectedExercise value)?  removeSelectedExercise,TResult? Function( AddNewSelectedExercise value)?  addNewSelectedExercise,TResult? Function( StartWorkoutTimer value)?  startWorkoutTimer,TResult? Function( AddWorkout value)?  addWorkout,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( GetExercise value)?  getExercise,TResult? Function( AddExercise value)?  addExercise,TResult? Function( DeleteExercise value)?  deleteExercise,TResult? Function( EditExercise value)?  editExercise,TResult? Function( GetSelectedExercise value)?  getSelectedExercise,TResult? Function( GetWorkoutExercise value)?  getWorkoutExercise,TResult? Function( AddWorkoutSet value)?  addWorkoutSet,TResult? Function( DeleteWorkoutSet value)?  deleteWorkoutSet,TResult? Function( CompleteWorkoutSet value)?  completeWorkoutSet,TResult? Function( RemoveSelectedExercise value)?  removeSelectedExercise,TResult? Function( AddNewSelectedExercise value)?  addNewSelectedExercise,TResult? Function( StartWorkoutTimer value)?  startWorkoutTimer,TResult? Function( DiscardWorkout value)?  discardWorkout,TResult? Function( CheckSetCompletion value)?  checkSetCompletion,TResult? Function( AddWorkout value)?  addWorkout,}){
 final _that = this;
 switch (_that) {
 case GetExercise() when getExercise != null:
@@ -137,7 +141,9 @@ return deleteWorkoutSet(_that);case CompleteWorkoutSet() when completeWorkoutSet
 return completeWorkoutSet(_that);case RemoveSelectedExercise() when removeSelectedExercise != null:
 return removeSelectedExercise(_that);case AddNewSelectedExercise() when addNewSelectedExercise != null:
 return addNewSelectedExercise(_that);case StartWorkoutTimer() when startWorkoutTimer != null:
-return startWorkoutTimer(_that);case AddWorkout() when addWorkout != null:
+return startWorkoutTimer(_that);case DiscardWorkout() when discardWorkout != null:
+return discardWorkout(_that);case CheckSetCompletion() when checkSetCompletion != null:
+return checkSetCompletion(_that);case AddWorkout() when addWorkout != null:
 return addWorkout(_that);case _:
   return null;
 
@@ -155,7 +161,7 @@ return addWorkout(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  getExercise,TResult Function( String name,  String quantifying,  String muscleGroup,  String description,  String userId)?  addExercise,TResult Function( String id)?  deleteExercise,TResult Function( Exercise exercise)?  editExercise,TResult Function( List<Exercise> selectedExercises)?  getSelectedExercise,TResult Function( List<Exercise> selectedExercises)?  getWorkoutExercise,TResult Function( int workoutIndex)?  addWorkoutSet,TResult Function( int workoutIndex,  int setIndex)?  deleteWorkoutSet,TResult Function( int workoutIndex,  int setIndex,  String weight,  String time,  String reps)?  completeWorkoutSet,TResult Function( int selectedWorkoutIndex)?  removeSelectedExercise,TResult Function( List<Exercise> newExerciseList)?  addNewSelectedExercise,TResult Function()?  startWorkoutTimer,TResult Function( List<WorkoutExersiseModel> workoutExerciseList,  String title,  DateTime workoutDuration,  int totalWeightLifted)?  addWorkout,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  getExercise,TResult Function( String name,  String quantifying,  String muscleGroup,  String description,  String userId)?  addExercise,TResult Function( String id)?  deleteExercise,TResult Function( Exercise exercise)?  editExercise,TResult Function( List<Exercise> selectedExercises)?  getSelectedExercise,TResult Function( List<Exercise> selectedExercises)?  getWorkoutExercise,TResult Function( int workoutIndex)?  addWorkoutSet,TResult Function( int workoutIndex,  int setIndex)?  deleteWorkoutSet,TResult Function( int workoutIndex,  int setIndex,  String weight,  String time,  String reps)?  completeWorkoutSet,TResult Function( int selectedWorkoutIndex)?  removeSelectedExercise,TResult Function( List<Exercise> newExerciseList)?  addNewSelectedExercise,TResult Function()?  startWorkoutTimer,TResult Function()?  discardWorkout,TResult Function()?  checkSetCompletion,TResult Function( String title,  Duration workoutDuration,  String userId)?  addWorkout,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case GetExercise() when getExercise != null:
 return getExercise();case AddExercise() when addExercise != null:
@@ -169,8 +175,10 @@ return deleteWorkoutSet(_that.workoutIndex,_that.setIndex);case CompleteWorkoutS
 return completeWorkoutSet(_that.workoutIndex,_that.setIndex,_that.weight,_that.time,_that.reps);case RemoveSelectedExercise() when removeSelectedExercise != null:
 return removeSelectedExercise(_that.selectedWorkoutIndex);case AddNewSelectedExercise() when addNewSelectedExercise != null:
 return addNewSelectedExercise(_that.newExerciseList);case StartWorkoutTimer() when startWorkoutTimer != null:
-return startWorkoutTimer();case AddWorkout() when addWorkout != null:
-return addWorkout(_that.workoutExerciseList,_that.title,_that.workoutDuration,_that.totalWeightLifted);case _:
+return startWorkoutTimer();case DiscardWorkout() when discardWorkout != null:
+return discardWorkout();case CheckSetCompletion() when checkSetCompletion != null:
+return checkSetCompletion();case AddWorkout() when addWorkout != null:
+return addWorkout(_that.title,_that.workoutDuration,_that.userId);case _:
   return orElse();
 
 }
@@ -188,7 +196,7 @@ return addWorkout(_that.workoutExerciseList,_that.title,_that.workoutDuration,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  getExercise,required TResult Function( String name,  String quantifying,  String muscleGroup,  String description,  String userId)  addExercise,required TResult Function( String id)  deleteExercise,required TResult Function( Exercise exercise)  editExercise,required TResult Function( List<Exercise> selectedExercises)  getSelectedExercise,required TResult Function( List<Exercise> selectedExercises)  getWorkoutExercise,required TResult Function( int workoutIndex)  addWorkoutSet,required TResult Function( int workoutIndex,  int setIndex)  deleteWorkoutSet,required TResult Function( int workoutIndex,  int setIndex,  String weight,  String time,  String reps)  completeWorkoutSet,required TResult Function( int selectedWorkoutIndex)  removeSelectedExercise,required TResult Function( List<Exercise> newExerciseList)  addNewSelectedExercise,required TResult Function()  startWorkoutTimer,required TResult Function( List<WorkoutExersiseModel> workoutExerciseList,  String title,  DateTime workoutDuration,  int totalWeightLifted)  addWorkout,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  getExercise,required TResult Function( String name,  String quantifying,  String muscleGroup,  String description,  String userId)  addExercise,required TResult Function( String id)  deleteExercise,required TResult Function( Exercise exercise)  editExercise,required TResult Function( List<Exercise> selectedExercises)  getSelectedExercise,required TResult Function( List<Exercise> selectedExercises)  getWorkoutExercise,required TResult Function( int workoutIndex)  addWorkoutSet,required TResult Function( int workoutIndex,  int setIndex)  deleteWorkoutSet,required TResult Function( int workoutIndex,  int setIndex,  String weight,  String time,  String reps)  completeWorkoutSet,required TResult Function( int selectedWorkoutIndex)  removeSelectedExercise,required TResult Function( List<Exercise> newExerciseList)  addNewSelectedExercise,required TResult Function()  startWorkoutTimer,required TResult Function()  discardWorkout,required TResult Function()  checkSetCompletion,required TResult Function( String title,  Duration workoutDuration,  String userId)  addWorkout,}) {final _that = this;
 switch (_that) {
 case GetExercise():
 return getExercise();case AddExercise():
@@ -202,8 +210,10 @@ return deleteWorkoutSet(_that.workoutIndex,_that.setIndex);case CompleteWorkoutS
 return completeWorkoutSet(_that.workoutIndex,_that.setIndex,_that.weight,_that.time,_that.reps);case RemoveSelectedExercise():
 return removeSelectedExercise(_that.selectedWorkoutIndex);case AddNewSelectedExercise():
 return addNewSelectedExercise(_that.newExerciseList);case StartWorkoutTimer():
-return startWorkoutTimer();case AddWorkout():
-return addWorkout(_that.workoutExerciseList,_that.title,_that.workoutDuration,_that.totalWeightLifted);case _:
+return startWorkoutTimer();case DiscardWorkout():
+return discardWorkout();case CheckSetCompletion():
+return checkSetCompletion();case AddWorkout():
+return addWorkout(_that.title,_that.workoutDuration,_that.userId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -220,7 +230,7 @@ return addWorkout(_that.workoutExerciseList,_that.title,_that.workoutDuration,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  getExercise,TResult? Function( String name,  String quantifying,  String muscleGroup,  String description,  String userId)?  addExercise,TResult? Function( String id)?  deleteExercise,TResult? Function( Exercise exercise)?  editExercise,TResult? Function( List<Exercise> selectedExercises)?  getSelectedExercise,TResult? Function( List<Exercise> selectedExercises)?  getWorkoutExercise,TResult? Function( int workoutIndex)?  addWorkoutSet,TResult? Function( int workoutIndex,  int setIndex)?  deleteWorkoutSet,TResult? Function( int workoutIndex,  int setIndex,  String weight,  String time,  String reps)?  completeWorkoutSet,TResult? Function( int selectedWorkoutIndex)?  removeSelectedExercise,TResult? Function( List<Exercise> newExerciseList)?  addNewSelectedExercise,TResult? Function()?  startWorkoutTimer,TResult? Function( List<WorkoutExersiseModel> workoutExerciseList,  String title,  DateTime workoutDuration,  int totalWeightLifted)?  addWorkout,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  getExercise,TResult? Function( String name,  String quantifying,  String muscleGroup,  String description,  String userId)?  addExercise,TResult? Function( String id)?  deleteExercise,TResult? Function( Exercise exercise)?  editExercise,TResult? Function( List<Exercise> selectedExercises)?  getSelectedExercise,TResult? Function( List<Exercise> selectedExercises)?  getWorkoutExercise,TResult? Function( int workoutIndex)?  addWorkoutSet,TResult? Function( int workoutIndex,  int setIndex)?  deleteWorkoutSet,TResult? Function( int workoutIndex,  int setIndex,  String weight,  String time,  String reps)?  completeWorkoutSet,TResult? Function( int selectedWorkoutIndex)?  removeSelectedExercise,TResult? Function( List<Exercise> newExerciseList)?  addNewSelectedExercise,TResult? Function()?  startWorkoutTimer,TResult? Function()?  discardWorkout,TResult? Function()?  checkSetCompletion,TResult? Function( String title,  Duration workoutDuration,  String userId)?  addWorkout,}) {final _that = this;
 switch (_that) {
 case GetExercise() when getExercise != null:
 return getExercise();case AddExercise() when addExercise != null:
@@ -234,8 +244,10 @@ return deleteWorkoutSet(_that.workoutIndex,_that.setIndex);case CompleteWorkoutS
 return completeWorkoutSet(_that.workoutIndex,_that.setIndex,_that.weight,_that.time,_that.reps);case RemoveSelectedExercise() when removeSelectedExercise != null:
 return removeSelectedExercise(_that.selectedWorkoutIndex);case AddNewSelectedExercise() when addNewSelectedExercise != null:
 return addNewSelectedExercise(_that.newExerciseList);case StartWorkoutTimer() when startWorkoutTimer != null:
-return startWorkoutTimer();case AddWorkout() when addWorkout != null:
-return addWorkout(_that.workoutExerciseList,_that.title,_that.workoutDuration,_that.totalWeightLifted);case _:
+return startWorkoutTimer();case DiscardWorkout() when discardWorkout != null:
+return discardWorkout();case CheckSetCompletion() when checkSetCompletion != null:
+return checkSetCompletion();case AddWorkout() when addWorkout != null:
+return addWorkout(_that.title,_that.workoutDuration,_that.userId);case _:
   return null;
 
 }
@@ -1006,20 +1018,77 @@ String toString() {
 /// @nodoc
 
 
-class AddWorkout implements WorkoutEvent {
-  const AddWorkout({required final  List<WorkoutExersiseModel> workoutExerciseList, required this.title, required this.workoutDuration, required this.totalWeightLifted}): _workoutExerciseList = workoutExerciseList;
+class DiscardWorkout implements WorkoutEvent {
+  const DiscardWorkout();
   
 
- final  List<WorkoutExersiseModel> _workoutExerciseList;
- List<WorkoutExersiseModel> get workoutExerciseList {
-  if (_workoutExerciseList is EqualUnmodifiableListView) return _workoutExerciseList;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_workoutExerciseList);
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DiscardWorkout);
 }
 
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'WorkoutEvent.discardWorkout()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class CheckSetCompletion implements WorkoutEvent {
+  const CheckSetCompletion();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CheckSetCompletion);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'WorkoutEvent.checkSetCompletion()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class AddWorkout implements WorkoutEvent {
+  const AddWorkout({required this.title, required this.workoutDuration, required this.userId});
+  
+
  final  String title;
- final  DateTime workoutDuration;
- final  int totalWeightLifted;
+ final  Duration workoutDuration;
+ final  String userId;
 
 /// Create a copy of WorkoutEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -1031,16 +1100,16 @@ $AddWorkoutCopyWith<AddWorkout> get copyWith => _$AddWorkoutCopyWithImpl<AddWork
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddWorkout&&const DeepCollectionEquality().equals(other._workoutExerciseList, _workoutExerciseList)&&(identical(other.title, title) || other.title == title)&&(identical(other.workoutDuration, workoutDuration) || other.workoutDuration == workoutDuration)&&(identical(other.totalWeightLifted, totalWeightLifted) || other.totalWeightLifted == totalWeightLifted));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddWorkout&&(identical(other.title, title) || other.title == title)&&(identical(other.workoutDuration, workoutDuration) || other.workoutDuration == workoutDuration)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_workoutExerciseList),title,workoutDuration,totalWeightLifted);
+int get hashCode => Object.hash(runtimeType,title,workoutDuration,userId);
 
 @override
 String toString() {
-  return 'WorkoutEvent.addWorkout(workoutExerciseList: $workoutExerciseList, title: $title, workoutDuration: $workoutDuration, totalWeightLifted: $totalWeightLifted)';
+  return 'WorkoutEvent.addWorkout(title: $title, workoutDuration: $workoutDuration, userId: $userId)';
 }
 
 
@@ -1051,7 +1120,7 @@ abstract mixin class $AddWorkoutCopyWith<$Res> implements $WorkoutEventCopyWith<
   factory $AddWorkoutCopyWith(AddWorkout value, $Res Function(AddWorkout) _then) = _$AddWorkoutCopyWithImpl;
 @useResult
 $Res call({
- List<WorkoutExersiseModel> workoutExerciseList, String title, DateTime workoutDuration, int totalWeightLifted
+ String title, Duration workoutDuration, String userId
 });
 
 
@@ -1068,13 +1137,12 @@ class _$AddWorkoutCopyWithImpl<$Res>
 
 /// Create a copy of WorkoutEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? workoutExerciseList = null,Object? title = null,Object? workoutDuration = null,Object? totalWeightLifted = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? title = null,Object? workoutDuration = null,Object? userId = null,}) {
   return _then(AddWorkout(
-workoutExerciseList: null == workoutExerciseList ? _self._workoutExerciseList : workoutExerciseList // ignore: cast_nullable_to_non_nullable
-as List<WorkoutExersiseModel>,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,workoutDuration: null == workoutDuration ? _self.workoutDuration : workoutDuration // ignore: cast_nullable_to_non_nullable
-as DateTime,totalWeightLifted: null == totalWeightLifted ? _self.totalWeightLifted : totalWeightLifted // ignore: cast_nullable_to_non_nullable
-as int,
+as Duration,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -1084,7 +1152,7 @@ as int,
 /// @nodoc
 mixin _$WorkoutState {
 
- bool get isLoading; bool get isError; String get errorMessage; bool get isSuccess; double get totalVolume; int get totalSet; List<Exercise> get exerciseList; List<Exercise> get selectedExerciseList; List<WorkoutExersiseModel> get workoutsList; DateTime? get workoutStartTime; Duration get totalWorkoutDuration;
+ bool get isLoading; bool get isError; String get errorMessage; bool get isSuccess; bool get isAllSetCompleted; double get totalVolume; int get totalSet; List<Exercise> get exerciseList; List<Exercise> get selectedExerciseList; List<WorkoutExersiseModel> get workoutsList; DateTime? get totalWorkoutDuration; DateTime? get workoutStartTime;
 /// Create a copy of WorkoutState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1095,16 +1163,16 @@ $WorkoutStateCopyWith<WorkoutState> get copyWith => _$WorkoutStateCopyWithImpl<W
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkoutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.totalVolume, totalVolume) || other.totalVolume == totalVolume)&&(identical(other.totalSet, totalSet) || other.totalSet == totalSet)&&const DeepCollectionEquality().equals(other.exerciseList, exerciseList)&&const DeepCollectionEquality().equals(other.selectedExerciseList, selectedExerciseList)&&const DeepCollectionEquality().equals(other.workoutsList, workoutsList)&&(identical(other.workoutStartTime, workoutStartTime) || other.workoutStartTime == workoutStartTime)&&(identical(other.totalWorkoutDuration, totalWorkoutDuration) || other.totalWorkoutDuration == totalWorkoutDuration));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkoutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.isAllSetCompleted, isAllSetCompleted) || other.isAllSetCompleted == isAllSetCompleted)&&(identical(other.totalVolume, totalVolume) || other.totalVolume == totalVolume)&&(identical(other.totalSet, totalSet) || other.totalSet == totalSet)&&const DeepCollectionEquality().equals(other.exerciseList, exerciseList)&&const DeepCollectionEquality().equals(other.selectedExerciseList, selectedExerciseList)&&const DeepCollectionEquality().equals(other.workoutsList, workoutsList)&&(identical(other.totalWorkoutDuration, totalWorkoutDuration) || other.totalWorkoutDuration == totalWorkoutDuration)&&(identical(other.workoutStartTime, workoutStartTime) || other.workoutStartTime == workoutStartTime));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,errorMessage,isSuccess,totalVolume,totalSet,const DeepCollectionEquality().hash(exerciseList),const DeepCollectionEquality().hash(selectedExerciseList),const DeepCollectionEquality().hash(workoutsList),workoutStartTime,totalWorkoutDuration);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,errorMessage,isSuccess,isAllSetCompleted,totalVolume,totalSet,const DeepCollectionEquality().hash(exerciseList),const DeepCollectionEquality().hash(selectedExerciseList),const DeepCollectionEquality().hash(workoutsList),totalWorkoutDuration,workoutStartTime);
 
 @override
 String toString() {
-  return 'WorkoutState(isLoading: $isLoading, isError: $isError, errorMessage: $errorMessage, isSuccess: $isSuccess, totalVolume: $totalVolume, totalSet: $totalSet, exerciseList: $exerciseList, selectedExerciseList: $selectedExerciseList, workoutsList: $workoutsList, workoutStartTime: $workoutStartTime, totalWorkoutDuration: $totalWorkoutDuration)';
+  return 'WorkoutState(isLoading: $isLoading, isError: $isError, errorMessage: $errorMessage, isSuccess: $isSuccess, isAllSetCompleted: $isAllSetCompleted, totalVolume: $totalVolume, totalSet: $totalSet, exerciseList: $exerciseList, selectedExerciseList: $selectedExerciseList, workoutsList: $workoutsList, totalWorkoutDuration: $totalWorkoutDuration, workoutStartTime: $workoutStartTime)';
 }
 
 
@@ -1115,7 +1183,7 @@ abstract mixin class $WorkoutStateCopyWith<$Res>  {
   factory $WorkoutStateCopyWith(WorkoutState value, $Res Function(WorkoutState) _then) = _$WorkoutStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool isError, String errorMessage, bool isSuccess, double totalVolume, int totalSet, List<Exercise> exerciseList, List<Exercise> selectedExerciseList, List<WorkoutExersiseModel> workoutsList, DateTime? workoutStartTime, Duration totalWorkoutDuration
+ bool isLoading, bool isError, String errorMessage, bool isSuccess, bool isAllSetCompleted, double totalVolume, int totalSet, List<Exercise> exerciseList, List<Exercise> selectedExerciseList, List<WorkoutExersiseModel> workoutsList, DateTime? totalWorkoutDuration, DateTime? workoutStartTime
 });
 
 
@@ -1132,20 +1200,21 @@ class _$WorkoutStateCopyWithImpl<$Res>
 
 /// Create a copy of WorkoutState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? errorMessage = null,Object? isSuccess = null,Object? totalVolume = null,Object? totalSet = null,Object? exerciseList = null,Object? selectedExerciseList = null,Object? workoutsList = null,Object? workoutStartTime = freezed,Object? totalWorkoutDuration = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? errorMessage = null,Object? isSuccess = null,Object? isAllSetCompleted = null,Object? totalVolume = null,Object? totalSet = null,Object? exerciseList = null,Object? selectedExerciseList = null,Object? workoutsList = null,Object? totalWorkoutDuration = freezed,Object? workoutStartTime = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
+as bool,isAllSetCompleted: null == isAllSetCompleted ? _self.isAllSetCompleted : isAllSetCompleted // ignore: cast_nullable_to_non_nullable
 as bool,totalVolume: null == totalVolume ? _self.totalVolume : totalVolume // ignore: cast_nullable_to_non_nullable
 as double,totalSet: null == totalSet ? _self.totalSet : totalSet // ignore: cast_nullable_to_non_nullable
 as int,exerciseList: null == exerciseList ? _self.exerciseList : exerciseList // ignore: cast_nullable_to_non_nullable
 as List<Exercise>,selectedExerciseList: null == selectedExerciseList ? _self.selectedExerciseList : selectedExerciseList // ignore: cast_nullable_to_non_nullable
 as List<Exercise>,workoutsList: null == workoutsList ? _self.workoutsList : workoutsList // ignore: cast_nullable_to_non_nullable
-as List<WorkoutExersiseModel>,workoutStartTime: freezed == workoutStartTime ? _self.workoutStartTime : workoutStartTime // ignore: cast_nullable_to_non_nullable
-as DateTime?,totalWorkoutDuration: null == totalWorkoutDuration ? _self.totalWorkoutDuration : totalWorkoutDuration // ignore: cast_nullable_to_non_nullable
-as Duration,
+as List<WorkoutExersiseModel>,totalWorkoutDuration: freezed == totalWorkoutDuration ? _self.totalWorkoutDuration : totalWorkoutDuration // ignore: cast_nullable_to_non_nullable
+as DateTime?,workoutStartTime: freezed == workoutStartTime ? _self.workoutStartTime : workoutStartTime // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -1230,10 +1299,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String errorMessage,  bool isSuccess,  double totalVolume,  int totalSet,  List<Exercise> exerciseList,  List<Exercise> selectedExerciseList,  List<WorkoutExersiseModel> workoutsList,  DateTime? workoutStartTime,  Duration totalWorkoutDuration)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String errorMessage,  bool isSuccess,  bool isAllSetCompleted,  double totalVolume,  int totalSet,  List<Exercise> exerciseList,  List<Exercise> selectedExerciseList,  List<WorkoutExersiseModel> workoutsList,  DateTime? totalWorkoutDuration,  DateTime? workoutStartTime)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WorkoutState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess,_that.totalVolume,_that.totalSet,_that.exerciseList,_that.selectedExerciseList,_that.workoutsList,_that.workoutStartTime,_that.totalWorkoutDuration);case _:
+return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess,_that.isAllSetCompleted,_that.totalVolume,_that.totalSet,_that.exerciseList,_that.selectedExerciseList,_that.workoutsList,_that.totalWorkoutDuration,_that.workoutStartTime);case _:
   return orElse();
 
 }
@@ -1251,10 +1320,10 @@ return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String errorMessage,  bool isSuccess,  double totalVolume,  int totalSet,  List<Exercise> exerciseList,  List<Exercise> selectedExerciseList,  List<WorkoutExersiseModel> workoutsList,  DateTime? workoutStartTime,  Duration totalWorkoutDuration)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String errorMessage,  bool isSuccess,  bool isAllSetCompleted,  double totalVolume,  int totalSet,  List<Exercise> exerciseList,  List<Exercise> selectedExerciseList,  List<WorkoutExersiseModel> workoutsList,  DateTime? totalWorkoutDuration,  DateTime? workoutStartTime)  $default,) {final _that = this;
 switch (_that) {
 case _WorkoutState():
-return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess,_that.totalVolume,_that.totalSet,_that.exerciseList,_that.selectedExerciseList,_that.workoutsList,_that.workoutStartTime,_that.totalWorkoutDuration);case _:
+return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess,_that.isAllSetCompleted,_that.totalVolume,_that.totalSet,_that.exerciseList,_that.selectedExerciseList,_that.workoutsList,_that.totalWorkoutDuration,_that.workoutStartTime);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1271,10 +1340,10 @@ return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  String errorMessage,  bool isSuccess,  double totalVolume,  int totalSet,  List<Exercise> exerciseList,  List<Exercise> selectedExerciseList,  List<WorkoutExersiseModel> workoutsList,  DateTime? workoutStartTime,  Duration totalWorkoutDuration)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  String errorMessage,  bool isSuccess,  bool isAllSetCompleted,  double totalVolume,  int totalSet,  List<Exercise> exerciseList,  List<Exercise> selectedExerciseList,  List<WorkoutExersiseModel> workoutsList,  DateTime? totalWorkoutDuration,  DateTime? workoutStartTime)?  $default,) {final _that = this;
 switch (_that) {
 case _WorkoutState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess,_that.totalVolume,_that.totalSet,_that.exerciseList,_that.selectedExerciseList,_that.workoutsList,_that.workoutStartTime,_that.totalWorkoutDuration);case _:
+return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess,_that.isAllSetCompleted,_that.totalVolume,_that.totalSet,_that.exerciseList,_that.selectedExerciseList,_that.workoutsList,_that.totalWorkoutDuration,_that.workoutStartTime);case _:
   return null;
 
 }
@@ -1286,13 +1355,14 @@ return $default(_that.isLoading,_that.isError,_that.errorMessage,_that.isSuccess
 
 
 class _WorkoutState implements WorkoutState {
-  const _WorkoutState({required this.isLoading, required this.isError, required this.errorMessage, required this.isSuccess, required this.totalVolume, required this.totalSet, required final  List<Exercise> exerciseList, required final  List<Exercise> selectedExerciseList, required final  List<WorkoutExersiseModel> workoutsList, required this.workoutStartTime, required this.totalWorkoutDuration}): _exerciseList = exerciseList,_selectedExerciseList = selectedExerciseList,_workoutsList = workoutsList;
+  const _WorkoutState({required this.isLoading, required this.isError, required this.errorMessage, required this.isSuccess, required this.isAllSetCompleted, required this.totalVolume, required this.totalSet, required final  List<Exercise> exerciseList, required final  List<Exercise> selectedExerciseList, required final  List<WorkoutExersiseModel> workoutsList, required this.totalWorkoutDuration, required this.workoutStartTime}): _exerciseList = exerciseList,_selectedExerciseList = selectedExerciseList,_workoutsList = workoutsList;
   
 
 @override final  bool isLoading;
 @override final  bool isError;
 @override final  String errorMessage;
 @override final  bool isSuccess;
+@override final  bool isAllSetCompleted;
 @override final  double totalVolume;
 @override final  int totalSet;
  final  List<Exercise> _exerciseList;
@@ -1316,8 +1386,8 @@ class _WorkoutState implements WorkoutState {
   return EqualUnmodifiableListView(_workoutsList);
 }
 
+@override final  DateTime? totalWorkoutDuration;
 @override final  DateTime? workoutStartTime;
-@override final  Duration totalWorkoutDuration;
 
 /// Create a copy of WorkoutState
 /// with the given fields replaced by the non-null parameter values.
@@ -1329,16 +1399,16 @@ _$WorkoutStateCopyWith<_WorkoutState> get copyWith => __$WorkoutStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkoutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.totalVolume, totalVolume) || other.totalVolume == totalVolume)&&(identical(other.totalSet, totalSet) || other.totalSet == totalSet)&&const DeepCollectionEquality().equals(other._exerciseList, _exerciseList)&&const DeepCollectionEquality().equals(other._selectedExerciseList, _selectedExerciseList)&&const DeepCollectionEquality().equals(other._workoutsList, _workoutsList)&&(identical(other.workoutStartTime, workoutStartTime) || other.workoutStartTime == workoutStartTime)&&(identical(other.totalWorkoutDuration, totalWorkoutDuration) || other.totalWorkoutDuration == totalWorkoutDuration));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkoutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.isAllSetCompleted, isAllSetCompleted) || other.isAllSetCompleted == isAllSetCompleted)&&(identical(other.totalVolume, totalVolume) || other.totalVolume == totalVolume)&&(identical(other.totalSet, totalSet) || other.totalSet == totalSet)&&const DeepCollectionEquality().equals(other._exerciseList, _exerciseList)&&const DeepCollectionEquality().equals(other._selectedExerciseList, _selectedExerciseList)&&const DeepCollectionEquality().equals(other._workoutsList, _workoutsList)&&(identical(other.totalWorkoutDuration, totalWorkoutDuration) || other.totalWorkoutDuration == totalWorkoutDuration)&&(identical(other.workoutStartTime, workoutStartTime) || other.workoutStartTime == workoutStartTime));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,errorMessage,isSuccess,totalVolume,totalSet,const DeepCollectionEquality().hash(_exerciseList),const DeepCollectionEquality().hash(_selectedExerciseList),const DeepCollectionEquality().hash(_workoutsList),workoutStartTime,totalWorkoutDuration);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,errorMessage,isSuccess,isAllSetCompleted,totalVolume,totalSet,const DeepCollectionEquality().hash(_exerciseList),const DeepCollectionEquality().hash(_selectedExerciseList),const DeepCollectionEquality().hash(_workoutsList),totalWorkoutDuration,workoutStartTime);
 
 @override
 String toString() {
-  return 'WorkoutState(isLoading: $isLoading, isError: $isError, errorMessage: $errorMessage, isSuccess: $isSuccess, totalVolume: $totalVolume, totalSet: $totalSet, exerciseList: $exerciseList, selectedExerciseList: $selectedExerciseList, workoutsList: $workoutsList, workoutStartTime: $workoutStartTime, totalWorkoutDuration: $totalWorkoutDuration)';
+  return 'WorkoutState(isLoading: $isLoading, isError: $isError, errorMessage: $errorMessage, isSuccess: $isSuccess, isAllSetCompleted: $isAllSetCompleted, totalVolume: $totalVolume, totalSet: $totalSet, exerciseList: $exerciseList, selectedExerciseList: $selectedExerciseList, workoutsList: $workoutsList, totalWorkoutDuration: $totalWorkoutDuration, workoutStartTime: $workoutStartTime)';
 }
 
 
@@ -1349,7 +1419,7 @@ abstract mixin class _$WorkoutStateCopyWith<$Res> implements $WorkoutStateCopyWi
   factory _$WorkoutStateCopyWith(_WorkoutState value, $Res Function(_WorkoutState) _then) = __$WorkoutStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool isError, String errorMessage, bool isSuccess, double totalVolume, int totalSet, List<Exercise> exerciseList, List<Exercise> selectedExerciseList, List<WorkoutExersiseModel> workoutsList, DateTime? workoutStartTime, Duration totalWorkoutDuration
+ bool isLoading, bool isError, String errorMessage, bool isSuccess, bool isAllSetCompleted, double totalVolume, int totalSet, List<Exercise> exerciseList, List<Exercise> selectedExerciseList, List<WorkoutExersiseModel> workoutsList, DateTime? totalWorkoutDuration, DateTime? workoutStartTime
 });
 
 
@@ -1366,20 +1436,21 @@ class __$WorkoutStateCopyWithImpl<$Res>
 
 /// Create a copy of WorkoutState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? errorMessage = null,Object? isSuccess = null,Object? totalVolume = null,Object? totalSet = null,Object? exerciseList = null,Object? selectedExerciseList = null,Object? workoutsList = null,Object? workoutStartTime = freezed,Object? totalWorkoutDuration = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? errorMessage = null,Object? isSuccess = null,Object? isAllSetCompleted = null,Object? totalVolume = null,Object? totalSet = null,Object? exerciseList = null,Object? selectedExerciseList = null,Object? workoutsList = null,Object? totalWorkoutDuration = freezed,Object? workoutStartTime = freezed,}) {
   return _then(_WorkoutState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
+as bool,isAllSetCompleted: null == isAllSetCompleted ? _self.isAllSetCompleted : isAllSetCompleted // ignore: cast_nullable_to_non_nullable
 as bool,totalVolume: null == totalVolume ? _self.totalVolume : totalVolume // ignore: cast_nullable_to_non_nullable
 as double,totalSet: null == totalSet ? _self.totalSet : totalSet // ignore: cast_nullable_to_non_nullable
 as int,exerciseList: null == exerciseList ? _self._exerciseList : exerciseList // ignore: cast_nullable_to_non_nullable
 as List<Exercise>,selectedExerciseList: null == selectedExerciseList ? _self._selectedExerciseList : selectedExerciseList // ignore: cast_nullable_to_non_nullable
 as List<Exercise>,workoutsList: null == workoutsList ? _self._workoutsList : workoutsList // ignore: cast_nullable_to_non_nullable
-as List<WorkoutExersiseModel>,workoutStartTime: freezed == workoutStartTime ? _self.workoutStartTime : workoutStartTime // ignore: cast_nullable_to_non_nullable
-as DateTime?,totalWorkoutDuration: null == totalWorkoutDuration ? _self.totalWorkoutDuration : totalWorkoutDuration // ignore: cast_nullable_to_non_nullable
-as Duration,
+as List<WorkoutExersiseModel>,totalWorkoutDuration: freezed == totalWorkoutDuration ? _self.totalWorkoutDuration : totalWorkoutDuration // ignore: cast_nullable_to_non_nullable
+as DateTime?,workoutStartTime: freezed == workoutStartTime ? _self.workoutStartTime : workoutStartTime // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

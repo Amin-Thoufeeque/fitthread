@@ -1,11 +1,14 @@
+import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
 import 'package:fitthread/Presentation/Workout%20Screen/workout_detail_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:fitthread/Presentation/widgets/custom_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class SubmitWorkoutScreen extends StatefulWidget {
   final Duration workoutDuration;
@@ -46,7 +49,22 @@ class _SubmitWorkoutScreenState extends State<SubmitWorkoutScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                if (titleCntrl.text.isEmpty) {
+                  titleCntrl.text = 'Workout';
+                }
+                context.read<WorkoutBloc>().add(
+                  AddWorkout(
+                    title: titleCntrl.text,
+                    workoutDuration: widget.workoutDuration,
+                    userId: context.read<UserBloc>().state.user.id,
+                  ),
+                );
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => MainScreen()),
+                  (route) => false,
+                );
+              },
               minWidth: 10,
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               shape: RoundedRectangleBorder(
@@ -72,6 +90,7 @@ class _SubmitWorkoutScreenState extends State<SubmitWorkoutScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
+                crossAxisAlignment: .start,
                 children: [
                   CustomInputField(
                     hintText: 'Workout Title',
@@ -80,11 +99,38 @@ class _SubmitWorkoutScreenState extends State<SubmitWorkoutScreen> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 20.h),
                   WorkoutInfo(
                     duration: _formatTime(widget.workoutDuration),
                     volume: state.totalVolume.toString(),
                     set: state.totalSet.toString(),
                   ),
+                  Divider(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 46,
+                    ).h,
+                    child: Column(
+                      crossAxisAlignment: .start,
+                      children: [
+                        Text(
+                          'When',
+                          style: TextStyle(
+                            color: AppColors.secondaryText,
+                            fontSize: 10.sp,
+                          ),
+                        ),
+                        Text(
+                          DateFormat(
+                            'd MMM yyyy, hh:mm a',
+                          ).format(state.workoutStartTime!),
+                          style: TextStyle(fontWeight: FontWeight.w100),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(),
                 ],
               ),
             ),

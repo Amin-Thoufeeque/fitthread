@@ -103,7 +103,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       final workoutList = List<WorkoutExersiseModel>.from(state.workoutsList);
       final newWorkouts = event.selectedExercises.asMap().entries.map((entry) {
         return WorkoutExersiseModel(
-          id: entry.key.toString(), // index
+          // index
           exercise: entry.value,
           quantifying: entry.value.quantifying,
           sets: [],
@@ -125,11 +125,9 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
 
       final oldWorkout = workouts[event.workoutIndex];
 
-      final newSetId = oldWorkout.sets.length + 1;
       final newSetNumber = oldWorkout.sets.length + 2;
 
       final newSet = WorkoutSet(
-        id: newSetId.toString(),
         set: newSetNumber,
         reps: oldWorkout.quantifying == 'reps' ? 0 : null,
         timeInSeconds: oldWorkout.quantifying == 'time' ? 0 : null,
@@ -261,7 +259,6 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       exercises.addAll(event.newExerciseList);
       final newWorkoutList = event.newExerciseList.asMap().entries.map((entry) {
         return WorkoutExersiseModel(
-          id: entry.key.toString(), // index
           exercise: entry.value,
           quantifying: entry.value.quantifying,
           sets: [],
@@ -280,8 +277,46 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     on<StartWorkoutTimer>((event, emit) {
       emit(
         state.copyWith(
-          workoutStartTime: state.workoutStartTime ?? DateTime.now(),
+          totalWorkoutDuration: state.totalWorkoutDuration ?? DateTime.now(),
+          workoutStartTime: DateTime.now(),
         ),
+      );
+    });
+    on<DiscardWorkout>((event, emit) {
+      emit(WorkoutState.initial());
+    });
+    on<CheckSetCompletion>((event, emit) {
+      if (state.workoutsList.isEmpty) {
+        emit(state.copyWith(isAllSetCompleted: false));
+      }
+
+      final bool result = state.workoutsList.every(
+        (workout) => workout.sets.every((set) => set.isCompleted),
+      );
+      print(result);
+      emit(state.copyWith(isAllSetCompleted: result));
+    });
+    on<AddWorkout>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+
+      final addWorkoutFunc = await workoutService.addWorkout(
+        userId: event.userId,
+        totalWorkoutSet: state.totalSet,
+        workoutExerciseList: state.workoutsList,
+        title: event.title,
+        workoutStartTime: state.workoutStartTime!,
+        totalWeightLifted: state.totalVolume,
+        totalWorkoutDuration: event.workoutDuration.inSeconds,
+      );
+      addWorkoutFunc.fold(
+        (failure) => emit(
+          state.copyWith(
+            errorMessage: failure.errorMessage,
+            isLoading: false,
+            isError: true,
+          ),
+        ),
+        (r) => emit(state.copyWith(isLoading: false)),
       );
     });
   }

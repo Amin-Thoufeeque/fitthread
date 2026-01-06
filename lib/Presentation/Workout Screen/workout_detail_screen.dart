@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
+import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,10 +77,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
         if (state.isLoading) {
           return Scaffold(body: Center(child: CircularProgressIndicator()));
         }
-        if (state.workoutStartTime == null) {
+        if (state.totalWorkoutDuration == null) {
           elapsed = Duration.zero;
         } else {
-          elapsed = DateTime.now().difference(state.workoutStartTime!);
+          elapsed = DateTime.now().difference(state.totalWorkoutDuration!);
         }
         return Scaffold(
           appBar: AppBar(
@@ -92,12 +93,51 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: MaterialButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            SubmitWorkoutScreen(workoutDuration: elapsed),
-                      ),
-                    );
+                    context.read<WorkoutBloc>().add(CheckSetCompletion());
+                    if (state.workoutsList.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          showCloseIcon: true,
+                          closeIconColor: AppColors.accentGreen,
+                          content: Text(
+                            'Add atleast one Workout',
+                            style: TextStyle(color: AppColors.primaryText),
+                          ),
+                          backgroundColor: AppColors.cardBackground,
+                        ),
+                      );
+                    } else if (state.isAllSetCompleted == false) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          showCloseIcon: true,
+                          closeIconColor: AppColors.accentGreen,
+                          content: Text(
+                            'Complete your sets',
+                            style: TextStyle(color: AppColors.primaryText),
+                          ),
+                          backgroundColor: AppColors.cardBackground,
+                        ),
+                      );
+                    } else if (state.totalSet == 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          showCloseIcon: true,
+                          closeIconColor: AppColors.accentGreen,
+                          content: Text(
+                            'Add atleast one set',
+                            style: TextStyle(color: AppColors.primaryText),
+                          ),
+                          backgroundColor: AppColors.cardBackground,
+                        ),
+                      );
+                    } else {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              SubmitWorkoutScreen(workoutDuration: elapsed),
+                        ),
+                      );
+                    }
                   },
                   minWidth: 10,
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -272,31 +312,52 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                                       child: InkWell(
                                         child: ListTile(
                                           onTap: () {
+                                            if (repController.text.isEmpty ||
+                                                repController.text == '0') {
+                                              ScaffoldMessenger.of(
+                                                context,
+                                              ).showSnackBar(
+                                                SnackBar(
+                                                  showCloseIcon: true,
+                                                  closeIconColor:
+                                                      AppColors.accentGreen,
+                                                  content: Text(
+                                                    'Add atleast one Workout',
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.primaryText,
+                                                    ),
+                                                  ),
+                                                  backgroundColor:
+                                                      AppColors.cardBackground,
+                                                ),
+                                              );
+                                            } else {
+                                              context.read<WorkoutBloc>().add(
+                                                CompleteWorkoutSet(
+                                                  workoutIndex: workoutIndex,
+                                                  setIndex: setIndex,
+                                                  weight:
+                                                      kgController
+                                                          .text
+                                                          .isNotEmpty
+                                                      ? kgController.text
+                                                      : '0.0',
+                                                  time:
+                                                      timeController
+                                                          .text
+                                                          .isNotEmpty
+                                                      ? timeController.text
+                                                      : '0.0',
+                                                  reps: repController.text,
+                                                ),
+                                              );
+                                            }
+
                                             context.read<WorkoutBloc>().add(
-                                              CompleteWorkoutSet(
-                                                workoutIndex: workoutIndex,
-                                                setIndex: setIndex,
-                                                weight:
-                                                    kgController.text.isNotEmpty
-                                                    ? kgController.text
-                                                    : '0.0',
-                                                time:
-                                                    timeController
-                                                        .text
-                                                        .isNotEmpty
-                                                    ? timeController.text
-                                                    : '0.0',
-                                                reps:
-                                                    repController
-                                                        .text
-                                                        .isNotEmpty
-                                                    ? repController.text
-                                                    : '0',
-                                              ),
+                                              CheckSetCompletion(),
                                             );
                                             FocusScope.of(context).unfocus();
-                                            print('pressing');
-                                            print(kgController.text);
                                           },
                                           leading: Checkbox(
                                             value: state
@@ -419,33 +480,74 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                   ),
                 ),
                 SizedBox(height: 20.h),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MaterialButton(
-                    onPressed: () {},
-                    minWidth: double.infinity,
-                    padding: EdgeInsets.all(12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusGeometry.circular(10),
-                    ),
-                    color: AppColors.cardBackground,
-                    elevation: 0,
-                    child: Text(
-                      'Discard Workout',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
+                DiscardWorkoutButton(),
                 SizedBox(height: 10.h),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class DiscardWorkoutButton extends StatelessWidget {
+  const DiscardWorkoutButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MaterialButton(
+        onPressed: () {
+          showDialog<bool>(
+            context: context,
+            barrierDismissible: false, // user must choose
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Discard workout?'),
+                content: const Text(
+                  'Your current workout progress will be lost. Are you sure you want to discard it?',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, false); // Cancel
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      context.read<WorkoutBloc>().add(DiscardWorkout());
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => MainScreen()),
+                        (route) => false,
+                      );
+                    },
+                    style: TextButton.styleFrom(foregroundColor: Colors.red),
+                    child: const Text('Discard'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        minWidth: double.infinity,
+        padding: EdgeInsets.all(12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(10),
+        ),
+        color: AppColors.cardBackground,
+        elevation: 0,
+        child: Text(
+          'Discard Workout',
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
     );
   }
 }
