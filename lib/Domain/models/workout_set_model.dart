@@ -45,14 +45,14 @@ class WorkoutSet {
 
   factory WorkoutSet.fromMap(Map<String, dynamic> map) {
     return WorkoutSet(
-      isCompleted: map['isCompleted'] as bool,
+      isCompleted: map['isCompleted'] ?? false,
       set: map['set'] as int,
       reps: map['reps'] != null ? map['reps'] as int : null,
       timeInSeconds: map['timeInSeconds'] != null
-          ? map['timeInSeconds'] as double
+          ? (map['timeInSeconds'] as num).toDouble()
           : null,
       weightInKg: map['weightInKg'] != null
-          ? map['weightInKg'] as double
+          ? (map['weightInKg'] as num).toDouble()
           : null,
     );
   }

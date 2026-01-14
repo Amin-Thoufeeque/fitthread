@@ -14,9 +14,8 @@ class WorkoutEvent with _$WorkoutEvent {
       DeleteExercise;
   const factory WorkoutEvent.editExercise({required Exercise exercise}) =
       EditExercise;
-  const factory WorkoutEvent.getSelectedExercise({
-    required List<Exercise> selectedExercises,
-  }) = GetSelectedExercise;
+
+  const factory WorkoutEvent.searchExercise(String query) = SearchExercise;
   const factory WorkoutEvent.getWorkoutExercise({
     required List<Exercise> selectedExercises,
   }) = GetWorkoutExercise;
@@ -47,4 +46,10 @@ class WorkoutEvent with _$WorkoutEvent {
     required Duration workoutDuration,
     required String userId,
   }) = AddWorkout;
+  const factory WorkoutEvent.getWorkoutDates({required String userId}) =
+      GetWorkoutDates;
+  const factory WorkoutEvent.getWorkoutByDate({
+    required String userId,
+    required String dateTime,
+  }) = GetWorkoutByDate;
 }

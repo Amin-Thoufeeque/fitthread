@@ -54,3 +54,22 @@ export const editExercise = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error ' + e })
   }
 }
+
+export const searchExercise = async (req: Request, res: Response) => {
+  try {
+    const q = String(req.query.q || "");
+    
+    const exercises = await Exercise.find({
+      $or: [
+        { name: { $regex: q, $options: "i" } }
+        ,
+        { muscleGroup: { $regex: q, $options: "i" } }
+      ],
+    }).limit(20);
+
+    return res.json(({ status: true, exercises: exercises }))
+  } catch (e) {
+   
+    res.status(500).json({ error: 'Error ' + e })
+  }
+}

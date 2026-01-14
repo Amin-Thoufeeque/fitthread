@@ -2,6 +2,8 @@ import { Response, Request } from "express";
 import User from "../models/user";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
+import workouts from "../models/workouts";
+import mongoose from "mongoose";
 
 
 export const createUser = async (req: Request, res: Response) => {
@@ -61,3 +63,5 @@ export const isTokenValid = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Error: " + e })
     }
 }
+
+

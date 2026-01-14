@@ -322,7 +322,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                                                   closeIconColor:
                                                       AppColors.accentGreen,
                                                   content: Text(
-                                                    'Add atleast one Workout',
+                                                    'rep must not be empty!',
                                                     style: TextStyle(
                                                       color:
                                                           AppColors.primaryText,

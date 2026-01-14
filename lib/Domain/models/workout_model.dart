@@ -10,12 +10,18 @@ class Workout {
   final String userId;
   final String title;
   final DateTime startTime;
+  final double totalWeightLifted;
+  final int totalWorkoutSet;
+  final double duration;
   final List<WorkoutExersiseModel> exercises;
   Workout({
     required this.id,
     required this.userId,
     required this.title,
     required this.startTime,
+    required this.totalWeightLifted,
+    required this.totalWorkoutSet,
+    required this.duration,
     required this.exercises,
   });
 
@@ -24,6 +30,9 @@ class Workout {
     String? userId,
     String? title,
     DateTime? startTime,
+    double? totalWeightLifted,
+    int? totalWorkoutSet,
+    double? duration,
     List<WorkoutExersiseModel>? exercises,
   }) {
     return Workout(
@@ -31,6 +40,9 @@ class Workout {
       userId: userId ?? this.userId,
       title: title ?? this.title,
       startTime: startTime ?? this.startTime,
+      totalWeightLifted: totalWeightLifted ?? this.totalWeightLifted,
+      totalWorkoutSet: totalWorkoutSet ?? this.totalWorkoutSet,
+      duration: duration ?? this.duration,
       exercises: exercises ?? this.exercises,
     );
   }
@@ -41,6 +53,9 @@ class Workout {
       'userId': userId,
       'title': title,
       'startTime': startTime.millisecondsSinceEpoch,
+      'totalWeightLifted': totalWeightLifted,
+      'totalWorkoutSet': totalWorkoutSet,
+      'duration': duration,
       'exercises': exercises.map((x) => x.toMap()).toList(),
     };
   }
@@ -50,9 +65,12 @@ class Workout {
       id: map['_id'] as String,
       userId: map['userId'] as String,
       title: map['title'] as String,
-      startTime: DateTime.fromMillisecondsSinceEpoch(map['startTime'] as int),
+      startTime: DateTime.parse(map['startTime']),
+      totalWeightLifted: (map['totalWeightLifted'] as num).toDouble(),
+      totalWorkoutSet: (map['totalWorkoutSet'] as num).toInt(),
+      duration: (map['duration'] as num).toDouble(),
       exercises: List<WorkoutExersiseModel>.from(
-        (map['exercises'] as List<int>).map<WorkoutExersiseModel>(
+        (map['exercises'] as List).map<WorkoutExersiseModel>(
           (x) => WorkoutExersiseModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -66,7 +84,7 @@ class Workout {
 
   @override
   String toString() {
-    return 'Workout(id: $id, userId: $userId, title: $title, startTime: $startTime, exercises: $exercises)';
+    return 'Workout(id: $id, userId: $userId, title: $title, startTime: $startTime, totalWeightLifted: $totalWeightLifted, totalWorkoutSet: $totalWorkoutSet, duration: $duration, exercises: $exercises)';
   }
 
   @override
@@ -77,6 +95,9 @@ class Workout {
         other.userId == userId &&
         other.title == title &&
         other.startTime == startTime &&
+        other.totalWeightLifted == totalWeightLifted &&
+        other.totalWorkoutSet == totalWorkoutSet &&
+        other.duration == duration &&
         listEquals(other.exercises, exercises);
   }
 
@@ -86,6 +107,9 @@ class Workout {
         userId.hashCode ^
         title.hashCode ^
         startTime.hashCode ^
+        totalWeightLifted.hashCode ^
+        totalWorkoutSet.hashCode ^
+        duration.hashCode ^
         exercises.hashCode;
   }
 }

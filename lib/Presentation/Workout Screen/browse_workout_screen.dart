@@ -1,6 +1,7 @@
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/debouncer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,11 +15,19 @@ class BrowseWorkoutsScreen extends StatefulWidget {
 
 class _BrowseWorkoutsScreenState extends State<BrowseWorkoutsScreen> {
   List<Exercise> selectedExerciseList = [];
+  Debouncer debouncer = Debouncer(delay: Duration(milliseconds: 500));
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context.read<WorkoutBloc>().add(GetExercise());
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    debouncer.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,12 +57,33 @@ class _BrowseWorkoutsScreenState extends State<BrowseWorkoutsScreen> {
           return SingleChildScrollView(
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SearchBar(
+                    elevation: WidgetStateProperty.all(0),
+                    backgroundColor: WidgetStateProperty.all(
+                      AppColors.darkBorder,
+                    ),
+                    hintText: 'Search',
+                    trailing: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.search),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      debouncer.run(() {
+                        context.read<WorkoutBloc>().add(SearchExercise(value));
+                      });
+                    },
+                  ),
+                ),
                 ListView.builder(
-                  itemCount: state.exerciseList.length,
+                  itemCount: state.searchExerciseList.length,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    Exercise exercise = state.exerciseList[index];
+                    Exercise exercise = state.searchExerciseList[index];
                     return Padding(
                       padding: const EdgeInsets.all(12).w,
                       child: GestureDetector(

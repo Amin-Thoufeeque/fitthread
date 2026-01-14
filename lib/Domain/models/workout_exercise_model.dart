@@ -39,10 +39,12 @@ class WorkoutExersiseModel {
 
   factory WorkoutExersiseModel.fromMap(Map<String, dynamic> map) {
     return WorkoutExersiseModel(
-      exercise: Exercise.fromMap(map['exercise'] as Map<String, dynamic>),
+      exercise: Exercise.fromMap(
+        map['exerciseDefinitionId'] as Map<String, dynamic>,
+      ),
       quantifying: map['quantifying'] as String,
       sets: List<WorkoutSet>.from(
-        (map['sets'] as List<int>).map<WorkoutSet>(
+        (map['sets'] as List<dynamic>).map<WorkoutSet>(
           (x) => WorkoutSet.fromMap(x as Map<String, dynamic>),
         ),
       ),

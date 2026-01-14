@@ -6,6 +6,7 @@ import 'package:fitthread/Domain/Failure/failure.dart';
 import 'package:fitthread/Domain/Workout/workout_service.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
 import 'package:fitthread/Domain/models/workout_exercise_model.dart';
+import 'package:fitthread/Domain/models/workout_model.dart';
 import 'package:fitthread/Implementation/const.dart';
 // ignore: depend_on_referenced_packages
 import 'package:injectable/injectable.dart';
@@ -121,6 +122,36 @@ class WorkoutImplementation extends WorkoutService {
   }
 
   @override
+  Future<Either<Failure, List<Exercise>>> searchExercise({
+    required String query,
+  }) async {
+    try {
+      Response response = await dio.get(
+        '$api/admin/search-exercise',
+        queryParameters: {"q": query},
+      );
+      List<Exercise> exerciseList = [];
+      log(query);
+      if (response.statusCode == 400) {
+        log(response.data['msg']);
+        log('fetch failed');
+        return Left(Failure.general(response.data['msg']));
+      }
+      if (response.statusCode == 200) {
+        log('fetch success');
+        final List exerciseJson = response.data['exercises'];
+        exerciseList = exerciseJson.map((e) => Exercise.fromMap(e)).toList();
+
+        return Right(exerciseList);
+      }
+      return Left(Failure.general(response.data['msg']));
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure.general('Something went wrong'));
+    }
+  }
+
+  @override
   Future<Either<Failure, Unit>> addWorkout({
     required List<WorkoutExersiseModel> workoutExerciseList,
     required String title,
@@ -155,6 +186,64 @@ class WorkoutImplementation extends WorkoutService {
     } catch (e) {
       log(e.toString());
       return Left(Failure.network('Something went wrong'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<DateTime>>> getWorkoutDates({
+    required String userId,
+  }) async {
+    try {
+      Response response = await dio.get('$api/workout/dates/$userId');
+      List<DateTime> datesList = [];
+
+      if (response.statusCode == 400) {
+        log(response.data['msg']);
+        log('fetch failed');
+        return Left(Failure.general(response.data['msg']));
+      }
+      if (response.statusCode == 200) {
+        log('fetch success');
+        final List datesJson = response.data['dates'];
+        datesList = datesJson.map((e) => DateTime.parse(e)).toList();
+        log(datesList.toString());
+        return Right(datesList);
+      }
+      return Left(Failure.general(response.data['msg']));
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure.general('Something went wrong'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Workout>>> getWorkoutByDate({
+    required String userId,
+    required String dateTime,
+  }) async {
+    try {
+      Response response = await dio.post(
+        '$api/workout/get-workout-byDate',
+        data: {'userId': userId, "date": dateTime},
+      );
+      List<Workout> workoutList = [];
+
+      if (response.statusCode == 400) {
+        log(response.data['msg']);
+        log('fetch failed');
+        return Left(Failure.general(response.data['msg']));
+      }
+      if (response.statusCode == 200) {
+        log('fetch success');
+        final List workoutsJson = response.data['workouts'];
+        workoutList = workoutsJson.map((e) => Workout.fromMap(e)).toList();
+
+        return Right(workoutList);
+      }
+      return Left(Failure.general(response.data['msg']));
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure.general('Something went wrong'));
     }
   }
 }

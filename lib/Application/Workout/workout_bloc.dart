@@ -1,6 +1,7 @@
 import 'package:fitthread/Domain/Workout/workout_service.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
 import 'package:fitthread/Domain/models/workout_exercise_model.dart';
+import 'package:fitthread/Domain/models/workout_model.dart';
 import 'package:fitthread/Domain/models/workout_set_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -49,6 +50,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
           state.copyWith(
             isLoading: false,
             exerciseList: exerciseList,
+            searchExerciseList: exerciseList,
             isSuccess: true,
           ),
         ),
@@ -90,16 +92,32 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
         ),
       );
     });
-    on<GetSelectedExercise>((event, emit) async {
-      final exerciseList = List<Exercise>.from(state.selectedExerciseList);
-      exerciseList.addAll(event.selectedExercises);
-      // print(exerciseList);
-      emit(state.copyWith(selectedExerciseList: exerciseList));
+    on<SearchExercise>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+      final addWorkoutFunc = await workoutService.searchExercise(
+        query: event.query,
+      );
+      addWorkoutFunc.fold(
+        (failure) => emit(
+          state.copyWith(
+            errorMessage: failure.errorMessage,
+            isLoading: false,
+            isError: true,
+          ),
+        ),
+        (exerciseList) => emit(
+          state.copyWith(
+            isLoading: false,
+            isError: false,
+            isSuccess: true,
+            searchExerciseList: exerciseList,
+          ),
+        ),
+      );
     });
+
     on<GetWorkoutExercise>((event, emit) async {
       emit(state.copyWith(isLoading: true));
-      final exerciseList = List<Exercise>.from(state.selectedExerciseList);
-      exerciseList.addAll(event.selectedExercises);
       final workoutList = List<WorkoutExersiseModel>.from(state.workoutsList);
       final newWorkouts = event.selectedExercises.asMap().entries.map((entry) {
         return WorkoutExersiseModel(
@@ -110,13 +128,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
         );
       }).toList();
       workoutList.addAll(newWorkouts);
-      emit(
-        state.copyWith(
-          workoutsList: workoutList,
-          isLoading: false,
-          selectedExerciseList: exerciseList,
-        ),
-      );
+      emit(state.copyWith(workoutsList: workoutList, isLoading: false));
     });
     on<AddWorkoutSet>((event, emit) async {
       emit(state.copyWith(isLoading: true));
@@ -154,10 +166,10 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       final rep = double.tryParse(set[event.setIndex].reps.toString());
       final weight = set[event.setIndex].weightInKg;
 
-      if (rep == null && weight == null) {
+      if (rep == null || weight == null) {
         emit(state.copyWith(totalVolume: 0));
       } else {
-        totalVolume = totalVolume - rep! * weight!;
+        totalVolume = totalVolume - rep * weight;
         totalSets = totalSets - 1;
       }
 
@@ -223,7 +235,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     });
     on<RemoveSelectedExercise>((event, emit) async {
       emit(state.copyWith(isLoading: true));
-      final exercises = List<Exercise>.from(state.selectedExerciseList);
+
       final workouts = List<WorkoutExersiseModel>.from(state.workoutsList);
       double totalVolume = state.totalVolume;
       int totalSets = state.totalSet;
@@ -239,13 +251,12 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       }
 
       workouts.removeAt(event.selectedWorkoutIndex);
-      exercises.removeAt(event.selectedWorkoutIndex);
 
       emit(
         state.copyWith(
           isLoading: false,
           workoutsList: workouts,
-          selectedExerciseList: exercises,
+
           totalSet: totalSets,
           totalVolume: totalVolume,
         ),
@@ -255,8 +266,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       emit(state.copyWith(isLoading: true));
 
       final workouts = List<WorkoutExersiseModel>.from(state.workoutsList);
-      final exercises = List<Exercise>.from(state.selectedExerciseList);
-      exercises.addAll(event.newExerciseList);
+
       final newWorkoutList = event.newExerciseList.asMap().entries.map((entry) {
         return WorkoutExersiseModel(
           exercise: entry.value,
@@ -266,13 +276,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       }).toList();
       workouts.addAll(newWorkoutList);
 
-      emit(
-        state.copyWith(
-          isLoading: false,
-          workoutsList: newWorkoutList,
-          selectedExerciseList: exercises,
-        ),
-      );
+      emit(state.copyWith(isLoading: false, workoutsList: newWorkoutList));
     });
     on<StartWorkoutTimer>((event, emit) {
       emit(
@@ -317,6 +321,51 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
           ),
         ),
         (r) => emit(state.copyWith(isLoading: false)),
+      );
+    });
+    on<GetWorkoutDates>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+      final addWorkoutFunc = await workoutService.getWorkoutDates(
+        userId: event.userId,
+      );
+      addWorkoutFunc.fold(
+        (failure) => emit(
+          state.copyWith(
+            errorMessage: failure.errorMessage,
+            isLoading: false,
+            isError: true,
+          ),
+        ),
+        (datesList) => emit(
+          state.copyWith(
+            isLoading: false,
+            isSuccess: true,
+            dateList: datesList,
+          ),
+        ),
+      );
+    });
+    on<GetWorkoutByDate>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+      final addWorkoutFunc = await workoutService.getWorkoutByDate(
+        userId: event.userId,
+        dateTime: event.dateTime,
+      );
+      addWorkoutFunc.fold(
+        (failure) => emit(
+          state.copyWith(
+            errorMessage: failure.errorMessage,
+            isLoading: false,
+            isError: true,
+          ),
+        ),
+        (workoutList) => emit(
+          state.copyWith(
+            isLoading: false,
+            isSuccess: true,
+            getWorkoutByDateList: workoutList,
+          ),
+        ),
       );
     });
   }

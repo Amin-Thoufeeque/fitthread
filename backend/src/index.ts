@@ -12,14 +12,19 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
-app.use(express.json())
+app.use(express.json(
+    {
+        strict: true,
+        type: ['application/json']
+    }
+))
 app.use(cors())
 
 connnectDb();
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
-app.use('/workout',workoutRouter);
+app.use('/workout', workoutRouter);
 
 app.get('/', (req, res) => {
     res.json('backend is ready!!')
