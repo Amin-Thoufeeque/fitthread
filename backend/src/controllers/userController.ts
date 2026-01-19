@@ -63,5 +63,78 @@ export const isTokenValid = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Error: " + e })
     }
 }
+export const calculateBMI = (weightKg: number, heightCm: number): number => {
+    const heightM = heightCm / 100;
+    return Number((weightKg / (heightM * heightM)).toFixed(1));
+};
+export const updateUserWeight = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const { weightKg } = req.body;
+        const user = await User.findById(userId);
 
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+
+        const bmi = calculateBMI(weightKg, user.heightCm);
+
+        // 3️⃣ Single update
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {
+                weightKg,
+                bmi,
+            },
+            { new: true, runValidators: true }
+        );
+
+        return res.status(200).json({
+            message: "Weight updated successfully",
+            user: updatedUser,
+        });
+
+    } catch (e) {
+        res.status(500).json({
+            message: "Failed to update weight",
+            e,
+        });
+    }
+}
+
+export const updateUserHeight = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const { heightCm } = req.body;
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+
+        const bmi = calculateBMI(user.weightKg, heightCm);
+
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {
+                heightCm,
+                bmi,
+            },
+            { new: true, runValidators: true }
+        );
+
+        return res.status(200).json({
+            message: "Height updated successfully",
+            user: updatedUser,
+        });
+    } catch (e) {
+        res.status(500).json({
+            message: "Failed to update weight",
+            e,
+        });
+    }
+}
 

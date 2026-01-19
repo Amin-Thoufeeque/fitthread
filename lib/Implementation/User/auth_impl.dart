@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fitthread/Domain/Auth/auth_service.dart';
+import 'package:fitthread/Domain/User/auth_service.dart';
 import 'package:fitthread/Domain/Failure/failure.dart';
 import 'package:fitthread/Domain/models/user_model.dart';
 import 'package:fitthread/Implementation/const.dart';
@@ -116,5 +116,69 @@ class AuthImplementation extends AuthService {
       log(e.toString());
       return null;
     }
+  }
+
+  @override
+  Future<Either<Failure, User>> updateUserHeight({
+    required String userId,
+    required int userHeight,
+  }) async {
+    try {
+      Response response = await dio.patch(
+        '$api/user/update/$userId/height',
+        data: {"heightCm": userHeight},
+      );
+
+      if (response.statusCode == 400) {
+        log(response.data['msg']);
+        log('fetch failed');
+        return Left(Failure.general(response.data['msg']));
+      }
+      if (response.statusCode == 200) {
+        log('fetch success');
+        final user = User.fromMap(response.data['user']);
+        log(user.toString());
+        return Right(user);
+      }
+      return Left(Failure.general(response.data['msg']));
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure.general('Something went wrong'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> updateUserWeight({
+    required String userId,
+    required int userWeight,
+  }) async {
+    try {
+      Response response = await dio.patch(
+        '$api/user/update/$userId/weight',
+        data: {"weightKg": userWeight},
+      );
+
+      if (response.statusCode == 400) {
+        log(response.data['msg']);
+        log('fetch failed');
+        return Left(Failure.general(response.data['msg']));
+      }
+      if (response.statusCode == 200) {
+        log('fetch success');
+        final user = User.fromMap(response.data['user']);
+        log(user.toString());
+        return Right(user);
+      }
+      return Left(Failure.general(response.data['msg']));
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure.general('Something went wrong'));
+    }
+  }
+
+  @override
+  Future<void> logOut() async {
+    SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+    sharedPrefs.clear();
   }
 }

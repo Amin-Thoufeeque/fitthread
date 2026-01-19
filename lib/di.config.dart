@@ -14,9 +14,9 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import 'Application/User/user_bloc.dart' as _i89;
 import 'Application/Workout/workout_bloc.dart' as _i1051;
-import 'Domain/Auth/auth_service.dart' as _i142;
+import 'Domain/User/auth_service.dart' as _i878;
 import 'Domain/Workout/workout_service.dart' as _i998;
-import 'Implementation/Auth/auth_impl.dart' as _i461;
+import 'Implementation/User/auth_impl.dart' as _i425;
 import 'Implementation/Workout/workout_impl.dart' as _i896;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -26,12 +26,12 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.lazySingleton<_i142.AuthService>(() => _i461.AuthImplementation());
+    gh.lazySingleton<_i878.AuthService>(() => _i425.AuthImplementation());
     gh.lazySingleton<_i998.WorkoutService>(() => _i896.WorkoutImplementation());
     gh.factory<_i1051.WorkoutBloc>(
       () => _i1051.WorkoutBloc(gh<_i998.WorkoutService>()),
     );
-    gh.factory<_i89.UserBloc>(() => _i89.UserBloc(gh<_i142.AuthService>()));
+    gh.factory<_i89.UserBloc>(() => _i89.UserBloc(gh<_i878.AuthService>()));
     return this;
   }
 }

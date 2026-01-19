@@ -9,8 +9,9 @@ class User {
   final int totalWorkouts;
   final int totalWorkoutDuration;
   final double fatPercentage;
-  final double weightKg;
-  final double heightCm;
+  final int weightKg;
+  final int heightCm;
+  final int bmi;
 
   User({
     required this.id,
@@ -22,6 +23,7 @@ class User {
     required this.fatPercentage,
     required this.weightKg,
     required this.heightCm,
+    required this.bmi,
   });
 
   User copyWith({
@@ -32,8 +34,9 @@ class User {
     int? totalWorkouts,
     int? totalWorkoutDuration,
     double? fatPercentage,
-    double? weightKg,
-    double? heightCm,
+    int? weightKg,
+    int? heightCm,
+    int? bmi,
   }) {
     return User(
       id: id ?? this.id,
@@ -45,6 +48,7 @@ class User {
       fatPercentage: fatPercentage ?? this.fatPercentage,
       weightKg: weightKg ?? this.weightKg,
       heightCm: heightCm ?? this.heightCm,
+      bmi: bmi ?? this.bmi,
     );
   }
 
@@ -71,8 +75,9 @@ class User {
       totalWorkouts: map['totalWorkouts'] as int,
       totalWorkoutDuration: map['totalWorkoutDuration'] as int,
       fatPercentage: (map['fatPercentage'] as num).toDouble(),
-      weightKg: (map['weightKg'] as num).toDouble(),
-      heightCm: (map['heightCm'] as num).toDouble(),
+      weightKg: (map['weightKg'] as num).toInt(),
+      heightCm: (map['heightCm'] as num).toInt(),
+      bmi: (map['bmi'] as num).toInt(),
     );
   }
 
@@ -83,7 +88,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, email: $email, role: $role, totalWorkouts: $totalWorkouts, totalWorkoutDuration: $totalWorkoutDuration, fatPercentage: $fatPercentage, weightKg: $weightKg, heightCm: $heightCm)';
+    return 'User(id: $id, username: $username, email: $email, role: $role, totalWorkouts: $totalWorkouts, totalWorkoutDuration: $totalWorkoutDuration, fatPercentage: $fatPercentage, weightKg: $weightKg, heightCm: $heightCm,bmi:$bmi)';
   }
 
   @override

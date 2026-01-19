@@ -7,16 +7,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DisplayWorkoutDetailScreen extends StatelessWidget {
   final Workout workout;
+
   const DisplayWorkoutDetailScreen({super.key, required this.workout});
 
   @override
   Widget build(BuildContext context) {
-    final double d = 5.00;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.darkBorder,
-        automaticallyImplyLeading: false,
-        title: Text('Workout'),
+        automaticallyImplyLeading: true,
+        title: Text(workout.title),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -24,7 +24,7 @@ class DisplayWorkoutDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: WorkoutInfo(
-                duration: Duration(minutes: (d * 60).round()).toString(),
+                duration: '${workout.duration}min',
                 volume: workout.totalWeightLifted.toString(),
                 set: workout.totalWorkoutSet.toString(),
               ),
@@ -34,7 +34,7 @@ class DisplayWorkoutDetailScreen extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: 1,
+              itemCount: workout.exercises.length,
               itemBuilder: (context, workoutIndex) {
                 List<WorkoutExersiseModel> workoutsList = workout.exercises;
                 final workoutSet = workoutsList[workoutIndex];

@@ -12,4 +12,7 @@ abstract class UserEvent with _$UserEvent {
     required String password,
   }) = SignUp;
   const factory UserEvent.validateUser() = ValidateUser;
+  const factory UserEvent.updateHeight({required int height}) = UpdateHeight;
+  const factory UserEvent.updateWeight({required int weight}) = UpdateWeight;
+  const factory UserEvent.logOut() = LogOut;
 }

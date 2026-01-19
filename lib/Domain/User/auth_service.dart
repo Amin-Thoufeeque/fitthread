@@ -13,4 +13,13 @@ abstract class AuthService {
     required String email,
   });
   Future<User?> validateToken();
+  Future<Either<Failure, User>> updateUserWeight({
+    required String userId,
+    required int userWeight,
+  });
+  Future<Either<Failure, User>> updateUserHeight({
+    required String userId,
+    required int userHeight,
+  });
+  Future<void> logOut();
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
+import 'package:fitthread/Presentation/other_screens/exercise_detail_screen.dart';
 import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -210,28 +211,41 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                             child: Column(
                               crossAxisAlignment: .start,
                               children: [
-                                Row(
-                                  mainAxisAlignment: .spaceBetween,
-                                  children: [
-                                    Text(
-                                      workoutSet.exercise.name,
-                                      style: TextStyle(
-                                        color: AppColors.primaryText,
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w600,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ExerciseDetailScreen(
+                                              exercise: workoutSet.exercise,
+                                            ),
                                       ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        context.read<WorkoutBloc>().add(
-                                          RemoveSelectedExercise(
-                                            selectedWorkoutIndex: workoutIndex,
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(Icons.close),
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: .spaceBetween,
+                                    children: [
+                                      Text(
+                                        workoutSet.exercise.name,
+                                        style: TextStyle(
+                                          color: AppColors.primaryText,
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          context.read<WorkoutBloc>().add(
+                                            RemoveSelectedExercise(
+                                              selectedWorkoutIndex:
+                                                  workoutIndex,
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(Icons.close),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Visibility(
                                   visible: workoutSet.sets.isEmpty

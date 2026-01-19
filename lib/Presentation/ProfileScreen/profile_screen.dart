@@ -1,5 +1,10 @@
+import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/other_screens/submit_height_screen.dart';
+import 'package:fitthread/Presentation/other_screens/submit_weight_screen.dart';
+import 'package:fitthread/Presentation/splashscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -8,162 +13,114 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+        centerTitle: true,
+        backgroundColor: AppColors.cardBackground,
+      ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: .start,
-          children: [
-            SizedBox(height: 50.h),
-            Container(
-              height: 200.h,
-              width: double.infinity,
+        child: Center(
+          child: Column(
+            crossAxisAlignment: .center,
 
-              margin: EdgeInsets.all(18.w),
-              decoration: BoxDecoration(
-                color: AppColors.accentGreen,
-                borderRadius: BorderRadius.circular(20.w),
+            children: [
+              SizedBox(height: 50.h),
+              Text(
+                context.read<UserBloc>().state.user.username,
+                style: TextStyle(fontSize: 25.sp),
               ),
-              child: Column(
-                mainAxisAlignment: .center,
-
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: .start,
-                      children: [
-                        CircleAvatar(
-                          radius: 50.w,
-                          backgroundImage: NetworkImage(
-                            'https://intowellness.in/wp-content/uploads/2024/05/product-detail-banner.webp',
-                          ),
+              SizedBox(height: 20.h),
+              Chip(
+                label: Text('In good shape', style: TextStyle(fontSize: 15.sp)),
+              ),
+              SizedBox(height: 20.h),
+              Align(
+                alignment: AlignmentGeometry.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Health Matrics',
+                    style: TextStyle(fontSize: 17.sp),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(10),
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  tileColor: AppColors.cardBackground,
+                  leading: Icon(Icons.monitor_weight, size: 40),
+                  title: Text('Current Weight'),
+                  subtitle: Text('188kg'),
+                  trailing: MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              SubmitWeightScreen(isUpdating: true),
                         ),
-                        SizedBox(width: 20.w),
-                        Column(
-                          crossAxisAlignment: .start,
-                          children: [
-                            Text(
-                              'Amin Thoufeeque',
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              'Status: healthy',
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                      );
+                    },
+                    color: AppColors.accentGreen,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(10),
                     ),
+                    child: Text('Update'),
                   ),
-                ],
+                ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                'Perfomance',
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(10),
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  tileColor: AppColors.cardBackground,
+                  leading: Icon(Icons.height, size: 40),
+                  title: Text('Current Height'),
+                  subtitle: Text('188cm'),
+                  trailing: MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              SubmitHeightScreen(isUpdating: true),
+                        ),
+                      );
+                    },
+                    color: AppColors.accentGreen,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(10),
+                    ),
+                    child: Text('Update'),
+                  ),
+                ),
               ),
-            ),
-
-            Row(
-              mainAxisAlignment: .spaceEvenly,
-              children: [
-                Container(
-                  height: 130.h,
-                  width: 110.w,
-
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackground,
-                    borderRadius: BorderRadius.circular(12.w),
+              SizedBox(height: 60.h),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  onTap: () {
+                    context.read<UserBloc>().add(LogOut());
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => Splashscreen()),
+                    );
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(10),
                   ),
-                  child: Column(
-                    mainAxisAlignment: .center,
-                    crossAxisAlignment: .center,
-                    children: [
-                      Icon(
-                        Icons.fitness_center,
-                        size: 40.w,
-                        color: AppColors.accentGreen,
-                      ),
-                      SizedBox(height: 15.h),
-                      Text(
-                        'Monthly report',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  tileColor: AppColors.inputBackground,
+                  leading: Icon(Icons.exit_to_app, size: 35),
+                  title: Text('Log out'),
                 ),
-                Container(
-                  height: 130.h,
-
-                  width: 110.w,
-
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackground,
-                    borderRadius: BorderRadius.circular(12.w),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: .center,
-                    crossAxisAlignment: .center,
-                    children: [
-                      Icon(
-                        Icons.calendar_month,
-                        size: 45.w,
-                        color: AppColors.accentGreen,
-                      ),
-                      SizedBox(height: 15.h),
-                      Text(
-                        'Calender',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 130.h,
-                  width: 110.w,
-
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackground,
-                    borderRadius: BorderRadius.circular(12.w),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: .center,
-                    crossAxisAlignment: .center,
-                    children: [
-                      Icon(
-                        Icons.handyman,
-                        size: 40.w,
-                        color: AppColors.accentGreen,
-                      ),
-                      SizedBox(height: 15.h),
-                      Text(
-                        'Muscle Distribution',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

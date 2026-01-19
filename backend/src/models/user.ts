@@ -64,6 +64,11 @@ const userSchema = new Schema({
         trim: true,
         default: 0
     },
+    bmi: {
+        type: Number,
+        trim: true,
+        default: 0
+    },
 });
 
 export type UserType = InferSchemaType<typeof userSchema>;

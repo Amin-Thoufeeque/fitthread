@@ -28,6 +28,7 @@ abstract class UserState with _$UserState {
       fatPercentage: 0,
       weightKg: 0,
       heightCm: 0,
+      bmi: 0,
     ),
   );
 }

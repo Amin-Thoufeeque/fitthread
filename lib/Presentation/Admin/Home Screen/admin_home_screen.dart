@@ -2,46 +2,81 @@ import 'package:fitthread/Application/Workout/workout_bloc.dart';
 // import 'package:fitthread/Domain/models/dummy_data.dart';
 import 'package:fitthread/Presentation/Admin/Home%20Screen/add_exercise_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/debouncer.dart';
+import 'package:fitthread/Presentation/other_screens/exercise_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class AdminHomeScreen extends StatelessWidget {
+class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
 
+  @override
+  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
+}
+
+class _AdminHomeScreenState extends State<AdminHomeScreen> {
+  Debouncer debouncer = Debouncer(delay: Duration(milliseconds: 500));
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<WorkoutBloc>(context).add(GetExercise());
     });
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.mainBackground,
+        title: Text('Admin Panel'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: BlocBuilder<WorkoutBloc, WorkoutState>(
             builder: (context, state) {
-              if (state.isLoading) {
-                return Center(child: CircularProgressIndicator());
-              }
               return Column(
+                crossAxisAlignment: .start,
                 mainAxisSize: .min,
                 children: [
-                  Text(
-                    'Exercises',
-                    style: TextStyle(
-                      fontSize: 25.sp,
-                      fontWeight: FontWeight.w700,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Exercises',
+                      style: TextStyle(
+                        fontSize: 25.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 35.h),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SearchBar(
+                      elevation: WidgetStateProperty.all(0),
+                      backgroundColor: WidgetStateProperty.all(
+                        AppColors.darkBorder,
+                      ),
+                      hintText: 'Search',
+                      trailing: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.search),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        debouncer.run(() {
+                          context.read<WorkoutBloc>().add(
+                            SearchExercise(value),
+                          );
+                        });
+                      },
+                    ),
+                  ),
                   Flexible(
                     fit: FlexFit.loose,
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: state.exerciseList.length,
+                      itemCount: state.searchExerciseList.length,
                       itemBuilder: (context, index) {
-                        final exercise = state.exerciseList[index];
+                        final exercise = state.searchExerciseList[index];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Slidable(
@@ -111,7 +146,15 @@ class AdminHomeScreen extends StatelessWidget {
                             ),
                             child: ListTile(
                               contentPadding: EdgeInsets.all(12).w,
-
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ExerciseDetailScreen(
+                                      exercise: exercise,
+                                    ),
+                                  ),
+                                );
+                              },
                               tileColor: AppColors.darkBorder,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadiusGeometry.circular(15),

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:fitthread/Domain/Auth/auth_service.dart';
+import 'package:fitthread/Domain/User/auth_service.dart';
 import 'package:fitthread/Domain/Failure/failure.dart';
 import 'package:fitthread/Domain/models/user_model.dart';
 
@@ -70,6 +70,53 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       } else {
         emit(state.copyWith(isTokenValid: true, user: validateUser));
       }
+    });
+    on<UpdateWeight>((event, emit) async {
+      final updateHeightFunc = await authService.updateUserWeight(
+        userId: state.user.id,
+        userWeight: event.weight,
+      );
+      updateHeightFunc.fold(
+        (failure) {
+          return emit(
+            state.copyWith(
+              isError: true,
+              isLoading: false,
+              errorMessage: failure.errorMessage,
+            ),
+          );
+        },
+        (user) {
+          return emit(
+            state.copyWith(isLoading: false, isError: false, user: user),
+          );
+        },
+      );
+    });
+    on<UpdateHeight>((event, emit) async {
+      final updateHeightFunc = await authService.updateUserHeight(
+        userId: state.user.id,
+        userHeight: event.height,
+      );
+      updateHeightFunc.fold(
+        (failure) {
+          return emit(
+            state.copyWith(
+              isError: true,
+              isLoading: false,
+              errorMessage: failure.errorMessage,
+            ),
+          );
+        },
+        (user) {
+          return emit(
+            state.copyWith(isLoading: false, isError: false, user: user),
+          );
+        },
+      );
+    });
+    on<LogOut>((event, emit) async {
+      await authService.logOut();
     });
   }
 }

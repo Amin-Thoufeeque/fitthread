@@ -3,6 +3,7 @@ import Exercise from "../models/exercise_definition";
 import Workout from "../models/workouts";
 import workouts from "../models/workouts";
 import mongoose from "mongoose";
+import User from "../models/user";
 export const getExercises = async (req: Request, res: Response) => {
 
   const exercises = await Exercise.find()
@@ -30,7 +31,15 @@ export const createWorkout = async (req: Request, res: Response) => {
       totalWorkoutSet,
       duration
     });
-
+    await User.findByIdAndUpdate(
+      userId,
+      {
+        $inc: {
+          totalWorkouts: 1,
+        },
+      },
+      { runValidators: true }
+    );
     return res.status(201).json({
       success: true,
       workout,
@@ -73,9 +82,9 @@ export const getUserWorkoutByDate = async (req: Request, res: Response) => {
         $lte: endOfDay,
       },
     }).populate({
-    path: 'exercises.exerciseDefinitionId',
-    model: 'Exercises',
-  });;
+      path: 'exercises.exerciseDefinitionId',
+      model: 'Exercises',
+    });;
 
     res.status(200).json({
       workouts: userWorkouts,

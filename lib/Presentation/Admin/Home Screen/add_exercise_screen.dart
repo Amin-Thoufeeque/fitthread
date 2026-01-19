@@ -121,7 +121,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   },
                   hintText: 'Enter exercise description',
                   isPassword: false,
-                  maxLength: 200,
+
                   maxLines: 6,
                 ),
                 SizedBox(height: 10.h),
@@ -223,7 +223,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 SizedBox(height: 30.h),
                 BlocListener<WorkoutBloc, WorkoutState>(
                   listener: (context, state) {
-                    if (state.isSuccess && mounted) {
+                    if (state.isSuccess &&
+                        mounted &&
+                        Navigator.canPop(context)) {
                       Navigator.of(context).pop();
                     }
                     if (state.isError) {

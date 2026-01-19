@@ -1,8 +1,8 @@
 import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Presentation/Authentication/signup_screen.dart';
 
-import 'package:fitthread/Presentation/Home%20Screen/home_screen.dart';
 import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:fitthread/Presentation/widgets/custom_input_field.dart';
 import 'package:fitthread/Presentation/widgets/custom_submit_button.dart';
 import 'package:flutter/gestures.dart';
@@ -131,7 +131,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       return CustomSubmitButton(
                         label: "Login",
                         onPressed: () {
-                          globalKey.currentState!.validate();
                           if (globalKey.currentState!.validate()) {
                             BlocProvider.of<UserBloc>(context).add(
                               LogIn(
@@ -142,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (!state.isError && !state.isLoading) {
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
+                                  builder: (context) => MainScreen(),
                                 ),
                               );
                             }

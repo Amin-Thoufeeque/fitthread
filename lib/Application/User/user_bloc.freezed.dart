@@ -61,13 +61,16 @@ extension UserEventPatterns on UserEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LogIn value)?  login,TResult Function( SignUp value)?  signUp,TResult Function( ValidateUser value)?  validateUser,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LogIn value)?  login,TResult Function( SignUp value)?  signUp,TResult Function( ValidateUser value)?  validateUser,TResult Function( UpdateHeight value)?  updateHeight,TResult Function( UpdateWeight value)?  updateWeight,TResult Function( LogOut value)?  logOut,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LogIn() when login != null:
 return login(_that);case SignUp() when signUp != null:
 return signUp(_that);case ValidateUser() when validateUser != null:
-return validateUser(_that);case _:
+return validateUser(_that);case UpdateHeight() when updateHeight != null:
+return updateHeight(_that);case UpdateWeight() when updateWeight != null:
+return updateWeight(_that);case LogOut() when logOut != null:
+return logOut(_that);case _:
   return orElse();
 
 }
@@ -85,13 +88,16 @@ return validateUser(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LogIn value)  login,required TResult Function( SignUp value)  signUp,required TResult Function( ValidateUser value)  validateUser,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LogIn value)  login,required TResult Function( SignUp value)  signUp,required TResult Function( ValidateUser value)  validateUser,required TResult Function( UpdateHeight value)  updateHeight,required TResult Function( UpdateWeight value)  updateWeight,required TResult Function( LogOut value)  logOut,}){
 final _that = this;
 switch (_that) {
 case LogIn():
 return login(_that);case SignUp():
 return signUp(_that);case ValidateUser():
-return validateUser(_that);case _:
+return validateUser(_that);case UpdateHeight():
+return updateHeight(_that);case UpdateWeight():
+return updateWeight(_that);case LogOut():
+return logOut(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -108,13 +114,16 @@ return validateUser(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LogIn value)?  login,TResult? Function( SignUp value)?  signUp,TResult? Function( ValidateUser value)?  validateUser,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LogIn value)?  login,TResult? Function( SignUp value)?  signUp,TResult? Function( ValidateUser value)?  validateUser,TResult? Function( UpdateHeight value)?  updateHeight,TResult? Function( UpdateWeight value)?  updateWeight,TResult? Function( LogOut value)?  logOut,}){
 final _that = this;
 switch (_that) {
 case LogIn() when login != null:
 return login(_that);case SignUp() when signUp != null:
 return signUp(_that);case ValidateUser() when validateUser != null:
-return validateUser(_that);case _:
+return validateUser(_that);case UpdateHeight() when updateHeight != null:
+return updateHeight(_that);case UpdateWeight() when updateWeight != null:
+return updateWeight(_that);case LogOut() when logOut != null:
+return logOut(_that);case _:
   return null;
 
 }
@@ -131,12 +140,15 @@ return validateUser(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  login,TResult Function( String username,  String email,  String password)?  signUp,TResult Function()?  validateUser,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  login,TResult Function( String username,  String email,  String password)?  signUp,TResult Function()?  validateUser,TResult Function( int height)?  updateHeight,TResult Function( int weight)?  updateWeight,TResult Function()?  logOut,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LogIn() when login != null:
 return login(_that.email,_that.password);case SignUp() when signUp != null:
 return signUp(_that.username,_that.email,_that.password);case ValidateUser() when validateUser != null:
-return validateUser();case _:
+return validateUser();case UpdateHeight() when updateHeight != null:
+return updateHeight(_that.height);case UpdateWeight() when updateWeight != null:
+return updateWeight(_that.weight);case LogOut() when logOut != null:
+return logOut();case _:
   return orElse();
 
 }
@@ -154,12 +166,15 @@ return validateUser();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  login,required TResult Function( String username,  String email,  String password)  signUp,required TResult Function()  validateUser,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  login,required TResult Function( String username,  String email,  String password)  signUp,required TResult Function()  validateUser,required TResult Function( int height)  updateHeight,required TResult Function( int weight)  updateWeight,required TResult Function()  logOut,}) {final _that = this;
 switch (_that) {
 case LogIn():
 return login(_that.email,_that.password);case SignUp():
 return signUp(_that.username,_that.email,_that.password);case ValidateUser():
-return validateUser();case _:
+return validateUser();case UpdateHeight():
+return updateHeight(_that.height);case UpdateWeight():
+return updateWeight(_that.weight);case LogOut():
+return logOut();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -176,12 +191,15 @@ return validateUser();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  login,TResult? Function( String username,  String email,  String password)?  signUp,TResult? Function()?  validateUser,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  login,TResult? Function( String username,  String email,  String password)?  signUp,TResult? Function()?  validateUser,TResult? Function( int height)?  updateHeight,TResult? Function( int weight)?  updateWeight,TResult? Function()?  logOut,}) {final _that = this;
 switch (_that) {
 case LogIn() when login != null:
 return login(_that.email,_that.password);case SignUp() when signUp != null:
 return signUp(_that.username,_that.email,_that.password);case ValidateUser() when validateUser != null:
-return validateUser();case _:
+return validateUser();case UpdateHeight() when updateHeight != null:
+return updateHeight(_that.height);case UpdateWeight() when updateWeight != null:
+return updateWeight(_that.weight);case LogOut() when logOut != null:
+return logOut();case _:
   return null;
 
 }
@@ -369,6 +387,188 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserEvent.validateUser()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class UpdateHeight with DiagnosticableTreeMixin implements UserEvent {
+  const UpdateHeight({required this.height});
+  
+
+ final  int height;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateHeightCopyWith<UpdateHeight> get copyWith => _$UpdateHeightCopyWithImpl<UpdateHeight>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.updateHeight'))
+    ..add(DiagnosticsProperty('height', height));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateHeight&&(identical(other.height, height) || other.height == height));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,height);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.updateHeight(height: $height)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UpdateHeightCopyWith<$Res> implements $UserEventCopyWith<$Res> {
+  factory $UpdateHeightCopyWith(UpdateHeight value, $Res Function(UpdateHeight) _then) = _$UpdateHeightCopyWithImpl;
+@useResult
+$Res call({
+ int height
+});
+
+
+
+
+}
+/// @nodoc
+class _$UpdateHeightCopyWithImpl<$Res>
+    implements $UpdateHeightCopyWith<$Res> {
+  _$UpdateHeightCopyWithImpl(this._self, this._then);
+
+  final UpdateHeight _self;
+  final $Res Function(UpdateHeight) _then;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? height = null,}) {
+  return _then(UpdateHeight(
+height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class UpdateWeight with DiagnosticableTreeMixin implements UserEvent {
+  const UpdateWeight({required this.weight});
+  
+
+ final  int weight;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateWeightCopyWith<UpdateWeight> get copyWith => _$UpdateWeightCopyWithImpl<UpdateWeight>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.updateWeight'))
+    ..add(DiagnosticsProperty('weight', weight));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateWeight&&(identical(other.weight, weight) || other.weight == weight));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,weight);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.updateWeight(weight: $weight)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UpdateWeightCopyWith<$Res> implements $UserEventCopyWith<$Res> {
+  factory $UpdateWeightCopyWith(UpdateWeight value, $Res Function(UpdateWeight) _then) = _$UpdateWeightCopyWithImpl;
+@useResult
+$Res call({
+ int weight
+});
+
+
+
+
+}
+/// @nodoc
+class _$UpdateWeightCopyWithImpl<$Res>
+    implements $UpdateWeightCopyWith<$Res> {
+  _$UpdateWeightCopyWithImpl(this._self, this._then);
+
+  final UpdateWeight _self;
+  final $Res Function(UpdateWeight) _then;
+
+/// Create a copy of UserEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? weight = null,}) {
+  return _then(UpdateWeight(
+weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class LogOut with DiagnosticableTreeMixin implements UserEvent {
+  const LogOut();
+  
+
+
+
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserEvent.logOut'))
+    ;
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LogOut);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'UserEvent.logOut()';
 }
 
 

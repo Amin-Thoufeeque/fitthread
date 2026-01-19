@@ -1,4 +1,5 @@
 import 'package:fitthread/Application/User/user_bloc.dart';
+import 'package:fitthread/Presentation/Admin/Home%20Screen/admin_home_screen.dart';
 import 'package:fitthread/Presentation/Authentication/login_screen.dart';
 
 import 'package:fitthread/Presentation/colors.dart';
@@ -26,9 +27,15 @@ class _SplashscreenState extends State<Splashscreen> {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
         if (state.isTokenValid) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => MainScreen()),
-          );
+          if (state.user.role == 'admin') {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => AdminHomeScreen()),
+            );
+          } else {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => MainScreen()),
+            );
+          }
         } else {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => LoginScreen()),

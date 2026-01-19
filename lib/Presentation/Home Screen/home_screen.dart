@@ -60,6 +60,18 @@ class HomeScreen extends StatelessWidget {
                               builder: (context) => DisplayWorkoutScreen(),
                             ),
                           );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              showCloseIcon: true,
+                              closeIconColor: AppColors.accentGreen,
+                              content: Text(
+                                'No workouts found!',
+                                style: TextStyle(color: AppColors.primaryText),
+                              ),
+                              backgroundColor: AppColors.cardBackground,
+                            ),
+                          );
                         }
                       },
 
@@ -128,16 +140,33 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  WorkoutStatsTile(title: 'Total workout hours', stats: '36h'),
-                  WorkoutStatsTile(title: 'Total workouts', stats: '157'),
+                  WorkoutStatsTile(
+                    title: 'BMI',
+                    stats: context.read<UserBloc>().state.user.bmi.toString(),
+                  ),
+                  WorkoutStatsTile(
+                    title: 'Total workouts',
+                    stats: context
+                        .read<UserBloc>()
+                        .state
+                        .user
+                        .totalWorkouts
+                        .toString(),
+                  ),
                 ],
               ),
               SizedBox(height: 10.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  WorkoutStatsTile(title: 'Body weight', stats: '70.5kg'),
-                  WorkoutStatsTile(title: 'Body fat percentage', stats: '18%'),
+                  WorkoutStatsTile(
+                    title: 'Body weight',
+                    stats: '${context.read<UserBloc>().state.user.weightKg}kg',
+                  ),
+                  WorkoutStatsTile(
+                    title: 'Height',
+                    stats: '${context.read<UserBloc>().state.user.heightCm}cm',
+                  ),
                 ],
               ),
             ],
