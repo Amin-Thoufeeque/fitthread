@@ -1,9 +1,9 @@
-import 'package:fitthread/Application/Workout/workout_bloc.dart';
 // import 'package:fitthread/Domain/models/dummy_data.dart';
+import 'package:fitthread/Application/Exercise/exercise_bloc.dart';
 import 'package:fitthread/Presentation/Admin/Home%20Screen/add_exercise_screen.dart';
-import 'package:fitthread/Presentation/colors.dart';
-import 'package:fitthread/Presentation/debouncer.dart';
-import 'package:fitthread/Presentation/other_screens/exercise_detail_screen.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
+import 'package:fitthread/Presentation/Const/debouncer.dart';
+import 'package:fitthread/Presentation/Const/other_screens/exercise_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +21,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<WorkoutBloc>(context).add(GetExercise());
+      BlocProvider.of<ExerciseBloc>(context).add(GetExercise());
     });
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +30,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: BlocBuilder<WorkoutBloc, WorkoutState>(
+          child: BlocBuilder<ExerciseBloc, ExerciseState>(
             builder: (context, state) {
               return Column(
                 crossAxisAlignment: .start,
@@ -62,7 +62,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       ],
                       onChanged: (value) {
                         debouncer.run(() {
-                          context.read<WorkoutBloc>().add(
+                          context.read<ExerciseBloc>().add(
                             SearchExercise(value),
                           );
                         });
@@ -122,7 +122,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                                 backgroundColor: Colors.red,
                                               ),
                                               onPressed: () {
-                                                BlocProvider.of<WorkoutBloc>(
+                                                BlocProvider.of<ExerciseBloc>(
                                                   context,
                                                 ).add(
                                                   DeleteExercise(

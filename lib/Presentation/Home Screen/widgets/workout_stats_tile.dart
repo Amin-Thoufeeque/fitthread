@@ -1,4 +1,4 @@
-import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutStatsTile extends StatelessWidget {

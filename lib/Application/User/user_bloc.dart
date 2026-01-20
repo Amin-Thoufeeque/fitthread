@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:fitthread/Domain/User/auth_service.dart';
-import 'package:fitthread/Domain/Failure/failure.dart';
+import 'package:fitthread/Domain/Network/Failure/failure.dart';
 import 'package:fitthread/Domain/models/user_model.dart';
 
 part 'user_bloc.freezed.dart';
@@ -17,7 +17,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   AuthService authService;
   UserBloc(this.authService) : super(UserState.initial()) {
     on<LogIn>((event, emit) async {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, isError: false));
       final loginFunc = await authService.logIn(
         password: event.password,
         email: event.email,
@@ -25,11 +25,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       loginFunc.fold(
         (failure) {
           return emit(
-            state.copyWith(
-              isError: true,
-              isLoading: false,
-              errorMessage: failure.errorMessage,
-            ),
+            state.copyWith(isError: true, isLoading: false, failure: failure),
           );
         },
         (user) {
@@ -40,7 +36,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
     });
     on<SignUp>((event, emit) async {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, isError: false));
       final loginFunc = await authService.signUp(
         username: event.username,
         password: event.password,
@@ -49,11 +45,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       loginFunc.fold(
         (failure) {
           return emit(
-            state.copyWith(
-              isError: true,
-              isLoading: false,
-              errorMessage: failure.errorMessage,
-            ),
+            state.copyWith(isError: true, isLoading: false, failure: failure),
           );
         },
         (user) {
@@ -72,6 +64,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     });
     on<UpdateWeight>((event, emit) async {
+      emit(state.copyWith(isLoading: true, isError: false));
       final updateHeightFunc = await authService.updateUserWeight(
         userId: state.user.id,
         userWeight: event.weight,
@@ -79,11 +72,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       updateHeightFunc.fold(
         (failure) {
           return emit(
-            state.copyWith(
-              isError: true,
-              isLoading: false,
-              errorMessage: failure.errorMessage,
-            ),
+            state.copyWith(isError: true, isLoading: false, failure: failure),
           );
         },
         (user) {
@@ -94,6 +83,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
     });
     on<UpdateHeight>((event, emit) async {
+      emit(state.copyWith(isLoading: true, isError: false));
       final updateHeightFunc = await authService.updateUserHeight(
         userId: state.user.id,
         userHeight: event.height,
@@ -101,11 +91,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       updateHeightFunc.fold(
         (failure) {
           return emit(
-            state.copyWith(
-              isError: true,
-              isLoading: false,
-              errorMessage: failure.errorMessage,
-            ),
+            state.copyWith(isError: true, isLoading: false, failure: failure),
           );
         },
         (user) {

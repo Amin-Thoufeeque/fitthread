@@ -6,7 +6,7 @@ abstract class UserState with _$UserState {
     required bool isLoading,
     required bool isError,
     required bool isTokenValid,
-    required String errorMessage,
+    Failure? failure,
     required Option<Either<Failure, User>> loginUserFunc,
     required Option<Future<Either<Failure, User>>> signUpUserFunc,
     required User user,
@@ -15,7 +15,7 @@ abstract class UserState with _$UserState {
     isLoading: false,
     isError: false,
     isTokenValid: false,
-    errorMessage: '',
+    failure: null,
     loginUserFunc: None(),
     signUpUserFunc: None(),
     user: User(

@@ -580,7 +580,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 mixin _$UserState implements DiagnosticableTreeMixin {
 
- bool get isLoading; bool get isError; bool get isTokenValid; String get errorMessage; Option<Either<Failure, User>> get loginUserFunc; Option<Future<Either<Failure, User>>> get signUpUserFunc; User get user;
+ bool get isLoading; bool get isError; bool get isTokenValid; Failure? get failure; Option<Either<Failure, User>> get loginUserFunc; Option<Future<Either<Failure, User>>> get signUpUserFunc; User get user;
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -592,21 +592,21 @@ $UserStateCopyWith<UserState> get copyWith => _$UserStateCopyWithImpl<UserState>
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'UserState'))
-    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('isTokenValid', isTokenValid))..add(DiagnosticsProperty('errorMessage', errorMessage))..add(DiagnosticsProperty('loginUserFunc', loginUserFunc))..add(DiagnosticsProperty('signUpUserFunc', signUpUserFunc))..add(DiagnosticsProperty('user', user));
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('isTokenValid', isTokenValid))..add(DiagnosticsProperty('failure', failure))..add(DiagnosticsProperty('loginUserFunc', loginUserFunc))..add(DiagnosticsProperty('signUpUserFunc', signUpUserFunc))..add(DiagnosticsProperty('user', user));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isTokenValid, isTokenValid) || other.isTokenValid == isTokenValid)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.loginUserFunc, loginUserFunc) || other.loginUserFunc == loginUserFunc)&&(identical(other.signUpUserFunc, signUpUserFunc) || other.signUpUserFunc == signUpUserFunc)&&(identical(other.user, user) || other.user == user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isTokenValid, isTokenValid) || other.isTokenValid == isTokenValid)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.loginUserFunc, loginUserFunc) || other.loginUserFunc == loginUserFunc)&&(identical(other.signUpUserFunc, signUpUserFunc) || other.signUpUserFunc == signUpUserFunc)&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,isTokenValid,errorMessage,loginUserFunc,signUpUserFunc,user);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,isTokenValid,failure,loginUserFunc,signUpUserFunc,user);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserState(isLoading: $isLoading, isError: $isError, isTokenValid: $isTokenValid, errorMessage: $errorMessage, loginUserFunc: $loginUserFunc, signUpUserFunc: $signUpUserFunc, user: $user)';
+  return 'UserState(isLoading: $isLoading, isError: $isError, isTokenValid: $isTokenValid, failure: $failure, loginUserFunc: $loginUserFunc, signUpUserFunc: $signUpUserFunc, user: $user)';
 }
 
 
@@ -617,7 +617,7 @@ abstract mixin class $UserStateCopyWith<$Res>  {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) _then) = _$UserStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool isError, bool isTokenValid, String errorMessage, Option<Either<Failure, User>> loginUserFunc, Option<Future<Either<Failure, User>>> signUpUserFunc, User user
+ bool isLoading, bool isError, bool isTokenValid, Failure? failure, Option<Either<Failure, User>> loginUserFunc, Option<Future<Either<Failure, User>>> signUpUserFunc, User user
 });
 
 
@@ -634,13 +634,13 @@ class _$UserStateCopyWithImpl<$Res>
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? isTokenValid = null,Object? errorMessage = null,Object? loginUserFunc = null,Object? signUpUserFunc = null,Object? user = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? isTokenValid = null,Object? failure = freezed,Object? loginUserFunc = null,Object? signUpUserFunc = null,Object? user = null,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,isTokenValid: null == isTokenValid ? _self.isTokenValid : isTokenValid // ignore: cast_nullable_to_non_nullable
-as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String,loginUserFunc: null == loginUserFunc ? _self.loginUserFunc : loginUserFunc // ignore: cast_nullable_to_non_nullable
+as bool,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as Failure?,loginUserFunc: null == loginUserFunc ? _self.loginUserFunc : loginUserFunc // ignore: cast_nullable_to_non_nullable
 as Option<Either<Failure, User>>,signUpUserFunc: null == signUpUserFunc ? _self.signUpUserFunc : signUpUserFunc // ignore: cast_nullable_to_non_nullable
 as Option<Future<Either<Failure, User>>>,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,
@@ -728,10 +728,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isTokenValid,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isTokenValid,  Failure? failure,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
+return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.failure,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
   return orElse();
 
 }
@@ -749,10 +749,10 @@ return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMess
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isTokenValid,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isTokenValid,  Failure? failure,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)  $default,) {final _that = this;
 switch (_that) {
 case _UserState():
-return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
+return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.failure,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -769,10 +769,10 @@ return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMess
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  bool isTokenValid,  String errorMessage,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  bool isTokenValid,  Failure? failure,  Option<Either<Failure, User>> loginUserFunc,  Option<Future<Either<Failure, User>>> signUpUserFunc,  User user)?  $default,) {final _that = this;
 switch (_that) {
 case _UserState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMessage,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
+return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.failure,_that.loginUserFunc,_that.signUpUserFunc,_that.user);case _:
   return null;
 
 }
@@ -784,13 +784,13 @@ return $default(_that.isLoading,_that.isError,_that.isTokenValid,_that.errorMess
 
 
 class _UserState with DiagnosticableTreeMixin implements UserState {
-  const _UserState({required this.isLoading, required this.isError, required this.isTokenValid, required this.errorMessage, required this.loginUserFunc, required this.signUpUserFunc, required this.user});
+  const _UserState({required this.isLoading, required this.isError, required this.isTokenValid, this.failure, required this.loginUserFunc, required this.signUpUserFunc, required this.user});
   
 
 @override final  bool isLoading;
 @override final  bool isError;
 @override final  bool isTokenValid;
-@override final  String errorMessage;
+@override final  Failure? failure;
 @override final  Option<Either<Failure, User>> loginUserFunc;
 @override final  Option<Future<Either<Failure, User>>> signUpUserFunc;
 @override final  User user;
@@ -806,21 +806,21 @@ _$UserStateCopyWith<_UserState> get copyWith => __$UserStateCopyWithImpl<_UserSt
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'UserState'))
-    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('isTokenValid', isTokenValid))..add(DiagnosticsProperty('errorMessage', errorMessage))..add(DiagnosticsProperty('loginUserFunc', loginUserFunc))..add(DiagnosticsProperty('signUpUserFunc', signUpUserFunc))..add(DiagnosticsProperty('user', user));
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('isTokenValid', isTokenValid))..add(DiagnosticsProperty('failure', failure))..add(DiagnosticsProperty('loginUserFunc', loginUserFunc))..add(DiagnosticsProperty('signUpUserFunc', signUpUserFunc))..add(DiagnosticsProperty('user', user));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isTokenValid, isTokenValid) || other.isTokenValid == isTokenValid)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.loginUserFunc, loginUserFunc) || other.loginUserFunc == loginUserFunc)&&(identical(other.signUpUserFunc, signUpUserFunc) || other.signUpUserFunc == signUpUserFunc)&&(identical(other.user, user) || other.user == user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isTokenValid, isTokenValid) || other.isTokenValid == isTokenValid)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.loginUserFunc, loginUserFunc) || other.loginUserFunc == loginUserFunc)&&(identical(other.signUpUserFunc, signUpUserFunc) || other.signUpUserFunc == signUpUserFunc)&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,isTokenValid,errorMessage,loginUserFunc,signUpUserFunc,user);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,isTokenValid,failure,loginUserFunc,signUpUserFunc,user);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserState(isLoading: $isLoading, isError: $isError, isTokenValid: $isTokenValid, errorMessage: $errorMessage, loginUserFunc: $loginUserFunc, signUpUserFunc: $signUpUserFunc, user: $user)';
+  return 'UserState(isLoading: $isLoading, isError: $isError, isTokenValid: $isTokenValid, failure: $failure, loginUserFunc: $loginUserFunc, signUpUserFunc: $signUpUserFunc, user: $user)';
 }
 
 
@@ -831,7 +831,7 @@ abstract mixin class _$UserStateCopyWith<$Res> implements $UserStateCopyWith<$Re
   factory _$UserStateCopyWith(_UserState value, $Res Function(_UserState) _then) = __$UserStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool isError, bool isTokenValid, String errorMessage, Option<Either<Failure, User>> loginUserFunc, Option<Future<Either<Failure, User>>> signUpUserFunc, User user
+ bool isLoading, bool isError, bool isTokenValid, Failure? failure, Option<Either<Failure, User>> loginUserFunc, Option<Future<Either<Failure, User>>> signUpUserFunc, User user
 });
 
 
@@ -848,13 +848,13 @@ class __$UserStateCopyWithImpl<$Res>
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? isTokenValid = null,Object? errorMessage = null,Object? loginUserFunc = null,Object? signUpUserFunc = null,Object? user = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? isTokenValid = null,Object? failure = freezed,Object? loginUserFunc = null,Object? signUpUserFunc = null,Object? user = null,}) {
   return _then(_UserState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,isTokenValid: null == isTokenValid ? _self.isTokenValid : isTokenValid // ignore: cast_nullable_to_non_nullable
-as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String,loginUserFunc: null == loginUserFunc ? _self.loginUserFunc : loginUserFunc // ignore: cast_nullable_to_non_nullable
+as bool,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as Failure?,loginUserFunc: null == loginUserFunc ? _self.loginUserFunc : loginUserFunc // ignore: cast_nullable_to_non_nullable
 as Option<Either<Failure, User>>,signUpUserFunc: null == signUpUserFunc ? _self.signUpUserFunc : signUpUserFunc // ignore: cast_nullable_to_non_nullable
 as Option<Future<Either<Failure, User>>>,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,

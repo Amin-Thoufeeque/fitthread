@@ -1,9 +1,9 @@
 import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
 import 'package:fitthread/Presentation/Workout%20Screen/workout_detail_screen.dart';
-import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
 import 'package:fitthread/Presentation/main_screen.dart';
-import 'package:fitthread/Presentation/widgets/custom_input_field.dart';
+import 'package:fitthread/Presentation/Const/widgets/custom_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

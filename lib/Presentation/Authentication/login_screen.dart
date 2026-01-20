@@ -1,10 +1,10 @@
 import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Presentation/Authentication/signup_screen.dart';
 
-import 'package:fitthread/Presentation/colors.dart';
-import 'package:fitthread/Presentation/main_screen.dart';
-import 'package:fitthread/Presentation/widgets/custom_input_field.dart';
-import 'package:fitthread/Presentation/widgets/custom_submit_button.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
+import 'package:fitthread/Presentation/Const/widgets/custom_input_field.dart';
+import 'package:fitthread/Presentation/Const/widgets/custom_submit_button.dart';
+import 'package:fitthread/Presentation/splashscreen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -126,29 +126,38 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 30.h),
 
-                  BlocBuilder<UserBloc, UserState>(
-                    builder: (context, state) {
-                      return CustomSubmitButton(
-                        label: "Login",
-                        onPressed: () {
-                          if (globalKey.currentState!.validate()) {
-                            BlocProvider.of<UserBloc>(context).add(
-                              LogIn(
-                                email: emailCntrl.text,
-                                password: passwordCntrl.text,
-                              ),
-                            );
-                            if (!state.isError && !state.isLoading) {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => MainScreen(),
+                  BlocListener<UserBloc, UserState>(
+                    listener: (context, state) {
+                      if (!state.isError && !state.isLoading) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => Splashscreen(),
+                          ),
+                        );
+                      }
+                      if (state.isError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.failure!.message)),
+                        );
+                      }
+                    },
+                    child: BlocBuilder<UserBloc, UserState>(
+                      builder: (context, state) {
+                        return CustomSubmitButton(
+                          label: "Login",
+                          onPressed: () {
+                            if (globalKey.currentState!.validate()) {
+                              BlocProvider.of<UserBloc>(context).add(
+                                LogIn(
+                                  email: emailCntrl.text,
+                                  password: passwordCntrl.text,
                                 ),
                               );
                             }
-                          }
-                        },
-                      );
-                    },
+                          },
+                        );
+                      },
+                    ),
                   ),
 
                   SizedBox(height: 40.h),

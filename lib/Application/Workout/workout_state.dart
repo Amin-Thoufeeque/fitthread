@@ -5,14 +5,14 @@ abstract class WorkoutState with _$WorkoutState {
   const factory WorkoutState({
     required bool isLoading,
     required bool isError,
-    required String errorMessage,
+    Failure? failure,
     required bool isSuccess,
     required bool isAllSetCompleted,
     required double totalVolume,
     required int totalSet,
-    required List<Exercise> exerciseList,
+
     required List<DateTime> dateList,
-    required List<Exercise> searchExerciseList,
+
     required List<Workout> getWorkoutByDateList,
     required List<WorkoutExersiseModel> workoutsList,
     required DateTime? totalWorkoutDuration,
@@ -22,10 +22,8 @@ abstract class WorkoutState with _$WorkoutState {
   factory WorkoutState.initial() => WorkoutState(
     isLoading: false,
     isError: false,
-    errorMessage: '',
-    exerciseList: [],
+    failure: null,
     isSuccess: false,
-    searchExerciseList: [],
     workoutsList: [],
     totalVolume: 0,
     totalSet: 0,

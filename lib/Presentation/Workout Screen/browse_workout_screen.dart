@@ -1,7 +1,9 @@
+import 'package:fitthread/Application/Exercise/exercise_bloc.dart';
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
+
 import 'package:fitthread/Domain/models/exercise_model.dart';
-import 'package:fitthread/Presentation/colors.dart';
-import 'package:fitthread/Presentation/debouncer.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
+import 'package:fitthread/Presentation/Const/debouncer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +22,7 @@ class _BrowseWorkoutsScreenState extends State<BrowseWorkoutsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<WorkoutBloc>().add(GetExercise());
+    context.read<ExerciseBloc>().add(GetExercise());
   }
 
   @override
@@ -48,7 +50,7 @@ class _BrowseWorkoutsScreenState extends State<BrowseWorkoutsScreen> {
         backgroundColor: AppColors.mainBackground,
       ),
       backgroundColor: AppColors.mainBackground,
-      body: BlocBuilder<WorkoutBloc, WorkoutState>(
+      body: BlocBuilder<ExerciseBloc, ExerciseState>(
         builder: (context, state) {
           if (state.isLoading) {
             Center(child: CircularProgressIndicator());
@@ -73,7 +75,7 @@ class _BrowseWorkoutsScreenState extends State<BrowseWorkoutsScreen> {
                     ],
                     onChanged: (value) {
                       debouncer.run(() {
-                        context.read<WorkoutBloc>().add(SearchExercise(value));
+                        context.read<ExerciseBloc>().add(SearchExercise(value));
                       });
                     },
                   ),

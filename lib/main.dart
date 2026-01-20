@@ -1,6 +1,7 @@
+import 'package:fitthread/Application/Exercise/exercise_bloc.dart';
 import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
-import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
 import 'package:fitthread/Presentation/splashscreen.dart';
 import 'package:fitthread/di.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (context) => getIt<UserBloc>()),
             BlocProvider(create: (context) => getIt<WorkoutBloc>()),
+            BlocProvider(create: (context) => getIt<ExerciseBloc>()),
           ],
 
           child: MaterialApp(

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:fitthread/Domain/Failure/failure.dart';
+import 'package:fitthread/Domain/Network/Failure/failure.dart';
 import 'package:fitthread/Domain/models/user_model.dart';
 
 abstract class AuthService {

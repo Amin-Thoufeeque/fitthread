@@ -2,7 +2,8 @@ import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Presentation/Admin/Home%20Screen/admin_home_screen.dart';
 import 'package:fitthread/Presentation/Authentication/login_screen.dart';
 
-import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
+import 'package:fitthread/Presentation/Const/other_screens/submit_weight_screen.dart';
 import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,9 +33,17 @@ class _SplashscreenState extends State<Splashscreen> {
               MaterialPageRoute(builder: (context) => AdminHomeScreen()),
             );
           } else {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MainScreen()),
-            );
+            if (state.user.heightCm == 0 || state.user.weightKg == 0) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => SubmitWeightScreen(isUpdating: false),
+                ),
+              );
+            } else {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => MainScreen()),
+              );
+            }
           }
         } else {
           Navigator.of(context).pushReplacement(

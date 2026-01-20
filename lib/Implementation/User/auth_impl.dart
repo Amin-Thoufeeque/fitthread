@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:fitthread/Domain/Network/api_error_handler.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fitthread/Domain/User/auth_service.dart';
-import 'package:fitthread/Domain/Failure/failure.dart';
+import 'package:fitthread/Domain/Network/Failure/failure.dart';
 import 'package:fitthread/Domain/models/user_model.dart';
 import 'package:fitthread/Implementation/const.dart';
 import 'dart:developer';
@@ -29,34 +30,23 @@ class AuthImplementation extends AuthService {
       log(email);
       log('i calling login');
       final Response response = await dio.post(
-        '$api/user/login',
+        '$api/api/user/login',
         data: {'email': email, 'password': password},
         options: Options(contentType: 'application/json; charset=UTF-8'),
       );
       log('got response');
-      if (response.statusCode == 200) {
-        log('login success');
-        final User user = User.fromMap(response.data['user']);
-        log(user.toString());
-        final String token = response.data['token'];
-        log(token);
-        SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-        await sharedPrefs.setString(sharedPrefsSecretKey, token);
-        return Right(user);
-      }
-      if (response.statusCode == 400) {
-        log('Login failed');
-        return Left(Failure.general(response.data['msg']));
-      }
 
-      return Left(Failure.general(response.data['error']));
-    } on DioException catch (e) {
-      log(e.toString());
-
-      return Left(Failure.network('Request timeout!'));
+      log('login success');
+      final User user = User.fromMap(response.data['user']);
+      log(user.toString());
+      final String token = response.data['token'];
+      log(token);
+      SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+      await sharedPrefs.setString(sharedPrefsSecretKey, token);
+      return Right(user);
     } catch (e) {
       log(e.toString());
-      return Left(Failure.network(e.toString()));
+      return Left(ApiErrorHandler.handle(e));
     }
   }
 
@@ -68,22 +58,15 @@ class AuthImplementation extends AuthService {
   }) async {
     try {
       final response = await dio.post(
-        '$api/user/signup',
+        '$api/api/user/signup',
         data: {'name': username, 'email': email, 'password': password},
       );
 
-      if (response.statusCode == 200) {
-        final user = User.fromMap(response.data['user']);
-        log(user.toString());
-        return Right(user);
-      }
-      if (response.statusCode == 400) {
-        return Left(Failure.general(response.data['msg']));
-      }
-
-      return Left(Failure.general(response.data['error']));
+      final user = User.fromMap(response.data['user']);
+      log(user.toString());
+      return Right(user);
     } catch (e) {
-      return Left(Failure.network(e.toString()));
+      return Left(ApiErrorHandler.handle(e));
     }
   }
 
@@ -97,7 +80,7 @@ class AuthImplementation extends AuthService {
       }
       log(authToken.toString());
       Response response = await dio.post(
-        '$api/user/isTokenValid',
+        '$api/api/user/isTokenValid',
         options: Options(headers: {'auth-token': authToken}),
       );
       if (response.statusCode == 200) {
@@ -125,25 +108,17 @@ class AuthImplementation extends AuthService {
   }) async {
     try {
       Response response = await dio.patch(
-        '$api/user/update/$userId/height',
+        '$api/api/user/update/$userId/height',
         data: {"heightCm": userHeight},
       );
 
-      if (response.statusCode == 400) {
-        log(response.data['msg']);
-        log('fetch failed');
-        return Left(Failure.general(response.data['msg']));
-      }
-      if (response.statusCode == 200) {
-        log('fetch success');
-        final user = User.fromMap(response.data['user']);
-        log(user.toString());
-        return Right(user);
-      }
-      return Left(Failure.general(response.data['msg']));
+      log('fetch success');
+      final user = User.fromMap(response.data['user']);
+      log(user.toString());
+      return Right(user);
     } catch (e) {
       log(e.toString());
-      return Left(Failure.general('Something went wrong'));
+      return Left(ApiErrorHandler.handle(e));
     }
   }
 
@@ -154,25 +129,17 @@ class AuthImplementation extends AuthService {
   }) async {
     try {
       Response response = await dio.patch(
-        '$api/user/update/$userId/weight',
+        '$api/api/user/update/$userId/weight',
         data: {"weightKg": userWeight},
       );
 
-      if (response.statusCode == 400) {
-        log(response.data['msg']);
-        log('fetch failed');
-        return Left(Failure.general(response.data['msg']));
-      }
-      if (response.statusCode == 200) {
-        log('fetch success');
-        final user = User.fromMap(response.data['user']);
-        log(user.toString());
-        return Right(user);
-      }
-      return Left(Failure.general(response.data['msg']));
+      log('fetch success');
+      final user = User.fromMap(response.data['user']);
+      log(user.toString());
+      return Right(user);
     } catch (e) {
       log(e.toString());
-      return Left(Failure.general('Something went wrong'));
+      return Left(ApiErrorHandler.handle(e));
     }
   }
 

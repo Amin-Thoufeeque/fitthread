@@ -1,9 +1,10 @@
+import 'package:fitthread/Application/Exercise/exercise_bloc.dart';
 import 'package:fitthread/Application/User/user_bloc.dart';
-import 'package:fitthread/Application/Workout/workout_bloc.dart';
+
 import 'package:fitthread/Domain/models/exercise_model.dart';
-import 'package:fitthread/Presentation/colors.dart';
-import 'package:fitthread/Presentation/widgets/custom_input_field.dart';
-import 'package:fitthread/Presentation/widgets/custom_submit_button.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
+import 'package:fitthread/Presentation/Const/widgets/custom_input_field.dart';
+import 'package:fitthread/Presentation/Const/widgets/custom_submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -221,7 +222,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   },
                 ),
                 SizedBox(height: 30.h),
-                BlocListener<WorkoutBloc, WorkoutState>(
+                BlocListener<ExerciseBloc, ExerciseState>(
                   listener: (context, state) {
                     if (state.isSuccess &&
                         mounted &&
@@ -230,11 +231,11 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                     }
                     if (state.isError) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.errorMessage)),
+                        SnackBar(content: Text(state.failure!.message)),
                       );
                     }
                   },
-                  child: BlocBuilder<WorkoutBloc, WorkoutState>(
+                  child: BlocBuilder<ExerciseBloc, ExerciseState>(
                     builder: (context, state) {
                       return CustomSubmitButton(
                         label: 'Submit',
@@ -254,10 +255,10 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   void _onSubmit(BuildContext context) {
     if (!globalKey.currentState!.validate()) return;
 
-    final workoutBloc = context.read<WorkoutBloc>();
+    final exerciseBloc = context.read<ExerciseBloc>();
 
     if (isEdit) {
-      workoutBloc.add(
+      exerciseBloc.add(
         EditExercise(
           exercise: exercise.copyWith(
             name: nameCntrl.text,
@@ -268,7 +269,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         ),
       );
     } else {
-      workoutBloc.add(
+      exerciseBloc.add(
         AddExercise(
           name: nameCntrl.text,
           quantifying: selectedQuantifier,

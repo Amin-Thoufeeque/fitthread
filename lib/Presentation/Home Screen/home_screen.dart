@@ -2,7 +2,7 @@ import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
 import 'package:fitthread/Presentation/Home%20Screen/display_workout_screen.dart';
 import 'package:fitthread/Presentation/Home%20Screen/widgets/workout_stats_tile.dart';
-import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

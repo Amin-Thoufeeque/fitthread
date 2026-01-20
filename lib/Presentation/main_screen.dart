@@ -1,7 +1,7 @@
 import 'package:fitthread/Presentation/Home%20Screen/home_screen.dart';
 import 'package:fitthread/Presentation/ProfileScreen/profile_screen.dart';
 import 'package:fitthread/Presentation/Workout%20Screen/workout_screen.dart';
-import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

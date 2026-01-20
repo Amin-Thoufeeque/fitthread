@@ -1,7 +1,7 @@
 import 'package:fitthread/Application/User/user_bloc.dart';
-import 'package:fitthread/Presentation/colors.dart';
-import 'package:fitthread/Presentation/other_screens/submit_height_screen.dart';
-import 'package:fitthread/Presentation/other_screens/submit_weight_screen.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
+import 'package:fitthread/Presentation/Const/other_screens/submit_height_screen.dart';
+import 'package:fitthread/Presentation/Const/other_screens/submit_weight_screen.dart';
 import 'package:fitthread/Presentation/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

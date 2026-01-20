@@ -1,8 +1,8 @@
 import 'package:fitthread/Application/User/user_bloc.dart';
 
-import 'package:fitthread/Presentation/colors.dart';
-import 'package:fitthread/Presentation/widgets/custom_input_field.dart';
-import 'package:fitthread/Presentation/widgets/custom_submit_button.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
+import 'package:fitthread/Presentation/Const/widgets/custom_input_field.dart';
+import 'package:fitthread/Presentation/Const/widgets/custom_submit_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

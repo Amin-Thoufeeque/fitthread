@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:fitthread/Presentation/other_screens/exercise_detail_screen.dart';
+import 'package:fitthread/Presentation/Const/other_screens/exercise_detail_screen.dart';
 import 'package:fitthread/Presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +12,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
 import 'package:fitthread/Presentation/Workout%20Screen/browse_workout_screen.dart';
 import 'package:fitthread/Presentation/Workout%20Screen/submit_workout_screen.dart';
-import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
 
 class WorkoutDetailScreen extends StatefulWidget {
   const WorkoutDetailScreen({super.key});

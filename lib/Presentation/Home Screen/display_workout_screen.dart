@@ -1,6 +1,9 @@
+import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
+import 'package:fitthread/Domain/Network/Failure/failure.dart';
+import 'package:fitthread/Presentation/Const/widgets/no_network_widget.dart';
 import 'package:fitthread/Presentation/Home%20Screen/display_workout_detail_screen.dart';
-import 'package:fitthread/Presentation/colors.dart';
+import 'package:fitthread/Presentation/Const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +20,27 @@ class DisplayWorkoutScreen extends StatelessWidget {
       ),
       body: BlocBuilder<WorkoutBloc, WorkoutState>(
         builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          // 🔴 NETWORK ERROR → FULL SCREEN
+          if (state.failure is NetworkFailure) {
+            return NoNetworkWidget(
+              retry: () {
+                context.read<WorkoutBloc>().add(
+                  GetWorkoutDates(
+                    userId: context.read<UserBloc>().state.user.id,
+                  ),
+                );
+              },
+            );
+          }
+
+          // 🔴 OTHER ERRORS → GENERIC ERROR
+          if (state.failure != null) {
+            return Center(child: Text(state.failure!.message));
+          }
           return SingleChildScrollView(
             child: Column(
               children: [
