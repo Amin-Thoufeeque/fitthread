@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Presentation/Admin/Home%20Screen/admin_home_screen.dart';
 import 'package:fitthread/Presentation/Authentication/login_screen.dart';
@@ -28,6 +30,7 @@ class _SplashscreenState extends State<Splashscreen> {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
         if (state.isTokenValid) {
+          log('token is valid');
           if (state.user.role == 'admin') {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => AdminHomeScreen()),
@@ -46,6 +49,7 @@ class _SplashscreenState extends State<Splashscreen> {
             }
           }
         } else {
+          print('token is not valid');
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => LoginScreen()),
           );

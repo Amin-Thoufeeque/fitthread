@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:fitthread/Domain/Network/Failure/failure.dart';
+import 'package:fitthread/Implementation/Core/Network/Failure/failure.dart';
 
 class ApiErrorHandler {
   static Failure handle(dynamic error) {
@@ -26,11 +26,9 @@ class ApiErrorHandler {
       case DioExceptionType.badResponse:
         break; // handled below
       case DioExceptionType.badCertificate:
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        return const NetworkFailure("Secure connection failed");
       case DioExceptionType.connectionError:
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        return const NetworkFailure("No internet connection");
     }
 
     final response = error.response;

@@ -1,4 +1,4 @@
-import 'package:fitthread/Domain/Network/Failure/failure.dart';
+import 'package:fitthread/Implementation/Core/Network/Failure/failure.dart';
 import 'package:fitthread/Domain/Workout/workout_service.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
 import 'package:fitthread/Domain/models/workout_exercise_model.dart';
@@ -216,11 +216,11 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
         (failure) => emit(
           state.copyWith(failure: failure, isLoading: false, isError: true),
         ),
-        (r) => emit(state.copyWith(isLoading: false)),
+        (r) => emit(WorkoutState.initial()),
       );
     });
     on<GetWorkoutDates>((event, emit) async {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, isError: false));
       final addWorkoutFunc = await workoutService.getWorkoutDates(
         userId: event.userId,
       );
@@ -233,12 +233,13 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
             isLoading: false,
             isSuccess: true,
             dateList: datesList,
+            isError: false,
           ),
         ),
       );
     });
     on<GetWorkoutByDate>((event, emit) async {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, isError: false));
       final addWorkoutFunc = await workoutService.getWorkoutByDate(
         userId: event.userId,
         dateTime: event.dateTime,
@@ -252,6 +253,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
             isLoading: false,
             isSuccess: true,
             getWorkoutByDateList: workoutList,
+            isError: false,
           ),
         ),
       );

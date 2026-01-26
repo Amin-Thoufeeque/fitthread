@@ -34,7 +34,7 @@ class Exercise {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      '_id': id,
       'name': name,
       'quantifying': quantifying,
       'muscleGroup': muscleGroup,

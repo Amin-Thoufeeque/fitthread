@@ -1,4 +1,4 @@
-import 'package:fitthread/Domain/Network/Failure/failure.dart';
+import 'package:fitthread/Implementation/Core/Network/Failure/failure.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';

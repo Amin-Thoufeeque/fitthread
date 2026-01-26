@@ -6,6 +6,6 @@ const workoutRouter = Router();
 workoutRouter.get('/',getExercises);
 workoutRouter.post('/add',createWorkout);
 workoutRouter.get('/dates/:userId',getUserWorkoutDates)
-workoutRouter.post('/get-workout-byDate',getUserWorkoutByDate)
+workoutRouter.get('/get-workout-byDate/:userId/:date',getUserWorkoutByDate)
 
 export default workoutRouter;

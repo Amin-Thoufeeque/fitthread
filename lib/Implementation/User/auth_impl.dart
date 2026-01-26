@@ -1,25 +1,21 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:fitthread/Domain/Network/api_error_handler.dart';
+// ignore: depend_on_referenced_packages
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:fitthread/Implementation/Core/Network/Failure/failure.dart';
+import 'package:fitthread/Implementation/Core/Network/api_error_handler.dart';
 import 'package:fitthread/Domain/User/auth_service.dart';
-import 'package:fitthread/Domain/Network/Failure/failure.dart';
 import 'package:fitthread/Domain/models/user_model.dart';
 import 'package:fitthread/Implementation/const.dart';
-import 'dart:developer';
 
 @LazySingleton(as: AuthService)
 class AuthImplementation extends AuthService {
   final Dio dio = Dio(
-    BaseOptions(
-      baseUrl: api,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-      sendTimeout: const Duration(seconds: 10),
-      headers: {'Content-Type': 'application/json; charset=UTF-8'},
-    ),
+    BaseOptions(headers: {'Content-Type': 'application/json; charset=UTF-8'}),
   );
   @override
   Future<Either<Failure, User>> logIn({

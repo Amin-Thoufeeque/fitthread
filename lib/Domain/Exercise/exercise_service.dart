@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:fitthread/Domain/Network/Failure/failure.dart';
+import 'package:fitthread/Implementation/Core/Network/Failure/failure.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
 
 abstract class ExerciseService {

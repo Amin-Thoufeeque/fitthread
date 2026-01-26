@@ -68,7 +68,12 @@ export const getUserWorkoutDates = async (req: Request, res: Response) => {
 
 export const getUserWorkoutByDate = async (req: Request, res: Response) => {
   try {
-    const { userId, date } = req.body;
+    const { userId, date } = req.params;
+
+    if (!userId || !date) {
+      return res.status(400).json({ error: 'userId and date are required' });
+    }
+    
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
 

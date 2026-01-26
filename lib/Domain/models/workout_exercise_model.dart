@@ -31,7 +31,7 @@ class WorkoutExersiseModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'exerciseDefinitionId': exercise.id,
+      'exerciseDefinitionId': exercise.toMap(),
       'quantifying': quantifying,
       'sets': sets.map((x) => x.toMap()).toList(),
     };
@@ -40,12 +40,12 @@ class WorkoutExersiseModel {
   factory WorkoutExersiseModel.fromMap(Map<String, dynamic> map) {
     return WorkoutExersiseModel(
       exercise: Exercise.fromMap(
-        map['exerciseDefinitionId'] as Map<String, dynamic>,
+        Map<String, dynamic>.from(map['exerciseDefinitionId']),
       ),
       quantifying: map['quantifying'] as String,
       sets: List<WorkoutSet>.from(
         (map['sets'] as List<dynamic>).map<WorkoutSet>(
-          (x) => WorkoutSet.fromMap(x as Map<String, dynamic>),
+          (x) => WorkoutSet.fromMap(Map<String, dynamic>.from(x as Map)),
         ),
       ),
     );

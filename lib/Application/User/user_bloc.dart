@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:fitthread/Domain/User/auth_service.dart';
-import 'package:fitthread/Domain/Network/Failure/failure.dart';
+import 'package:fitthread/Implementation/Core/Network/Failure/failure.dart';
 import 'package:fitthread/Domain/models/user_model.dart';
 
 part 'user_bloc.freezed.dart';

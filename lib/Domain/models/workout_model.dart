@@ -49,10 +49,10 @@ class Workout {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      '_id': id,
       'userId': userId,
       'title': title,
-      'startTime': startTime.millisecondsSinceEpoch,
+      'startTime': startTime.toIso8601String(),
       'totalWeightLifted': totalWeightLifted,
       'totalWorkoutSet': totalWorkoutSet,
       'duration': duration,
@@ -71,7 +71,8 @@ class Workout {
       duration: (map['duration'] as num).toDouble(),
       exercises: List<WorkoutExersiseModel>.from(
         (map['exercises'] as List).map<WorkoutExersiseModel>(
-          (x) => WorkoutExersiseModel.fromMap(x as Map<String, dynamic>),
+          (x) =>
+              WorkoutExersiseModel.fromMap(Map<String, dynamic>.from(x as Map)),
         ),
       ),
     );

@@ -3,17 +3,21 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:fitthread/Domain/Exercise/exercise_service.dart';
-import 'package:fitthread/Domain/Network/Failure/failure.dart';
-import 'package:fitthread/Domain/Network/api_error_handler.dart';
+import 'package:fitthread/Implementation/Core/Local/exercise_local_data_source.dart';
+import 'package:fitthread/Implementation/Core/Network/Failure/failure.dart';
+import 'package:fitthread/Implementation/Core/Network/api_error_handler.dart';
 import 'package:fitthread/Domain/models/exercise_model.dart';
 import 'package:fitthread/Implementation/const.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: ExerciseService)
 class ExerciseImplementation implements ExerciseService {
-  final dio = Dio(
-    BaseOptions(headers: {'Content-Type': 'application/json; charset=UTF-8'}),
-  );
+  final Dio dio;
+  final ExerciseLocalDataSource localDataSource;
+
+  ExerciseImplementation(this.dio, this.localDataSource);
+  DateTime? _lastFetched;
+
   @override
   Future<Either<Failure, Unit>> addExercise({
     required String name,
@@ -43,6 +47,15 @@ class ExerciseImplementation implements ExerciseService {
 
   @override
   Future<Either<Failure, List<Exercise>>> getExercises() async {
+    final cached = await localDataSource.getCachedExercise();
+    final bool isCacheFresh =
+        _lastFetched != null &&
+        DateTime.now().difference(_lastFetched!) < const Duration(minutes: 10);
+
+    if (cached != null && cached.isNotEmpty && isCacheFresh) {
+      return Right(cached);
+    }
+
     try {
       List<Exercise> exerciseList = [];
       Response response = await dio.get('$api/api/workout/');
@@ -50,9 +63,14 @@ class ExerciseImplementation implements ExerciseService {
       final List exerciseJson = response.data['exercises'];
       exerciseList = exerciseJson.map((e) => Exercise.fromMap(e)).toList();
 
+      _lastFetched = DateTime.now();
+      await localDataSource.chacheExercises(exerciseList);
       return Right(exerciseList);
     } catch (e) {
       log(e.toString());
+      if (cached != null && cached.isNotEmpty) {
+        return Right(cached);
+      }
       return Left(ApiErrorHandler.handle(e));
     }
   }

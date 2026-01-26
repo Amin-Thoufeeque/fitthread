@@ -1,6 +1,6 @@
 import 'package:fitthread/Application/User/user_bloc.dart';
 import 'package:fitthread/Application/Workout/workout_bloc.dart';
-import 'package:fitthread/Domain/Network/Failure/failure.dart';
+import 'package:fitthread/Implementation/Core/Network/Failure/failure.dart';
 import 'package:fitthread/Presentation/Const/widgets/no_network_widget.dart';
 import 'package:fitthread/Presentation/Home%20Screen/display_workout_detail_screen.dart';
 import 'package:fitthread/Presentation/Const/colors.dart';
@@ -24,8 +24,7 @@ class DisplayWorkoutScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          // 🔴 NETWORK ERROR → FULL SCREEN
-          if (state.failure is NetworkFailure) {
+          if (state.isError && state.failure is NetworkFailure) {
             return NoNetworkWidget(
               retry: () {
                 context.read<WorkoutBloc>().add(
@@ -37,10 +36,6 @@ class DisplayWorkoutScreen extends StatelessWidget {
             );
           }
 
-          // 🔴 OTHER ERRORS → GENERIC ERROR
-          if (state.failure != null) {
-            return Center(child: Text(state.failure!.message));
-          }
           return SingleChildScrollView(
             child: Column(
               children: [
