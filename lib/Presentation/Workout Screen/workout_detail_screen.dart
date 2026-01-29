@@ -397,7 +397,11 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                                                           .sets[setIndex]
                                                           .isCompleted,
                                                     )
-                                                  : MatrixTile(
+                                                  : SizedBox(),
+                                              SizedBox(width: 6.w),
+                                              workoutSet.exercise.quantifying ==
+                                                      "time"
+                                                  ? MatrixTile(
                                                       matrix: 'min',
                                                       isDecimalAllowed: true,
                                                       controller:
@@ -407,18 +411,17 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                                                           .workoutsList[workoutIndex]
                                                           .sets[setIndex]
                                                           .isCompleted,
+                                                    )
+                                                  : MatrixTile(
+                                                      matrix: 'reps',
+                                                      isDecimalAllowed: false,
+                                                      controller: repController,
+                                                      onEditingComplete: () {},
+                                                      isCompleted: state
+                                                          .workoutsList[workoutIndex]
+                                                          .sets[setIndex]
+                                                          .isCompleted,
                                                     ),
-                                              SizedBox(width: 6.w),
-                                              MatrixTile(
-                                                matrix: 'reps',
-                                                isDecimalAllowed: false,
-                                                controller: repController,
-                                                onEditingComplete: () {},
-                                                isCompleted: state
-                                                    .workoutsList[workoutIndex]
-                                                    .sets[setIndex]
-                                                    .isCompleted,
-                                              ),
                                             ],
                                           ),
                                         ),
